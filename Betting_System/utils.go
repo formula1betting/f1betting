@@ -11,5 +11,5 @@ func Init() {
 }
 
 func loadSqlQueries() {
-	bettingQueries = dbms.LoadUserManagementQueries()
+	bettingQueries = dbms.LoadBettingQueries()
 }
