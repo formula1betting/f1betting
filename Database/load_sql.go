@@ -1,0 +1,36 @@
+package dbms
+
+import (
+	"log"
+	"sync"
+)
+
+var (
+	onceUserManagement sync.Once
+)
+
+func LoadUserManagementQueries() map[string]string {
+	var queries map[string]string
+
+	onceUserManagement.Do(func() {
+		var err error
+		queries, err = loadSQLFile("./Database/sql/user_management.sql")
+		if err != nil {
+			log.Fatalf("Failed to load user management queries: %v", err)
+		}
+	})
+	return queries
+}
+
+func LoadBettingQueries() map[string]string {
+	var queries map[string]string
+
+	onceUserManagement.Do(func() {
+		var err error
+		queries, err = loadSQLFile("./Database/sql/betting.sql")
+		if err != nil {
+			log.Fatalf("Failed to load user management queries: %v", err)
+		}
+	})
+	return queries
+}
