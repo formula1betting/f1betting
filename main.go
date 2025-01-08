@@ -15,14 +15,8 @@ func main() {
 	}
 	defer dbms.CloseConnection(ctx, conn)
 	user_management.Init()
+	user_management.UpdateUserTable(ctx, conn)
 
-	// Generate and add random users
-	randomUsers := user_management.GenerateRandomUsers(100)
-	for _, user := range randomUsers {
-		_, err := user_management.CreateUser(ctx, conn, user)
-		if err != nil {
-			log.Printf("Failed to create user %s: %v", user.Username, err)
-			continue
-		}
-	}
 }
+// Add a new column 'balance' with default value 0.00 to the users table
+
