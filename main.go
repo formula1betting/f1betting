@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"f1betting/betting_system"
 	"f1betting/dbms"
 	"f1betting/user_management"
 	"log"
@@ -14,15 +15,19 @@ func main() {
 		log.Fatalf("Failed to connect to database: %v", err)
 	}
 	defer dbms.CloseConnection(ctx, conn)
+	
 	user_management.Init()
+	betting_system.Init()
 
-	// Generate and add random users
-	randomUsers := user_management.GenerateRandomUsers(100)
-	for _, user := range randomUsers {
-		_, err := user_management.CreateUser(ctx, conn, user)
-		if err != nil {
-			log.Printf("Failed to create user %s: %v", user.Username, err)
-			continue
-		}
+	conn.Exec(ctx, "DEALLOCATE PREPARE ALL")
+
+	bets, err := betting_system.GetFastestLapBetsByRace(ctx, conn, 1, "PENDING")
+	if err != nil {
+		log.Fatalf("Failed to get fastest lap bets: %v", err)
 	}
+
+	for _, bet := range bets {
+		log.Printf("Bet ID: %d, User ID: %d, ", bet.ID, bet.UserID)
+	}
+
 }
