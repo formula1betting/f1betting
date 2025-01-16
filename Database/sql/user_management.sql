@@ -20,6 +20,7 @@ CREATE TABLE IF NOT EXISTS users (
     preferred_currency VARCHAR(3),
     favorite_team VARCHAR(100),
     profile_picture_url TEXT,
+    balance DECIMAL(10, 2) NOT NULL DEFAULT 0.00
     
     CONSTRAINT valid_account_status CHECK (account_status IN ('ACTIVE', 'SUSPENDED', 'BANNED', 'DELETED')),
     CONSTRAINT valid_role CHECK (role IN ('USER', 'ADMIN')),
@@ -44,14 +45,15 @@ INSERT INTO users (
     country,
     preferred_currency,
     favorite_team,
-    profile_picture_url
+    profile_picture_url,
+    balance
 ) VALUES (
     $1, $2, $3, $4, $5, $6, $7, $8, $9, 
     'ACTIVE',                  -- default account status
     CURRENT_TIMESTAMP,         -- registration date
     'USER',                    -- default role
     false,                     -- email_verified
-    $10, $11, $12, $13
+    $10, $11, $12, $13, $14
 ) RETURNING id;
 
 -- name: GetUserByID
@@ -90,6 +92,11 @@ UPDATE users SET
     account_status = $1
 WHERE id = $2;
 
+-- name: UpdateUserBalance
+UPDATE users SET 
+    balance = $1
+WHERE id = $2;
+
 -- name: DeleteUser
 UPDATE users SET 
     account_status = 'DELETED',
@@ -103,3 +110,7 @@ SELECT * FROM users WHERE account_status = $1;
 UPDATE users SET 
     email_verified = true 
 WHERE id = $1;
+
+-- name: UpdateUserTable
+ALTER TABLE users
+	ADD COLUMN balance DECIMAL(10, 2) DEFAULT 0.00

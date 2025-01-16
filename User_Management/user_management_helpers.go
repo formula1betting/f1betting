@@ -27,6 +27,7 @@ func generateRandomString(length int) string {
 	return string(b)
 }
 
+
 func GenerateRandomUsers(count int) []User {
 	users := make([]User, count)
 	timestamp := time.Now().UnixNano()
