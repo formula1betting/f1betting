@@ -118,29 +118,23 @@ SELECT * FROM (
     SELECT 'lap_timing' as bet_type, id, user_id, race_id, lap_number, driver_id, amount, status, betting_pool, created_at FROM lap_timing_bets WHERE user_id = $1 AND status = 'PENDING'
 ) active_bets;
 
--- name: UpdatePodiumBetStatus
-UPDATE podium_bets SET status = $1 WHERE id = $2 AND user_id = $3
-RETURNING id;
+-- name: UpdatePodiumBetStatusByRace
+UPDATE podium_bets SET status = 'SETTLED' WHERE race_id = $1;
 
--- name: UpdatePolePositionBetStatus
-UPDATE pole_position_bets SET status = $1 WHERE id = $2 AND user_id = $3
-RETURNING id;
+-- name: UpdatePolePositionBetStatusByRace
+UPDATE pole_position_bets SET status = 'SETTLED' WHERE race_id = $1;
 
--- name: UpdateRainBetStatus
-UPDATE rain_bets SET status = $1 WHERE id = $2 AND user_id = $3
-RETURNING id;
+-- name: UpdateRainBetStatusByRace
+UPDATE rain_bets SET status = 'SETTLED' WHERE race_id = $1;
 
--- name: UpdateRetirementBetStatus
-UPDATE retirement_bets SET status = $1 WHERE id = $2 AND user_id = $3
-RETURNING id;
+-- name: UpdateRetirementBetStatusByRace
+UPDATE retirement_bets SET status = 'SETTLED' WHERE race_id = $1;
 
--- name: UpdateFastestLapBetStatus
-UPDATE fastest_lap_bets SET status = $1 WHERE id = $2 AND user_id = $3
-RETURNING id;
+-- name: UpdateFastestLapBetStatusByRace
+UPDATE fastest_lap_bets SET status = 'SETTLED' WHERE race_id = $1;
 
--- name: UpdateLapTimingBetStatus
-UPDATE lap_timing_bets SET status = $1 WHERE id = $2 AND user_id = $3
-RETURNING id;
+-- name: UpdateLapTimingBetStatusByRace
+UPDATE lap_timing_bets SET status = 'SETTLED' WHERE race_id = $1;
 
 -- name: GetRacePodiumBets
 SELECT id, user_id, race_id, first_position, second_position, third_position, amount, status, betting_pool, created_at FROM podium_bets WHERE race_id = $1 AND status = $2;

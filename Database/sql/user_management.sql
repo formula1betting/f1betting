@@ -114,3 +114,8 @@ WHERE id = $1;
 -- name: UpdateUserTable
 ALTER TABLE users
 	ADD COLUMN balance DECIMAL(10, 2) DEFAULT 0.00
+
+-- name: AddToUserBalance
+UPDATE users SET 
+    balance = balance + $1
+WHERE id = $2;
