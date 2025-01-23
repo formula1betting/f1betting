@@ -4,6 +4,7 @@ import (
 	"context"
 	"f1betting/betting_system"
 	"f1betting/dbms"
+	"f1betting/race_info"
 	"f1betting/user_management"
 	"log"
 )
@@ -32,12 +33,38 @@ func main() {
 	// 	}
 	// }
 
-	payout, err := betting_system.GetFastestLapUserPayout(ctx, conn, 1, 1)
+	// payout, err := betting_system.GetFastestLapUserPayout(ctx, conn, 1, 1)
+
+	// if err != nil {
+	// 	log.Fatalf("Failed to get real-time odds: %v", err)
+	// }
+
+	// log.Printf("Real-time odds: %v", payout)
+
+	// fastestLapEachLap, err := race_info.GetFastestDriverEachLap(9606)
+
+	// if err != nil {
+	// 	log.Fatalf("Failed to get fastest driver each lap: %v", err)
+	// }
+
+	// for lap, fastestLap := range fastestLapEachLap {
+	// 	log.Printf("Lap %v: %v", lap, fastestLap)
+	// }
+
+	fastestLap, err := race_info.GetFastestDriverWholeRace(9606)
 
 	if err != nil {
-		log.Fatalf("Failed to get real-time odds: %v", err)
+		log.Fatalf("Failed to get fastest driver : %v", err)
 	}
 
-	log.Printf("Real-time odds: %v", payout)
+	log.Printf("Fastest lap: %v", fastestLap)
+
+	betting_system.GetFastestLapBetsByRace(ctx, conn, 9606, "PENDING")
+
+	err = betting_system.SettleBetsAndUpdateBalanceFastestLap(ctx, conn, 9606)
+
+	if err != nil {
+		log.Fatalf("Failed to settle bets: %v", err)
+	}
 
 }

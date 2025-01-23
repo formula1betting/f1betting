@@ -10,8 +10,8 @@ var (
 	onceBettingSystem  sync.Once
 )
 
-func LoadUserManagementQueries() map[string]string {
-	var queries map[string]string
+func GetUserManagementQueries() *map[string]string {
+	var queries *map[string]string
 
 	onceUserManagement.Do(func() {
 		var err error
@@ -23,8 +23,8 @@ func LoadUserManagementQueries() map[string]string {
 	return queries
 }
 
-func LoadBettingQueries() map[string]string {
-	var queries map[string]string
+func GetBettingQueries() *map[string]string {
+	var queries *map[string]string
 
 	onceBettingSystem.Do(func() {
 		var err error

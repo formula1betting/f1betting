@@ -2,9 +2,15 @@ module f1betting/betting_system
 
 go 1.23.4
 
-replace f1betting/dbms => ../Database
+replace f1betting/race_info => ../Race_Info
 
 replace f1betting/user_management => ../User_Management
+
+replace f1betting/dbms => ../Database
+
+require f1betting/race_info v0.0.0
+
+require f1betting/user_management v0.0.0
 
 require f1betting/dbms v0.0.0
 

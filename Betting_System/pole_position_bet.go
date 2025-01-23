@@ -10,7 +10,7 @@ import (
 type PolePositionBet struct {
 	ID          int64
 	UserID      int64
-	RaceID      int64
+	SessionID      int64
 	DriverID    int64
 	Status      string
 	BettingPool int64
@@ -19,7 +19,7 @@ type PolePositionBet struct {
 
 func CreatePolePositionBet(ctx context.Context, conn *pgx.Conn, bet PolePositionBet) (int64, error) {
 	var betID int64
-	err := conn.QueryRow(ctx, bettingQueries["CreatePolePositionBet"],
-		bet.UserID, bet.RaceID, bet.DriverID, bet.BettingPool).Scan(&betID)
+	err := conn.QueryRow(ctx, (*bettingQueries)["CreatePolePositionBet"],
+		bet.UserID, bet.SessionID, bet.DriverID, bet.BettingPool).Scan(&betID)
 	return betID, err
 }
