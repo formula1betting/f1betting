@@ -6,9 +6,18 @@ replace f1betting/dbms => ./Database
 
 replace f1betting/user_management => ./User_Management
 
+replace f1betting/betting_system => ./Betting_System
+
+replace f1betting/race_info => ./Race_Info
+
 require f1betting/dbms v0.0.0
 
 require f1betting/user_management v0.0.0
+
+require (
+	f1betting/betting_system v0.0.0
+		f1betting/race_info v0.0.0
+)
 
 require (
 	github.com/jackc/pgpassfile v1.0.0 // indirect

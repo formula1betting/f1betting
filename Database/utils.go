@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func loadSQLFile(filePath string) (map[string]string, error) {
+func loadSQLFile(filePath string) (*map[string]string, error) {
 	file, err := os.Open(filePath)
 	if err != nil {
 		return nil, err
@@ -71,5 +71,5 @@ func loadSQLFile(filePath string) (map[string]string, error) {
 		return nil, err
 	}
 
-	return queries, nil
+	return &queries, nil
 }

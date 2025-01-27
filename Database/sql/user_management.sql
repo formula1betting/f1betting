@@ -1,25 +1,26 @@
 -- name: CreateUsersTable
 CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
-    full_name VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL UNIQUE,
-    username VARCHAR(50) NOT NULL UNIQUE,
-    password_hash VARCHAR(255) NOT NULL,
+    full_name TEXT NOT NULL,
+    email TEXT NOT NULL UNIQUE,
+    username TEXT NOT NULL UNIQUE,
+    password_hash TEXT NOT NULL,
     date_of_birth DATE NOT NULL,
-    phone_number VARCHAR(20),
-    government_id VARCHAR(100) NOT NULL,
+    phone_number TEXT,
+    government_id TEXT NOT NULL,
     address TEXT NOT NULL,
-    tax_id VARCHAR(50),
-    account_status VARCHAR(20) NOT NULL DEFAULT 'ACTIVE',
+    tax_id TEXT,
+    account_status TEXT NOT NULL DEFAULT 'ACTIVE',
     registration_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    role VARCHAR(20) NOT NULL DEFAULT 'USER',
+    role TEXT NOT NULL DEFAULT 'USER',
     email_verified BOOLEAN NOT NULL DEFAULT FALSE,
     last_password_change TIMESTAMP,
     deleted_at TIMESTAMP,
-    country VARCHAR(100),
-    preferred_currency VARCHAR(3),
-    favorite_team VARCHAR(100),
+    country TEXT,
+    preferred_currency TEXT,
+    favorite_team TEXT,
     profile_picture_url TEXT,
+    balance DECIMAL(10, 2) NOT NULL DEFAULT 0.00
     
     CONSTRAINT valid_account_status CHECK (account_status IN ('ACTIVE', 'SUSPENDED', 'BANNED', 'DELETED')),
     CONSTRAINT valid_role CHECK (role IN ('USER', 'ADMIN')),
@@ -44,14 +45,15 @@ INSERT INTO users (
     country,
     preferred_currency,
     favorite_team,
-    profile_picture_url
+    profile_picture_url,
+    balance
 ) VALUES (
     $1, $2, $3, $4, $5, $6, $7, $8, $9, 
     'ACTIVE',                  -- default account status
     CURRENT_TIMESTAMP,         -- registration date
     'USER',                    -- default role
     false,                     -- email_verified
-    $10, $11, $12, $13
+    $10, $11, $12, $13, $14
 ) RETURNING id;
 
 -- name: GetUserByID
@@ -90,6 +92,11 @@ UPDATE users SET
     account_status = $1
 WHERE id = $2;
 
+-- name: UpdateUserBalance
+UPDATE users SET 
+    balance = $1
+WHERE id = $2;
+
 -- name: DeleteUser
 UPDATE users SET 
     account_status = 'DELETED',
@@ -103,3 +110,12 @@ SELECT * FROM users WHERE account_status = $1;
 UPDATE users SET 
     email_verified = true 
 WHERE id = $1;
+
+-- name: UpdateUserTable
+ALTER TABLE users
+	ADD COLUMN balance DECIMAL(10, 2) DEFAULT 0.00
+
+-- name: AddToUserBalance
+UPDATE users SET 
+    balance = balance + $1
+WHERE id = $2;

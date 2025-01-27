@@ -28,11 +28,12 @@ type User struct {
 	PreferredCurrency  *string
 	FavoriteTeam       *string
 	ProfilePictureURL  *string
+	Balance            float64
 }
 
 func CreateUser(ctx context.Context, conn *pgx.Conn, user User) (int64, error) {
 	var userID int64
-	err := conn.QueryRow(ctx, userManagementQueries["CreateUser"],
+	err := conn.QueryRow(ctx, (*UserManagementQueries)["CreateUser"],
 		user.FullName,
 		user.Email,
 		user.Username,
@@ -46,19 +47,20 @@ func CreateUser(ctx context.Context, conn *pgx.Conn, user User) (int64, error) {
 		user.PreferredCurrency,
 		user.FavoriteTeam,
 		user.ProfilePictureURL,
+		user.Balance,
 	).Scan(&userID)
 	return userID, err
 }
 
 func GetUserByID(ctx context.Context, conn *pgx.Conn, id int64) (*User, error) {
 	var user User
-	err := conn.QueryRow(ctx, userManagementQueries["GetUserByID"], id).Scan(
+	err := conn.QueryRow(ctx, (*UserManagementQueries)["GetUserByID"], id).Scan(
 		&user.ID, &user.FullName, &user.Email, &user.Username, &user.PasswordHash,
 		&user.DateOfBirth, &user.PhoneNumber, &user.GovernmentID, &user.Address,
 		&user.TaxID, &user.AccountStatus, &user.RegistrationDate, &user.Role,
 		&user.EmailVerified, &user.LastPasswordChange, &user.DeletedAt,
 		&user.Country, &user.PreferredCurrency, &user.FavoriteTeam,
-		&user.ProfilePictureURL,
+		&user.ProfilePictureURL, &user.Balance,
 	)
 	if err == pgx.ErrNoRows {
 		return nil, nil
@@ -68,13 +70,13 @@ func GetUserByID(ctx context.Context, conn *pgx.Conn, id int64) (*User, error) {
 
 func GetUserByEmail(ctx context.Context, conn *pgx.Conn, email string) (*User, error) {
 	var user User
-	err := conn.QueryRow(ctx, userManagementQueries["GetUserByEmail"], email).Scan(
+	err := conn.QueryRow(ctx, (*UserManagementQueries)["GetUserByEmail"], email).Scan(
 		&user.ID, &user.FullName, &user.Email, &user.Username, &user.PasswordHash,
 		&user.DateOfBirth, &user.PhoneNumber, &user.GovernmentID, &user.Address,
 		&user.TaxID, &user.AccountStatus, &user.RegistrationDate, &user.Role,
 		&user.EmailVerified, &user.LastPasswordChange, &user.DeletedAt,
 		&user.Country, &user.PreferredCurrency, &user.FavoriteTeam,
-		&user.ProfilePictureURL,
+		&user.ProfilePictureURL, &user.Balance,
 	)
 	if err == pgx.ErrNoRows {
 		return nil, nil
@@ -84,13 +86,13 @@ func GetUserByEmail(ctx context.Context, conn *pgx.Conn, email string) (*User, e
 
 func GetUserByUsername(ctx context.Context, conn *pgx.Conn, username string) (*User, error) {
 	var user User
-	err := conn.QueryRow(ctx, userManagementQueries["GetUserByUsername"], username).Scan(
+	err := conn.QueryRow(ctx, (*UserManagementQueries)["GetUserByUsername"], username).Scan(
 		&user.ID, &user.FullName, &user.Email, &user.Username, &user.PasswordHash,
 		&user.DateOfBirth, &user.PhoneNumber, &user.GovernmentID, &user.Address,
 		&user.TaxID, &user.AccountStatus, &user.RegistrationDate, &user.Role,
 		&user.EmailVerified, &user.LastPasswordChange, &user.DeletedAt,
 		&user.Country, &user.PreferredCurrency, &user.FavoriteTeam,
-		&user.ProfilePictureURL,
+		&user.ProfilePictureURL, &user.Balance,
 	)
 	if err == pgx.ErrNoRows {
 		return nil, nil
@@ -99,7 +101,7 @@ func GetUserByUsername(ctx context.Context, conn *pgx.Conn, username string) (*U
 }
 
 func UpdateUserProfile(ctx context.Context, conn *pgx.Conn, userID int64, updates User) error {
-	_, err := conn.Exec(ctx, userManagementQueries["UpdateUserProfile"],
+	_, err := conn.Exec(ctx, (*UserManagementQueries)["UpdateUserProfile"],
 		updates.FullName, updates.PhoneNumber, updates.Address,
 		updates.Country, updates.PreferredCurrency, updates.FavoriteTeam,
 		userID,
@@ -108,27 +110,37 @@ func UpdateUserProfile(ctx context.Context, conn *pgx.Conn, userID int64, update
 }
 
 func UpdateUserEmail(ctx context.Context, conn *pgx.Conn, userID int64, newEmail string) error {
-	_, err := conn.Exec(ctx, userManagementQueries["UpdateUserEmail"], newEmail, userID)
+	_, err := conn.Exec(ctx, (*UserManagementQueries)["UpdateUserEmail"], newEmail, userID)
 	return err
 }
 
 func UpdateUserPassword(ctx context.Context, conn *pgx.Conn, userID int64, newPasswordHash string) error {
-	_, err := conn.Exec(ctx, userManagementQueries["UpdateUserPassword"], newPasswordHash, userID)
+	_, err := conn.Exec(ctx, (*UserManagementQueries)["UpdateUserPassword"], newPasswordHash, userID)
 	return err
 }
 
 func UpdateUserStatus(ctx context.Context, conn *pgx.Conn, userID int64, newStatus string) error {
-	_, err := conn.Exec(ctx, userManagementQueries["UpdateUserStatus"], newStatus, userID)
+	_, err := conn.Exec(ctx, (*UserManagementQueries)["UpdateUserStatus"], newStatus, userID)
+	return err
+}
+
+func UpdateUserBalance(ctx context.Context, conn *pgx.Conn, userID int64, newBalance int64) error {
+	_, err := conn.Exec(ctx, (*UserManagementQueries)["UpdateUserBalance"], newBalance, userID)
 	return err
 }
 
 func DeleteUser(ctx context.Context, conn *pgx.Conn, userID int64) error {
-	_, err := conn.Exec(ctx, userManagementQueries["DeleteUser"], userID)
+	_, err := conn.Exec(ctx, (*UserManagementQueries)["DeleteUser"], userID)
+	return err
+}
+
+func UpdateUserTable(ctx context.Context, conn *pgx.Conn) error {
+	_, err := conn.Exec(ctx, (*UserManagementQueries)["UpdateUserTable"])
 	return err
 }
 
 func GetUsersByStatus(ctx context.Context, conn *pgx.Conn, status string) ([]User, error) {
-	rows, err := conn.Query(ctx, userManagementQueries["GetUsersByStatus"], status)
+	rows, err := conn.Query(ctx, (*UserManagementQueries)["GetUsersByStatus"], status)
 	if err != nil {
 		return nil, err
 	}
@@ -143,7 +155,7 @@ func GetUsersByStatus(ctx context.Context, conn *pgx.Conn, status string) ([]Use
 			&user.TaxID, &user.AccountStatus, &user.RegistrationDate, &user.Role,
 			&user.EmailVerified, &user.LastPasswordChange, &user.DeletedAt,
 			&user.Country, &user.PreferredCurrency, &user.FavoriteTeam,
-			&user.ProfilePictureURL,
+			&user.ProfilePictureURL, &user.Balance,
 		)
 		if err != nil {
 			return nil, err
@@ -154,11 +166,11 @@ func GetUsersByStatus(ctx context.Context, conn *pgx.Conn, status string) ([]Use
 }
 
 func VerifyUserEmail(ctx context.Context, conn *pgx.Conn, userID int64) error {
-	_, err := conn.Exec(ctx, userManagementQueries["VerifyUserEmail"], userID)
+	_, err := conn.Exec(ctx, (*UserManagementQueries)["VerifyUserEmail"], userID)
 	return err
 }
 
 func CreateUsersTable(ctx context.Context, conn *pgx.Conn) error {
-	_, err := conn.Exec(ctx, userManagementQueries["CreateUsersTable"])
+	_, err := conn.Exec(ctx, (*UserManagementQueries)["CreateUsersTable"])
 	return err
 }
