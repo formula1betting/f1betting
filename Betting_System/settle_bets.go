@@ -53,10 +53,6 @@ func SettleBetsAndUpdateBalanceFastestLap(ctx context.Context, conn *pgx.Conn, S
 	}
 	defer tx.Rollback(ctx)
 
-	if err := updateFastestLapBetStatus(ctx, tx, SessionID); err != nil {
-		return err
-	}
-
 	winners, err := GetFastestLapWinningBetsAndPayouts(ctx, conn, SessionID)
 	if err != nil {
 		return err
@@ -69,6 +65,10 @@ func SettleBetsAndUpdateBalanceFastestLap(ctx context.Context, conn *pgx.Conn, S
 		if err != nil {
 			return err
 		}
+	}
+
+	if err := updateFastestLapBetStatus(ctx, tx, SessionID); err != nil {
+		return err
 	}
 
 	err = tx.Commit(ctx)

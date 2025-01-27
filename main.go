@@ -4,7 +4,6 @@ import (
 	"context"
 	"f1betting/betting_system"
 	"f1betting/dbms"
-	"f1betting/race_info"
 	"f1betting/user_management"
 	"log"
 )
@@ -22,16 +21,18 @@ func main() {
 
 	conn.Exec(ctx, "DEALLOCATE PREPARE ALL")
 
-	// var bets []betting_system.FastestLapBet
-	// for i := 1; i < 5; i++ {
-	// 	bets = append(bets, betting_system.GenerateRandomFastestLapBet(int64(i), 1))
-	// }
+	var bets []betting_system.FastestLapBet
+	for i := 6; i < 10; i++ {
+		bets = append(bets, betting_system.GenerateRandomFastestLapBet(int64(i), 3456))
+	}
 
-	// for _, bet := range bets {
-	// 	if _,err := betting_system.CreateFastestLapBet(ctx, conn, bet); err != nil {
-	// 		log.Fatalf("Failed to create fastest lap bet: %v", err)
-	// 	}
-	// }
+	for _, bet := range bets {
+		if _, err := betting_system.CreateFastestLapBet(ctx, conn, bet); err != nil {
+			log.Fatalf("Failed to create fastest lap bet: %v", err)
+		}
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////
 
 	// payout, err := betting_system.GetFastestLapUserPayout(ctx, conn, 1, 1)
 
@@ -51,20 +52,22 @@ func main() {
 	// 	log.Printf("Lap %v: %v", lap, fastestLap)
 	// }
 
-	fastestLap, err := race_info.GetFastestDriverWholeRace(9606)
+	////////////////////////////////////////////////////////////////////////////////
 
-	if err != nil {
-		log.Fatalf("Failed to get fastest driver : %v", err)
-	}
+	// fastestLap, err := race_info.GetFastestDriverWholeRace(9606)
 
-	log.Printf("Fastest lap: %v", fastestLap)
+	// if err != nil {
+	// 	log.Fatalf("Failed to get fastest driver : %v", err)
+	// }
 
-	betting_system.GetFastestLapBetsByRace(ctx, conn, 9606, "PENDING")
+	// log.Printf("Fastest lap: %v", fastestLap)
 
-	err = betting_system.SettleBetsAndUpdateBalanceFastestLap(ctx, conn, 9606)
+	// betting_system.GetFastestLapBetsByRace(ctx, conn, 9606, "PENDING")
 
-	if err != nil {
-		log.Fatalf("Failed to settle bets: %v", err)
-	}
+	// err = betting_system.SettleBetsAndUpdateBalanceFastestLap(ctx, conn, 9606)
+
+	// if err != nil {
+	// 	log.Fatalf("Failed to settle bets: %v", err)
+	// }
 
 }
