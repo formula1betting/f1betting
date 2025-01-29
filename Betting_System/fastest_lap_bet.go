@@ -42,7 +42,7 @@ func CreateFastestLapBet(ctx context.Context, conn *pgx.Conn, bet FastestLapBet)
 	return betID, err
 }
 
-func GetFastestLapBetsByRace(ctx context.Context, conn *pgx.Conn, SessionID int64, status string) ([]FastestLapBet, error) {
+func GetFastestLapBetsByRace(ctx context.Context, conn *pgx.Conn, SessionID int64, status string) (*[]FastestLapBet, error) {
 	rows, err := conn.Query(ctx, (*bettingQueries)["GetSessionFastestLapBets"], SessionID, status)
 	if err != nil {
 		return nil, err
@@ -61,7 +61,7 @@ func GetFastestLapBetsByRace(ctx context.Context, conn *pgx.Conn, SessionID int6
 
 	fastestLapBets = bets
 
-	return bets, rows.Err()
+	return &bets, rows.Err()
 }
 
 type FastestLapUserPayout struct {
@@ -70,7 +70,7 @@ type FastestLapUserPayout struct {
 }
 
 // GetFastestLapUserVisualizedPayout retrieves the potential payout for a user if they win a specific bet.
-func GetFastestLapUserVisualizedPayout(ctx context.Context, conn *pgx.Conn, userID int64, SessionID int) ([]FastestLapUserPayout, error) {
+func GetFastestLapUserVisualizedPayout(ctx context.Context, conn *pgx.Conn, userID int64, SessionID int) (*[]FastestLapUserPayout, error) {
 	var totalPool float64
 	var userBets []FastestLapBet
 	driverBets := make(map[int64][]float64)
@@ -103,5 +103,5 @@ func GetFastestLapUserVisualizedPayout(ctx context.Context, conn *pgx.Conn, user
 		userPayouts = append(userPayouts, FastestLapUserPayout{DriverID: bet.DriverID, Payout: userPayout})
 	}
 
-	return userPayouts, nil
+	return &userPayouts, nil
 }
