@@ -18,13 +18,13 @@ require f1betting/user_management v0.0.0
 
 require (
 	f1betting/betting_system v0.0.0
+	f1betting/race_info v0.0.0
 	f1betting/user_api v0.0.0-00010101000000-000000000000
 	github.com/99designs/gqlgen v0.17.64
 	github.com/vektah/gqlparser/v2 v2.5.22
 )
 
 require (
-	f1betting/race_info v0.0.0 // indirect
 	github.com/agnivade/levenshtein v1.2.0 // indirect
 	github.com/go-viper/mapstructure/v2 v2.2.1 // indirect
 	github.com/google/uuid v1.6.0 // indirect

@@ -2,7 +2,10 @@ package main
 
 import (
 	"context"
+	"f1betting/betting_system"
+	"f1betting/dbms"
 	"f1betting/user_api/graph"
+	"f1betting/user_management"
 	"log"
 	"net/http"
 	"os"
@@ -13,10 +16,6 @@ import (
 	"github.com/99designs/gqlgen/graphql/handler/transport"
 	"github.com/99designs/gqlgen/graphql/playground"
 	"github.com/vektah/gqlparser/v2/ast"
-
-	"f1betting/betting_system"
-	"f1betting/dbms"
-	"f1betting/user_management"
 )
 
 const defaultPort = "8080"

@@ -69,6 +69,7 @@ type FastestLapBet {
   sessionId: Int!
   driverId: Int!
   status: BetStatus!
+  amount: Float!
   bettingPool: Int!
   createdAt: String!
 }

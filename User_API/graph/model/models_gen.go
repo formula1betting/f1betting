@@ -23,6 +23,7 @@ type FastestLapBet struct {
 	SessionID   int32     `json:"sessionId"`
 	DriverID    int32     `json:"driverId"`
 	Status      BetStatus `json:"status"`
+	Amount      float64   `json:"amount"`
 	BettingPool int32     `json:"bettingPool"`
 	CreatedAt   string    `json:"createdAt"`
 }
