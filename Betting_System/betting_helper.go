@@ -12,8 +12,8 @@ func init() {
 	rand.Seed(time.Now().UnixNano())
 }
 
-func GenerateRandomFastestLapBet(userID, SessionID int64) FastestLapBet {
-	driverIDs := []int64{1, 2, 3, 4, 5, 6, 7, 8, 9, 10} // Example driver IDs
+func GenerateRandomFastestLapBet(userID int64 , SessionID int) FastestLapBet {
+	driverIDs := []int32{1, 2, 3, 4, 5, 6, 7, 8, 9, 10} // Example driver IDs
 	return FastestLapBet{
 		UserID:   userID,
 		SessionID:   SessionID,
@@ -23,7 +23,7 @@ func GenerateRandomFastestLapBet(userID, SessionID int64) FastestLapBet {
 	}
 }
 
-func GenerateRandomFastestLapBets(ctx context.Context, conn *pgx.Conn, userID, SessionID int64, count int) error {
+func GenerateRandomFastestLapBets(ctx context.Context, conn *pgx.Conn, userID int64, SessionID int, count int) error {
 	for i := 0; i < count; i++ {
 		bet := GenerateRandomFastestLapBet(userID, SessionID)
 		_, err := CreateFastestLapBet(ctx, conn, bet)

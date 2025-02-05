@@ -7,7 +7,7 @@ import (
 )
 
 type Lap struct {
-	DriverNumber    int     `json:"driver_number"`
+	DriverNumber    int32   `json:"driver_number"`
 	LapNumber       int     `json:"lap_number"`
 	LapDuration     float64 `json:"lap_duration"`
 	DurationSector1 float64 `json:"duration_sector_1"`

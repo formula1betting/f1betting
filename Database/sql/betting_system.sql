@@ -154,6 +154,11 @@ SELECT id, user_id, session_id, driver_id, amount, status, betting_pool, created
 -- name: GetSessionLapTimingBets
 SELECT id, user_id, session_id, lap_number, driver_id, amount, status, betting_pool, created_at FROM lap_timing_bets WHERE session_id = $1 AND status = $2;
 
+-- name: AddToUserBalance
+UPDATE users SET 
+    balance = balance + $1
+WHERE id = $2;
+
 -- name: GetUserBetHistory
 SELECT * FROM (
     SELECT 'podium' as bet_type, id, user_id, session_id, first_position, second_position, third_position, amount, status, betting_pool, created_at FROM podium_bets WHERE user_id = $1

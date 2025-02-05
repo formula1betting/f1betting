@@ -14,12 +14,19 @@ var fastestLapBets = make([]FastestLapBet, 0)
 type FastestLapBet struct {
 	ID          int64
 	UserID      int64
-	SessionID   int64
-	DriverID    int64
+	SessionID   int
+	DriverID    int32
 	Amount      float64
 	Status      string
 	BettingPool int64
 	CreateAt    time.Time
+}
+
+func (bet *FastestLapBet) SetFastestLapBet(userID int64, sessionID int, driverID int32, bettingPool int64) {
+	bet.UserID = userID
+	bet.SessionID = sessionID
+	bet.DriverID = driverID
+	bet.BettingPool = bettingPool
 }
 
 func CreateFastestLapBetTable(ctx context.Context, conn *pgx.Conn) error {
@@ -31,7 +38,7 @@ func CreateFastestLapBet(ctx context.Context, conn *pgx.Conn, bet FastestLapBet)
 	var betID int64
 
 	err := conn.QueryRow(ctx, (*bettingQueries)["CreateFastestLapBet"],
-		bet.UserID, bet.SessionID, bet.DriverID, bet.Amount, bet.BettingPool).Scan(&betID)
+		bet.UserID, bet.SessionID, bet.DriverID, 0.95*float64(bet.BettingPool), bet.BettingPool).Scan(&betID)
 
 	if err == nil {
 		bet.ID = betID
@@ -42,7 +49,7 @@ func CreateFastestLapBet(ctx context.Context, conn *pgx.Conn, bet FastestLapBet)
 	return betID, err
 }
 
-func GetFastestLapBetsByRace(ctx context.Context, conn *pgx.Conn, SessionID int64, status string) ([]FastestLapBet, error) {
+func GetFastestLapBetsByRace(ctx context.Context, conn *pgx.Conn, SessionID int64, status string) (*[]FastestLapBet, error) {
 	rows, err := conn.Query(ctx, (*bettingQueries)["GetSessionFastestLapBets"], SessionID, status)
 	if err != nil {
 		return nil, err
@@ -61,23 +68,23 @@ func GetFastestLapBetsByRace(ctx context.Context, conn *pgx.Conn, SessionID int6
 
 	fastestLapBets = bets
 
-	return bets, rows.Err()
+	return &bets, rows.Err()
 }
 
 type FastestLapUserPayout struct {
-	DriverID int64
+	DriverID int32
 	Payout   float64
 }
 
 // GetFastestLapUserVisualizedPayout retrieves the potential payout for a user if they win a specific bet.
-func GetFastestLapUserVisualizedPayout(ctx context.Context, conn *pgx.Conn, userID int64, SessionID int) ([]FastestLapUserPayout, error) {
+func GetFastestLapUserVisualizedPayout(ctx context.Context, conn *pgx.Conn, userID int64, SessionID int) (*[]FastestLapUserPayout, error) {
 	var totalPool float64
 	var userBets []FastestLapBet
-	driverBets := make(map[int64][]float64)
+	driverBets := make(map[int32][]float64)
 
 	// Use stored bets instead of querying DB
 	for _, bet := range fastestLapBets {
-		if bet.SessionID == int64(SessionID) && bet.Status == "PENDING" {
+		if bet.SessionID == SessionID && bet.Status == "PENDING" {
 			totalPool += bet.Amount
 			if bet.UserID == userID {
 				userBets = append(userBets, bet)
@@ -103,5 +110,5 @@ func GetFastestLapUserVisualizedPayout(ctx context.Context, conn *pgx.Conn, user
 		userPayouts = append(userPayouts, FastestLapUserPayout{DriverID: bet.DriverID, Payout: userPayout})
 	}
 
-	return userPayouts, nil
+	return &userPayouts, nil
 }

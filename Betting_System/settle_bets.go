@@ -3,7 +3,6 @@ package betting_system
 import (
 	"context"
 	"f1betting/race_info"
-	"f1betting/user_management"
 	"math"
 
 	"github.com/jackc/pgx/v5"
@@ -58,10 +57,8 @@ func SettleBetsAndUpdateBalanceFastestLap(ctx context.Context, conn *pgx.Conn, S
 		return err
 	}
 
-	userManagementQueries := user_management.UserManagementQueries
-
 	for _, winner := range winners {
-		_, err := tx.Exec(ctx, (*userManagementQueries)["AddToUserBalance"], winner.Payout, winner.UserID)
+		_, err := tx.Exec(ctx, (*bettingQueries)["AddToUserBalance"], winner.Payout, winner.UserID)
 		if err != nil {
 			return err
 		}
@@ -96,9 +93,9 @@ func GetFastestLapWinningBetsAndPayouts(ctx context.Context, conn *pgx.Conn, ses
 
 	// Calculate total pool and separate winning/losing bets
 	for _, bet := range fastestLapBets {
-		if bet.SessionID == int64(sessionID) && bet.Status == "PENDING" {
+		if bet.SessionID == sessionID && bet.Status == "PENDING" {
 			totalPool += bet.Amount
-			if bet.DriverID == int64(fastestLap.DriverNumber) {
+			if bet.DriverID == fastestLap.DriverNumber {
 				winningBets = append(winningBets, bet)
 			} else {
 				losingBetsAmount += bet.Amount

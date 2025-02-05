@@ -1,0 +1,15 @@
+schema {
+  query: Query
+  mutation: Mutation
+}
+
+union Bet =
+    PodiumBet
+  | PolePositionBet
+  | RainBet
+  | RetirementBet
+  | FastestLapBet
+  | LapTimingBet
+
+scalar Date
+scalar DateTime
