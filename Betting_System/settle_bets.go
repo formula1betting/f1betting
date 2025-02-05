@@ -46,6 +46,9 @@ func updateLapTimingBetStatus(ctx context.Context, tx pgx.Tx, SessionID int) err
 
 // SettleBetsAndUpdateBalanceFastestLap settles bets for the fastest lap and updates the user balance.
 func SettleBetsAndUpdateBalanceFastestLap(ctx context.Context, conn *pgx.Conn, SessionID int) error {
+
+	GetFastestLapBetsByRace(ctx, conn, SessionID, "PENDING")
+
 	tx, err := conn.Begin(ctx)
 	if err != nil {
 		return err

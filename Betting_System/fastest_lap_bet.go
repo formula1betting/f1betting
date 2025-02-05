@@ -49,7 +49,7 @@ func CreateFastestLapBet(ctx context.Context, conn *pgx.Conn, bet FastestLapBet)
 	return betID, err
 }
 
-func GetFastestLapBetsByRace(ctx context.Context, conn *pgx.Conn, SessionID int64, status string) (*[]FastestLapBet, error) {
+func GetFastestLapBetsByRace(ctx context.Context, conn *pgx.Conn, SessionID int, status string) (*[]FastestLapBet, error) {
 	rows, err := conn.Query(ctx, (*bettingQueries)["GetSessionFastestLapBets"], SessionID, status)
 	if err != nil {
 		return nil, err

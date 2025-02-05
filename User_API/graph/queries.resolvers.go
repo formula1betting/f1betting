@@ -71,7 +71,7 @@ func (r *queryResolver) SessionFastestLapBets(ctx context.Context, sessionID int
 		betStatus = "PENDING"
 	}
 
-	bets, err := betting_system.GetFastestLapBetsByRace(ctx, r.Conn, int64(sessionID), betStatus)
+	bets, err := betting_system.GetFastestLapBetsByRace(ctx, r.Conn, int(sessionID), betStatus)
 	if err != nil {
 		return nil, err
 	}

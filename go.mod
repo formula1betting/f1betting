@@ -12,14 +12,19 @@ replace f1betting/race_info => ./Race_Info
 
 replace f1betting/user_api => ./User_API
 
-require f1betting/dbms v0.0.0
-
-require f1betting/user_management v0.0.0
+replace f1betting/internal_api => ./Internal_API
 
 require (
 	f1betting/betting_system v0.0.0
+	f1betting/dbms v0.0.0
+	f1betting/internal_api v0.0.0
 	f1betting/race_info v0.0.0
-	f1betting/user_api v0.0.0-00010101000000-000000000000
+	f1betting/user_api v0.0.0
+	f1betting/user_management v0.0.0
+
+)
+
+require (
 	github.com/99designs/gqlgen v0.17.64
 	github.com/vektah/gqlparser/v2 v2.5.22
 )
