@@ -1,21 +1,16 @@
 type Mutation {
   # User Management
-  createUser(input: UserInput!): User!
-  updateUserProfile(userId: ID!, input: UserProfileUpdateInput!): User!
-  updateUserEmail(userId: ID!, email: String!): User!
+  createUser(input: UserInput!): ID!
+  updateUserProfile(userId: ID!, input: UserProfileUpdateInput!): Boolean!
+  updateUserEmail(userId: ID!, email: String!): Boolean!
   updateUserPassword(userId: ID!, newPassword: String!): Boolean!
-  updateUserStatus(userId: ID!, status: AccountStatus!): User!
   deleteUser(userId: ID!): Boolean!
-  verifyUserEmail(userId: ID!): Boolean!
 
   # Betting
-  createPodiumBet(userId: ID!, input: PodiumBetInput!): PodiumBet!
-  createPolePositionBet(
-    userId: ID!
-    input: PolePositionBetInput!
-  ): PolePositionBet!
-  createRainBet(userId: ID!, input: RainBetInput!): RainBet!
-  createRetirementBet(userId: ID!, input: RetirementBetInput!): RetirementBet!
-  createFastestLapBet(userId: ID!, input: FastestLapBetInput!): FastestLapBet!
-  createLapTimingBet(userId: ID!, input: LapTimingBetInput!): LapTimingBet!
+  createPodiumBet(userId: ID!, input: PodiumBetInput!): ID!
+  createPolePositionBet(userId: ID!, input: PolePositionBetInput!): ID!
+  createRainBet(userId: ID!, input: RainBetInput!): ID!
+  createRetirementBet(userId: ID!, input: RetirementBetInput!): ID!
+  createFastestLapBet(userId: ID!, input: FastestLapBetInput!): ID!
+  createLapTimingBet(userId: ID!, input: LapTimingBetInput!): ID!
 }

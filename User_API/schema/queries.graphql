@@ -2,18 +2,20 @@ type Query {
   user(id: ID!): User
   userByEmail(email: String!): User
   userByUsername(username: String!): User
-  usersByStatus(status: AccountStatus!): [User!]!
-  
+
   userActiveBets(userId: ID!): [Bet!]!
   userBetHistory(userId: ID!): [Bet!]!
-  
+
   sessionPodiumBets(sessionId: Int!, status: BetStatus): [PodiumBet!]!
-  sessionPolePositionBets(sessionId: Int!, status: BetStatus): [PolePositionBet!]!
+  sessionPolePositionBets(
+    sessionId: Int!
+    status: BetStatus
+  ): [PolePositionBet!]!
   sessionRainBets(sessionId: Int!, status: BetStatus): [RainBet!]!
-  
+
   sessionRetirementBets(sessionId: Int!, status: BetStatus): [RetirementBet!]!
   sessionFastestLapBets(sessionId: Int!, status: BetStatus): [FastestLapBet!]!
   sessionLapTimingBets(sessionId: Int!, status: BetStatus): [LapTimingBet!]!
-  
+
   pendingBetsForSession(sessionId: Int!): [Bet!]!
 }

@@ -22,30 +22,30 @@ func AuthMiddleware(next http.HandlerFunc) http.HandlerFunc {
 		// 	http.Redirect(w, r, "https://"+r.Host+r.RequestURI, http.StatusMovedPermanently)
 		// 	return
 		// }
-		clientIP := r.Header.Get("X-Real-IP")
-		if clientIP == "" {
-			clientIP = r.RemoteAddr
-		}
+		// clientIP := r.Header.Get("X-Real-IP")
+		// if clientIP == "" {
+		// 	clientIP = r.RemoteAddr
+		// }
 
-		// API key check
-		apiKey := r.Header.Get("X-API-Key")
-		expectedAPIKey := "surya" //os.Getenv("API_KEY")
-		if apiKey == "" || apiKey != expectedAPIKey {
-			w.Header().Set("Content-Type", "application/json")
-			w.WriteHeader(http.StatusUnauthorized)
-			w.Write([]byte(`{"error": "unauthorized"}`))
-			return
-		}
+		// // API key check
+		// apiKey := r.Header.Get("X-API-Key")
+		// expectedAPIKey := "surya" //os.Getenv("API_KEY")
+		// if apiKey == "" || apiKey != expectedAPIKey {
+		// 	w.Header().Set("Content-Type", "application/json")
+		// 	w.WriteHeader(http.StatusUnauthorized)
+		// 	w.Write([]byte(`{"error": "unauthorized"}`))
+		// 	return
+		// }
 
-		// Security headers
-		w.Header().Set("X-Content-Type-Options", "nosniff")
-		w.Header().Set("X-Frame-Options", "DENY")
-		w.Header().Set("X-XSS-Protection", "1; mode=block")
-		w.Header().Set("Strict-Transport-Security", "max-age=31536000; includeSubDomains")
-		w.Header().Set("Content-Security-Policy", "default-src 'self'")
-		w.Header().Set("Referrer-Policy", "strict-origin-when-cross-origin")
-		w.Header().Set("Cache-Control", "no-store")
-		w.Header().Set("Pragma", "no-cache")
+		// // Security headers
+		// w.Header().Set("X-Content-Type-Options", "nosniff")
+		// w.Header().Set("X-Frame-Options", "DENY")
+		// w.Header().Set("X-XSS-Protection", "1; mode=block")
+		// w.Header().Set("Strict-Transport-Security", "max-age=31536000; includeSubDomains")
+		// w.Header().Set("Content-Security-Policy", "default-src 'self'")
+		// w.Header().Set("Referrer-Policy", "strict-origin-when-cross-origin")
+		// w.Header().Set("Cache-Control", "no-store")
+		// w.Header().Set("Pragma", "no-cache")
 
 		next(w, r)
 	}

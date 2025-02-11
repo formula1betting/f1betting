@@ -12,8 +12,6 @@ type User {
   registrationDate: String!
   role: UserRole!
   emailVerified: Boolean!
-  lastPasswordChange: String
-  deletedAt: String
   country: String
   preferredCurrency: String
   favoriteTeam: String
@@ -126,11 +124,6 @@ input UserProfileUpdateInput {
   country: String
   preferredCurrency: String
   favoriteTeam: String
-}
-
-input BetInput {
-  sessionId: Int!
-  bettingPool: Int!
 }
 
 input PodiumBetInput {

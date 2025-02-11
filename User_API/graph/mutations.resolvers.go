@@ -8,22 +8,57 @@ import (
 	"context"
 	"f1betting/betting_system"
 	"f1betting/user_api/graph/model"
+	"f1betting/user_management"
 	"fmt"
 	"strconv"
+	"time"
 )
 
+func parseDate(dateStr string) time.Time {
+	date, err := time.Parse("2006-01-02", dateStr)
+	if err != nil {
+		panic(fmt.Errorf("invalid date format: %v", err))
+	}
+	return date
+
+}
+
 // CreateUser is the resolver for the createUser field.
-func (r *mutationResolver) CreateUser(ctx context.Context, input model.UserInput) (*model.User, error) {
-	panic(fmt.Errorf("not implemented: CreateUser - createUser"))
+func (r *mutationResolver) CreateUser(ctx context.Context, input model.UserInput) (string, error) {
+	user := user_management.User{
+		FullName:          input.FullName,
+		Email:             input.Email,
+		Username:          input.Username,
+		PasswordHash:      input.Password,
+		DateOfBirth:       parseDate(input.DateOfBirth),
+		PhoneNumber:       input.PhoneNumber,
+		GovernmentID:      input.GovernmentID,
+		Address:           input.Address,
+		AccountStatus:     "ACTIVE",
+		Role:              "USER",
+		EmailVerified:     false,
+		Country:           input.Country,
+		PreferredCurrency: input.PreferredCurrency,
+		FavoriteTeam:      input.FavoriteTeam,
+		ProfilePictureURL: input.ProfilePictureURL,
+		Balance:           0.0,
+	}
+
+	userID, err := user_management.CreateUser(ctx, r.Conn, user)
+	if err != nil {
+		return "", err
+	}
+
+	return fmt.Sprintf("%d", userID), nil
 }
 
 // UpdateUserProfile is the resolver for the updateUserProfile field.
-func (r *mutationResolver) UpdateUserProfile(ctx context.Context, userID string, input model.UserProfileUpdateInput) (*model.User, error) {
+func (r *mutationResolver) UpdateUserProfile(ctx context.Context, userID string, input model.UserProfileUpdateInput) (bool, error) {
 	panic(fmt.Errorf("not implemented: UpdateUserProfile - updateUserProfile"))
 }
 
 // UpdateUserEmail is the resolver for the updateUserEmail field.
-func (r *mutationResolver) UpdateUserEmail(ctx context.Context, userID string, email string) (*model.User, error) {
+func (r *mutationResolver) UpdateUserEmail(ctx context.Context, userID string, email string) (bool, error) {
 	panic(fmt.Errorf("not implemented: UpdateUserEmail - updateUserEmail"))
 }
 
@@ -32,46 +67,36 @@ func (r *mutationResolver) UpdateUserPassword(ctx context.Context, userID string
 	panic(fmt.Errorf("not implemented: UpdateUserPassword - updateUserPassword"))
 }
 
-// UpdateUserStatus is the resolver for the updateUserStatus field.
-func (r *mutationResolver) UpdateUserStatus(ctx context.Context, userID string, status model.AccountStatus) (*model.User, error) {
-	panic(fmt.Errorf("not implemented: UpdateUserStatus - updateUserStatus"))
-}
-
 // DeleteUser is the resolver for the deleteUser field.
 func (r *mutationResolver) DeleteUser(ctx context.Context, userID string) (bool, error) {
 	panic(fmt.Errorf("not implemented: DeleteUser - deleteUser"))
 }
 
-// VerifyUserEmail is the resolver for the verifyUserEmail field.
-func (r *mutationResolver) VerifyUserEmail(ctx context.Context, userID string) (bool, error) {
-	panic(fmt.Errorf("not implemented: VerifyUserEmail - verifyUserEmail"))
-}
-
 // CreatePodiumBet is the resolver for the createPodiumBet field.
-func (r *mutationResolver) CreatePodiumBet(ctx context.Context, userID string, input model.PodiumBetInput) (*model.PodiumBet, error) {
+func (r *mutationResolver) CreatePodiumBet(ctx context.Context, userID string, input model.PodiumBetInput) (string, error) {
 	panic(fmt.Errorf("not implemented: CreatePodiumBet - createPodiumBet"))
 }
 
 // CreatePolePositionBet is the resolver for the createPolePositionBet field.
-func (r *mutationResolver) CreatePolePositionBet(ctx context.Context, userID string, input model.PolePositionBetInput) (*model.PolePositionBet, error) {
+func (r *mutationResolver) CreatePolePositionBet(ctx context.Context, userID string, input model.PolePositionBetInput) (string, error) {
 	panic(fmt.Errorf("not implemented: CreatePolePositionBet - createPolePositionBet"))
 }
 
 // CreateRainBet is the resolver for the createRainBet field.
-func (r *mutationResolver) CreateRainBet(ctx context.Context, userID string, input model.RainBetInput) (*model.RainBet, error) {
+func (r *mutationResolver) CreateRainBet(ctx context.Context, userID string, input model.RainBetInput) (string, error) {
 	panic(fmt.Errorf("not implemented: CreateRainBet - createRainBet"))
 }
 
 // CreateRetirementBet is the resolver for the createRetirementBet field.
-func (r *mutationResolver) CreateRetirementBet(ctx context.Context, userID string, input model.RetirementBetInput) (*model.RetirementBet, error) {
+func (r *mutationResolver) CreateRetirementBet(ctx context.Context, userID string, input model.RetirementBetInput) (string, error) {
 	panic(fmt.Errorf("not implemented: CreateRetirementBet - createRetirementBet"))
 }
 
 // CreateFastestLapBet is the resolver for the createFastestLapBet field.
-func (r *mutationResolver) CreateFastestLapBet(ctx context.Context, userID string, input model.FastestLapBetInput) (*model.FastestLapBet, error) {
+func (r *mutationResolver) CreateFastestLapBet(ctx context.Context, userID string, input model.FastestLapBetInput) (string, error) {
 	userIDInt, err := strconv.ParseInt(userID, 10, 64)
 	if err != nil {
-		return nil, fmt.Errorf("invalid userID: %v", err)
+		return "", fmt.Errorf("invalid userID: %v", err)
 	}
 
 	var bet betting_system.FastestLapBet
@@ -80,24 +105,13 @@ func (r *mutationResolver) CreateFastestLapBet(ctx context.Context, userID strin
 	betId, err := betting_system.CreateFastestLapBet(ctx, r.Conn, bet)
 
 	if err != nil {
-		return nil, err
+		return "", err
 	}
-
-	return &model.FastestLapBet{
-		ID:          strconv.FormatInt(betId, 10),
-		UserID:      userID,
-		SessionID:   input.SessionID,
-		DriverID:    int32(bet.DriverID),
-		Status:      model.BetStatus(bet.Status),
-		Amount:      bet.Amount,
-		BettingPool: int32(bet.BettingPool),
-		CreatedAt:   bet.CreateAt.String(),
-	}, nil
-
+	return fmt.Sprintf("%d", betId), nil
 }
 
 // CreateLapTimingBet is the resolver for the createLapTimingBet field.
-func (r *mutationResolver) CreateLapTimingBet(ctx context.Context, userID string, input model.LapTimingBetInput) (*model.LapTimingBet, error) {
+func (r *mutationResolver) CreateLapTimingBet(ctx context.Context, userID string, input model.LapTimingBetInput) (string, error) {
 	panic(fmt.Errorf("not implemented: CreateLapTimingBet - createLapTimingBet"))
 }
 

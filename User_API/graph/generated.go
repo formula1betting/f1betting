@@ -80,8 +80,6 @@ type ComplexityRoot struct {
 		UpdateUserEmail       func(childComplexity int, userID string, email string) int
 		UpdateUserPassword    func(childComplexity int, userID string, newPassword string) int
 		UpdateUserProfile     func(childComplexity int, userID string, input model.UserProfileUpdateInput) int
-		UpdateUserStatus      func(childComplexity int, userID string, status model.AccountStatus) int
-		VerifyUserEmail       func(childComplexity int, userID string) int
 	}
 
 	PodiumBet struct {
@@ -119,7 +117,6 @@ type ComplexityRoot struct {
 		UserBetHistory          func(childComplexity int, userID string) int
 		UserByEmail             func(childComplexity int, email string) int
 		UserByUsername          func(childComplexity int, username string) int
-		UsersByStatus           func(childComplexity int, status model.AccountStatus) int
 	}
 
 	RainBet struct {
@@ -167,25 +164,22 @@ type ComplexityRoot struct {
 }
 
 type MutationResolver interface {
-	CreateUser(ctx context.Context, input model.UserInput) (*model.User, error)
-	UpdateUserProfile(ctx context.Context, userID string, input model.UserProfileUpdateInput) (*model.User, error)
-	UpdateUserEmail(ctx context.Context, userID string, email string) (*model.User, error)
+	CreateUser(ctx context.Context, input model.UserInput) (string, error)
+	UpdateUserProfile(ctx context.Context, userID string, input model.UserProfileUpdateInput) (bool, error)
+	UpdateUserEmail(ctx context.Context, userID string, email string) (bool, error)
 	UpdateUserPassword(ctx context.Context, userID string, newPassword string) (bool, error)
-	UpdateUserStatus(ctx context.Context, userID string, status model.AccountStatus) (*model.User, error)
 	DeleteUser(ctx context.Context, userID string) (bool, error)
-	VerifyUserEmail(ctx context.Context, userID string) (bool, error)
-	CreatePodiumBet(ctx context.Context, userID string, input model.PodiumBetInput) (*model.PodiumBet, error)
-	CreatePolePositionBet(ctx context.Context, userID string, input model.PolePositionBetInput) (*model.PolePositionBet, error)
-	CreateRainBet(ctx context.Context, userID string, input model.RainBetInput) (*model.RainBet, error)
-	CreateRetirementBet(ctx context.Context, userID string, input model.RetirementBetInput) (*model.RetirementBet, error)
-	CreateFastestLapBet(ctx context.Context, userID string, input model.FastestLapBetInput) (*model.FastestLapBet, error)
-	CreateLapTimingBet(ctx context.Context, userID string, input model.LapTimingBetInput) (*model.LapTimingBet, error)
+	CreatePodiumBet(ctx context.Context, userID string, input model.PodiumBetInput) (string, error)
+	CreatePolePositionBet(ctx context.Context, userID string, input model.PolePositionBetInput) (string, error)
+	CreateRainBet(ctx context.Context, userID string, input model.RainBetInput) (string, error)
+	CreateRetirementBet(ctx context.Context, userID string, input model.RetirementBetInput) (string, error)
+	CreateFastestLapBet(ctx context.Context, userID string, input model.FastestLapBetInput) (string, error)
+	CreateLapTimingBet(ctx context.Context, userID string, input model.LapTimingBetInput) (string, error)
 }
 type QueryResolver interface {
 	User(ctx context.Context, id string) (*model.User, error)
 	UserByEmail(ctx context.Context, email string) (*model.User, error)
 	UserByUsername(ctx context.Context, username string) (*model.User, error)
-	UsersByStatus(ctx context.Context, status model.AccountStatus) ([]*model.User, error)
 	UserActiveBets(ctx context.Context, userID string) ([]model.Bet, error)
 	UserBetHistory(ctx context.Context, userID string) ([]model.Bet, error)
 	SessionPodiumBets(ctx context.Context, sessionID int32, status *model.BetStatus) ([]*model.PodiumBet, error)
@@ -460,30 +454,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.UpdateUserProfile(childComplexity, args["userId"].(string), args["input"].(model.UserProfileUpdateInput)), true
 
-	case "Mutation.updateUserStatus":
-		if e.complexity.Mutation.UpdateUserStatus == nil {
-			break
-		}
-
-		args, err := ec.field_Mutation_updateUserStatus_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Mutation.UpdateUserStatus(childComplexity, args["userId"].(string), args["status"].(model.AccountStatus)), true
-
-	case "Mutation.verifyUserEmail":
-		if e.complexity.Mutation.VerifyUserEmail == nil {
-			break
-		}
-
-		args, err := ec.field_Mutation_verifyUserEmail_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Mutation.VerifyUserEmail(childComplexity, args["userId"].(string)), true
-
 	case "PodiumBet.bettingPool":
 		if e.complexity.PodiumBet.BettingPool == nil {
 			break
@@ -739,18 +709,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Query.UserByUsername(childComplexity, args["username"].(string)), true
-
-	case "Query.usersByStatus":
-		if e.complexity.Query.UsersByStatus == nil {
-			break
-		}
-
-		args, err := ec.field_Query_usersByStatus_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Query.UsersByStatus(childComplexity, args["status"].(model.AccountStatus)), true
 
 	case "RainBet.bettingPool":
 		if e.complexity.RainBet.BettingPool == nil {
@@ -1106,43 +1064,40 @@ func (ec *executionContext) introspectType(name string) (*introspection.Type, er
 var sources = []*ast.Source{
 	{Name: "../schema/mutations.graphql", Input: `type Mutation {
   # User Management
-  createUser(input: UserInput!): User!
-  updateUserProfile(userId: ID!, input: UserProfileUpdateInput!): User!
-  updateUserEmail(userId: ID!, email: String!): User!
+  createUser(input: UserInput!): ID!
+  updateUserProfile(userId: ID!, input: UserProfileUpdateInput!): Boolean!
+  updateUserEmail(userId: ID!, email: String!): Boolean!
   updateUserPassword(userId: ID!, newPassword: String!): Boolean!
-  updateUserStatus(userId: ID!, status: AccountStatus!): User!
   deleteUser(userId: ID!): Boolean!
-  verifyUserEmail(userId: ID!): Boolean!
 
   # Betting
-  createPodiumBet(userId: ID!, input: PodiumBetInput!): PodiumBet!
-  createPolePositionBet(
-    userId: ID!
-    input: PolePositionBetInput!
-  ): PolePositionBet!
-  createRainBet(userId: ID!, input: RainBetInput!): RainBet!
-  createRetirementBet(userId: ID!, input: RetirementBetInput!): RetirementBet!
-  createFastestLapBet(userId: ID!, input: FastestLapBetInput!): FastestLapBet!
-  createLapTimingBet(userId: ID!, input: LapTimingBetInput!): LapTimingBet!
+  createPodiumBet(userId: ID!, input: PodiumBetInput!): ID!
+  createPolePositionBet(userId: ID!, input: PolePositionBetInput!): ID!
+  createRainBet(userId: ID!, input: RainBetInput!): ID!
+  createRetirementBet(userId: ID!, input: RetirementBetInput!): ID!
+  createFastestLapBet(userId: ID!, input: FastestLapBetInput!): ID!
+  createLapTimingBet(userId: ID!, input: LapTimingBetInput!): ID!
 }
 `, BuiltIn: false},
 	{Name: "../schema/queries.graphql", Input: `type Query {
   user(id: ID!): User
   userByEmail(email: String!): User
   userByUsername(username: String!): User
-  usersByStatus(status: AccountStatus!): [User!]!
-  
+
   userActiveBets(userId: ID!): [Bet!]!
   userBetHistory(userId: ID!): [Bet!]!
-  
+
   sessionPodiumBets(sessionId: Int!, status: BetStatus): [PodiumBet!]!
-  sessionPolePositionBets(sessionId: Int!, status: BetStatus): [PolePositionBet!]!
+  sessionPolePositionBets(
+    sessionId: Int!
+    status: BetStatus
+  ): [PolePositionBet!]!
   sessionRainBets(sessionId: Int!, status: BetStatus): [RainBet!]!
-  
+
   sessionRetirementBets(sessionId: Int!, status: BetStatus): [RetirementBet!]!
   sessionFastestLapBets(sessionId: Int!, status: BetStatus): [FastestLapBet!]!
   sessionLapTimingBets(sessionId: Int!, status: BetStatus): [LapTimingBet!]!
-  
+
   pendingBetsForSession(sessionId: Int!): [Bet!]!
 }
 `, BuiltIn: false},
@@ -1758,70 +1713,6 @@ func (ec *executionContext) field_Mutation_updateUserProfile_argsInput(
 	return zeroVal, nil
 }
 
-func (ec *executionContext) field_Mutation_updateUserStatus_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
-	var err error
-	args := map[string]any{}
-	arg0, err := ec.field_Mutation_updateUserStatus_argsUserID(ctx, rawArgs)
-	if err != nil {
-		return nil, err
-	}
-	args["userId"] = arg0
-	arg1, err := ec.field_Mutation_updateUserStatus_argsStatus(ctx, rawArgs)
-	if err != nil {
-		return nil, err
-	}
-	args["status"] = arg1
-	return args, nil
-}
-func (ec *executionContext) field_Mutation_updateUserStatus_argsUserID(
-	ctx context.Context,
-	rawArgs map[string]any,
-) (string, error) {
-	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("userId"))
-	if tmp, ok := rawArgs["userId"]; ok {
-		return ec.unmarshalNID2string(ctx, tmp)
-	}
-
-	var zeroVal string
-	return zeroVal, nil
-}
-
-func (ec *executionContext) field_Mutation_updateUserStatus_argsStatus(
-	ctx context.Context,
-	rawArgs map[string]any,
-) (model.AccountStatus, error) {
-	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("status"))
-	if tmp, ok := rawArgs["status"]; ok {
-		return ec.unmarshalNAccountStatus2f1bettingᚋuser_apiᚋgraphᚋmodelᚐAccountStatus(ctx, tmp)
-	}
-
-	var zeroVal model.AccountStatus
-	return zeroVal, nil
-}
-
-func (ec *executionContext) field_Mutation_verifyUserEmail_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
-	var err error
-	args := map[string]any{}
-	arg0, err := ec.field_Mutation_verifyUserEmail_argsUserID(ctx, rawArgs)
-	if err != nil {
-		return nil, err
-	}
-	args["userId"] = arg0
-	return args, nil
-}
-func (ec *executionContext) field_Mutation_verifyUserEmail_argsUserID(
-	ctx context.Context,
-	rawArgs map[string]any,
-) (string, error) {
-	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("userId"))
-	if tmp, ok := rawArgs["userId"]; ok {
-		return ec.unmarshalNID2string(ctx, tmp)
-	}
-
-	var zeroVal string
-	return zeroVal, nil
-}
-
 func (ec *executionContext) field_Query___type_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
 	var err error
 	args := map[string]any{}
@@ -2226,29 +2117,6 @@ func (ec *executionContext) field_Query_user_argsID(
 	}
 
 	var zeroVal string
-	return zeroVal, nil
-}
-
-func (ec *executionContext) field_Query_usersByStatus_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
-	var err error
-	args := map[string]any{}
-	arg0, err := ec.field_Query_usersByStatus_argsStatus(ctx, rawArgs)
-	if err != nil {
-		return nil, err
-	}
-	args["status"] = arg0
-	return args, nil
-}
-func (ec *executionContext) field_Query_usersByStatus_argsStatus(
-	ctx context.Context,
-	rawArgs map[string]any,
-) (model.AccountStatus, error) {
-	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("status"))
-	if tmp, ok := rawArgs["status"]; ok {
-		return ec.unmarshalNAccountStatus2f1bettingᚋuser_apiᚋgraphᚋmodelᚐAccountStatus(ctx, tmp)
-	}
-
-	var zeroVal model.AccountStatus
 	return zeroVal, nil
 }
 
@@ -3082,9 +2950,9 @@ func (ec *executionContext) _Mutation_createUser(ctx context.Context, field grap
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*model.User)
+	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalNUser2ᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐUser(ctx, field.Selections, res)
+	return ec.marshalNID2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_createUser(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -3094,49 +2962,7 @@ func (ec *executionContext) fieldContext_Mutation_createUser(ctx context.Context
 		IsMethod:   true,
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_User_id(ctx, field)
-			case "fullName":
-				return ec.fieldContext_User_fullName(ctx, field)
-			case "email":
-				return ec.fieldContext_User_email(ctx, field)
-			case "username":
-				return ec.fieldContext_User_username(ctx, field)
-			case "dateOfBirth":
-				return ec.fieldContext_User_dateOfBirth(ctx, field)
-			case "phoneNumber":
-				return ec.fieldContext_User_phoneNumber(ctx, field)
-			case "governmentId":
-				return ec.fieldContext_User_governmentId(ctx, field)
-			case "address":
-				return ec.fieldContext_User_address(ctx, field)
-			case "taxId":
-				return ec.fieldContext_User_taxId(ctx, field)
-			case "accountStatus":
-				return ec.fieldContext_User_accountStatus(ctx, field)
-			case "registrationDate":
-				return ec.fieldContext_User_registrationDate(ctx, field)
-			case "role":
-				return ec.fieldContext_User_role(ctx, field)
-			case "emailVerified":
-				return ec.fieldContext_User_emailVerified(ctx, field)
-			case "lastPasswordChange":
-				return ec.fieldContext_User_lastPasswordChange(ctx, field)
-			case "deletedAt":
-				return ec.fieldContext_User_deletedAt(ctx, field)
-			case "country":
-				return ec.fieldContext_User_country(ctx, field)
-			case "preferredCurrency":
-				return ec.fieldContext_User_preferredCurrency(ctx, field)
-			case "favoriteTeam":
-				return ec.fieldContext_User_favoriteTeam(ctx, field)
-			case "profilePictureUrl":
-				return ec.fieldContext_User_profilePictureUrl(ctx, field)
-			case "balance":
-				return ec.fieldContext_User_balance(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type User", field.Name)
+			return nil, errors.New("field of type ID does not have child fields")
 		},
 	}
 	defer func() {
@@ -3179,9 +3005,9 @@ func (ec *executionContext) _Mutation_updateUserProfile(ctx context.Context, fie
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*model.User)
+	res := resTmp.(bool)
 	fc.Result = res
-	return ec.marshalNUser2ᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐUser(ctx, field.Selections, res)
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_updateUserProfile(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -3191,49 +3017,7 @@ func (ec *executionContext) fieldContext_Mutation_updateUserProfile(ctx context.
 		IsMethod:   true,
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_User_id(ctx, field)
-			case "fullName":
-				return ec.fieldContext_User_fullName(ctx, field)
-			case "email":
-				return ec.fieldContext_User_email(ctx, field)
-			case "username":
-				return ec.fieldContext_User_username(ctx, field)
-			case "dateOfBirth":
-				return ec.fieldContext_User_dateOfBirth(ctx, field)
-			case "phoneNumber":
-				return ec.fieldContext_User_phoneNumber(ctx, field)
-			case "governmentId":
-				return ec.fieldContext_User_governmentId(ctx, field)
-			case "address":
-				return ec.fieldContext_User_address(ctx, field)
-			case "taxId":
-				return ec.fieldContext_User_taxId(ctx, field)
-			case "accountStatus":
-				return ec.fieldContext_User_accountStatus(ctx, field)
-			case "registrationDate":
-				return ec.fieldContext_User_registrationDate(ctx, field)
-			case "role":
-				return ec.fieldContext_User_role(ctx, field)
-			case "emailVerified":
-				return ec.fieldContext_User_emailVerified(ctx, field)
-			case "lastPasswordChange":
-				return ec.fieldContext_User_lastPasswordChange(ctx, field)
-			case "deletedAt":
-				return ec.fieldContext_User_deletedAt(ctx, field)
-			case "country":
-				return ec.fieldContext_User_country(ctx, field)
-			case "preferredCurrency":
-				return ec.fieldContext_User_preferredCurrency(ctx, field)
-			case "favoriteTeam":
-				return ec.fieldContext_User_favoriteTeam(ctx, field)
-			case "profilePictureUrl":
-				return ec.fieldContext_User_profilePictureUrl(ctx, field)
-			case "balance":
-				return ec.fieldContext_User_balance(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type User", field.Name)
+			return nil, errors.New("field of type Boolean does not have child fields")
 		},
 	}
 	defer func() {
@@ -3276,9 +3060,9 @@ func (ec *executionContext) _Mutation_updateUserEmail(ctx context.Context, field
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*model.User)
+	res := resTmp.(bool)
 	fc.Result = res
-	return ec.marshalNUser2ᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐUser(ctx, field.Selections, res)
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_updateUserEmail(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -3288,49 +3072,7 @@ func (ec *executionContext) fieldContext_Mutation_updateUserEmail(ctx context.Co
 		IsMethod:   true,
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_User_id(ctx, field)
-			case "fullName":
-				return ec.fieldContext_User_fullName(ctx, field)
-			case "email":
-				return ec.fieldContext_User_email(ctx, field)
-			case "username":
-				return ec.fieldContext_User_username(ctx, field)
-			case "dateOfBirth":
-				return ec.fieldContext_User_dateOfBirth(ctx, field)
-			case "phoneNumber":
-				return ec.fieldContext_User_phoneNumber(ctx, field)
-			case "governmentId":
-				return ec.fieldContext_User_governmentId(ctx, field)
-			case "address":
-				return ec.fieldContext_User_address(ctx, field)
-			case "taxId":
-				return ec.fieldContext_User_taxId(ctx, field)
-			case "accountStatus":
-				return ec.fieldContext_User_accountStatus(ctx, field)
-			case "registrationDate":
-				return ec.fieldContext_User_registrationDate(ctx, field)
-			case "role":
-				return ec.fieldContext_User_role(ctx, field)
-			case "emailVerified":
-				return ec.fieldContext_User_emailVerified(ctx, field)
-			case "lastPasswordChange":
-				return ec.fieldContext_User_lastPasswordChange(ctx, field)
-			case "deletedAt":
-				return ec.fieldContext_User_deletedAt(ctx, field)
-			case "country":
-				return ec.fieldContext_User_country(ctx, field)
-			case "preferredCurrency":
-				return ec.fieldContext_User_preferredCurrency(ctx, field)
-			case "favoriteTeam":
-				return ec.fieldContext_User_favoriteTeam(ctx, field)
-			case "profilePictureUrl":
-				return ec.fieldContext_User_profilePictureUrl(ctx, field)
-			case "balance":
-				return ec.fieldContext_User_balance(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type User", field.Name)
+			return nil, errors.New("field of type Boolean does not have child fields")
 		},
 	}
 	defer func() {
@@ -3402,103 +3144,6 @@ func (ec *executionContext) fieldContext_Mutation_updateUserPassword(ctx context
 	return fc, nil
 }
 
-func (ec *executionContext) _Mutation_updateUserStatus(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_updateUserStatus(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Mutation().UpdateUserStatus(rctx, fc.Args["userId"].(string), fc.Args["status"].(model.AccountStatus))
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*model.User)
-	fc.Result = res
-	return ec.marshalNUser2ᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐUser(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_updateUserStatus(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_User_id(ctx, field)
-			case "fullName":
-				return ec.fieldContext_User_fullName(ctx, field)
-			case "email":
-				return ec.fieldContext_User_email(ctx, field)
-			case "username":
-				return ec.fieldContext_User_username(ctx, field)
-			case "dateOfBirth":
-				return ec.fieldContext_User_dateOfBirth(ctx, field)
-			case "phoneNumber":
-				return ec.fieldContext_User_phoneNumber(ctx, field)
-			case "governmentId":
-				return ec.fieldContext_User_governmentId(ctx, field)
-			case "address":
-				return ec.fieldContext_User_address(ctx, field)
-			case "taxId":
-				return ec.fieldContext_User_taxId(ctx, field)
-			case "accountStatus":
-				return ec.fieldContext_User_accountStatus(ctx, field)
-			case "registrationDate":
-				return ec.fieldContext_User_registrationDate(ctx, field)
-			case "role":
-				return ec.fieldContext_User_role(ctx, field)
-			case "emailVerified":
-				return ec.fieldContext_User_emailVerified(ctx, field)
-			case "lastPasswordChange":
-				return ec.fieldContext_User_lastPasswordChange(ctx, field)
-			case "deletedAt":
-				return ec.fieldContext_User_deletedAt(ctx, field)
-			case "country":
-				return ec.fieldContext_User_country(ctx, field)
-			case "preferredCurrency":
-				return ec.fieldContext_User_preferredCurrency(ctx, field)
-			case "favoriteTeam":
-				return ec.fieldContext_User_favoriteTeam(ctx, field)
-			case "profilePictureUrl":
-				return ec.fieldContext_User_profilePictureUrl(ctx, field)
-			case "balance":
-				return ec.fieldContext_User_balance(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type User", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_updateUserStatus_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
 func (ec *executionContext) _Mutation_deleteUser(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Mutation_deleteUser(ctx, field)
 	if err != nil {
@@ -3554,61 +3199,6 @@ func (ec *executionContext) fieldContext_Mutation_deleteUser(ctx context.Context
 	return fc, nil
 }
 
-func (ec *executionContext) _Mutation_verifyUserEmail(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_verifyUserEmail(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Mutation().VerifyUserEmail(rctx, fc.Args["userId"].(string))
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(bool)
-	fc.Result = res
-	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_verifyUserEmail(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Boolean does not have child fields")
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_verifyUserEmail_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
 func (ec *executionContext) _Mutation_createPodiumBet(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Mutation_createPodiumBet(ctx, field)
 	if err != nil {
@@ -3635,9 +3225,9 @@ func (ec *executionContext) _Mutation_createPodiumBet(ctx context.Context, field
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*model.PodiumBet)
+	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalNPodiumBet2ᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐPodiumBet(ctx, field.Selections, res)
+	return ec.marshalNID2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_createPodiumBet(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -3647,27 +3237,7 @@ func (ec *executionContext) fieldContext_Mutation_createPodiumBet(ctx context.Co
 		IsMethod:   true,
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_PodiumBet_id(ctx, field)
-			case "userId":
-				return ec.fieldContext_PodiumBet_userId(ctx, field)
-			case "sessionId":
-				return ec.fieldContext_PodiumBet_sessionId(ctx, field)
-			case "firstPosition":
-				return ec.fieldContext_PodiumBet_firstPosition(ctx, field)
-			case "secondPosition":
-				return ec.fieldContext_PodiumBet_secondPosition(ctx, field)
-			case "thirdPosition":
-				return ec.fieldContext_PodiumBet_thirdPosition(ctx, field)
-			case "status":
-				return ec.fieldContext_PodiumBet_status(ctx, field)
-			case "bettingPool":
-				return ec.fieldContext_PodiumBet_bettingPool(ctx, field)
-			case "createdAt":
-				return ec.fieldContext_PodiumBet_createdAt(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type PodiumBet", field.Name)
+			return nil, errors.New("field of type ID does not have child fields")
 		},
 	}
 	defer func() {
@@ -3710,9 +3280,9 @@ func (ec *executionContext) _Mutation_createPolePositionBet(ctx context.Context,
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*model.PolePositionBet)
+	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalNPolePositionBet2ᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐPolePositionBet(ctx, field.Selections, res)
+	return ec.marshalNID2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_createPolePositionBet(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -3722,23 +3292,7 @@ func (ec *executionContext) fieldContext_Mutation_createPolePositionBet(ctx cont
 		IsMethod:   true,
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_PolePositionBet_id(ctx, field)
-			case "userId":
-				return ec.fieldContext_PolePositionBet_userId(ctx, field)
-			case "sessionId":
-				return ec.fieldContext_PolePositionBet_sessionId(ctx, field)
-			case "driverId":
-				return ec.fieldContext_PolePositionBet_driverId(ctx, field)
-			case "status":
-				return ec.fieldContext_PolePositionBet_status(ctx, field)
-			case "bettingPool":
-				return ec.fieldContext_PolePositionBet_bettingPool(ctx, field)
-			case "createdAt":
-				return ec.fieldContext_PolePositionBet_createdAt(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type PolePositionBet", field.Name)
+			return nil, errors.New("field of type ID does not have child fields")
 		},
 	}
 	defer func() {
@@ -3781,9 +3335,9 @@ func (ec *executionContext) _Mutation_createRainBet(ctx context.Context, field g
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*model.RainBet)
+	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalNRainBet2ᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐRainBet(ctx, field.Selections, res)
+	return ec.marshalNID2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_createRainBet(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -3793,23 +3347,7 @@ func (ec *executionContext) fieldContext_Mutation_createRainBet(ctx context.Cont
 		IsMethod:   true,
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_RainBet_id(ctx, field)
-			case "userId":
-				return ec.fieldContext_RainBet_userId(ctx, field)
-			case "sessionId":
-				return ec.fieldContext_RainBet_sessionId(ctx, field)
-			case "rainPrediction":
-				return ec.fieldContext_RainBet_rainPrediction(ctx, field)
-			case "status":
-				return ec.fieldContext_RainBet_status(ctx, field)
-			case "bettingPool":
-				return ec.fieldContext_RainBet_bettingPool(ctx, field)
-			case "createdAt":
-				return ec.fieldContext_RainBet_createdAt(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type RainBet", field.Name)
+			return nil, errors.New("field of type ID does not have child fields")
 		},
 	}
 	defer func() {
@@ -3852,9 +3390,9 @@ func (ec *executionContext) _Mutation_createRetirementBet(ctx context.Context, f
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*model.RetirementBet)
+	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalNRetirementBet2ᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐRetirementBet(ctx, field.Selections, res)
+	return ec.marshalNID2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_createRetirementBet(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -3864,23 +3402,7 @@ func (ec *executionContext) fieldContext_Mutation_createRetirementBet(ctx contex
 		IsMethod:   true,
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_RetirementBet_id(ctx, field)
-			case "userId":
-				return ec.fieldContext_RetirementBet_userId(ctx, field)
-			case "sessionId":
-				return ec.fieldContext_RetirementBet_sessionId(ctx, field)
-			case "driverId":
-				return ec.fieldContext_RetirementBet_driverId(ctx, field)
-			case "status":
-				return ec.fieldContext_RetirementBet_status(ctx, field)
-			case "bettingPool":
-				return ec.fieldContext_RetirementBet_bettingPool(ctx, field)
-			case "createdAt":
-				return ec.fieldContext_RetirementBet_createdAt(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type RetirementBet", field.Name)
+			return nil, errors.New("field of type ID does not have child fields")
 		},
 	}
 	defer func() {
@@ -3923,9 +3445,9 @@ func (ec *executionContext) _Mutation_createFastestLapBet(ctx context.Context, f
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*model.FastestLapBet)
+	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalNFastestLapBet2ᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐFastestLapBet(ctx, field.Selections, res)
+	return ec.marshalNID2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_createFastestLapBet(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -3935,25 +3457,7 @@ func (ec *executionContext) fieldContext_Mutation_createFastestLapBet(ctx contex
 		IsMethod:   true,
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_FastestLapBet_id(ctx, field)
-			case "userId":
-				return ec.fieldContext_FastestLapBet_userId(ctx, field)
-			case "sessionId":
-				return ec.fieldContext_FastestLapBet_sessionId(ctx, field)
-			case "driverId":
-				return ec.fieldContext_FastestLapBet_driverId(ctx, field)
-			case "status":
-				return ec.fieldContext_FastestLapBet_status(ctx, field)
-			case "amount":
-				return ec.fieldContext_FastestLapBet_amount(ctx, field)
-			case "bettingPool":
-				return ec.fieldContext_FastestLapBet_bettingPool(ctx, field)
-			case "createdAt":
-				return ec.fieldContext_FastestLapBet_createdAt(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type FastestLapBet", field.Name)
+			return nil, errors.New("field of type ID does not have child fields")
 		},
 	}
 	defer func() {
@@ -3996,9 +3500,9 @@ func (ec *executionContext) _Mutation_createLapTimingBet(ctx context.Context, fi
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*model.LapTimingBet)
+	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalNLapTimingBet2ᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐLapTimingBet(ctx, field.Selections, res)
+	return ec.marshalNID2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_createLapTimingBet(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -4008,25 +3512,7 @@ func (ec *executionContext) fieldContext_Mutation_createLapTimingBet(ctx context
 		IsMethod:   true,
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_LapTimingBet_id(ctx, field)
-			case "userId":
-				return ec.fieldContext_LapTimingBet_userId(ctx, field)
-			case "sessionId":
-				return ec.fieldContext_LapTimingBet_sessionId(ctx, field)
-			case "lapNumber":
-				return ec.fieldContext_LapTimingBet_lapNumber(ctx, field)
-			case "driverId":
-				return ec.fieldContext_LapTimingBet_driverId(ctx, field)
-			case "status":
-				return ec.fieldContext_LapTimingBet_status(ctx, field)
-			case "bettingPool":
-				return ec.fieldContext_LapTimingBet_bettingPool(ctx, field)
-			case "createdAt":
-				return ec.fieldContext_LapTimingBet_createdAt(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type LapTimingBet", field.Name)
+			return nil, errors.New("field of type ID does not have child fields")
 		},
 	}
 	defer func() {
@@ -5023,103 +4509,6 @@ func (ec *executionContext) fieldContext_Query_userByUsername(ctx context.Contex
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
 	if fc.Args, err = ec.field_Query_userByUsername_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Query_usersByStatus(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Query_usersByStatus(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().UsersByStatus(rctx, fc.Args["status"].(model.AccountStatus))
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.([]*model.User)
-	fc.Result = res
-	return ec.marshalNUser2ᚕᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐUserᚄ(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Query_usersByStatus(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Query",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_User_id(ctx, field)
-			case "fullName":
-				return ec.fieldContext_User_fullName(ctx, field)
-			case "email":
-				return ec.fieldContext_User_email(ctx, field)
-			case "username":
-				return ec.fieldContext_User_username(ctx, field)
-			case "dateOfBirth":
-				return ec.fieldContext_User_dateOfBirth(ctx, field)
-			case "phoneNumber":
-				return ec.fieldContext_User_phoneNumber(ctx, field)
-			case "governmentId":
-				return ec.fieldContext_User_governmentId(ctx, field)
-			case "address":
-				return ec.fieldContext_User_address(ctx, field)
-			case "taxId":
-				return ec.fieldContext_User_taxId(ctx, field)
-			case "accountStatus":
-				return ec.fieldContext_User_accountStatus(ctx, field)
-			case "registrationDate":
-				return ec.fieldContext_User_registrationDate(ctx, field)
-			case "role":
-				return ec.fieldContext_User_role(ctx, field)
-			case "emailVerified":
-				return ec.fieldContext_User_emailVerified(ctx, field)
-			case "lastPasswordChange":
-				return ec.fieldContext_User_lastPasswordChange(ctx, field)
-			case "deletedAt":
-				return ec.fieldContext_User_deletedAt(ctx, field)
-			case "country":
-				return ec.fieldContext_User_country(ctx, field)
-			case "preferredCurrency":
-				return ec.fieldContext_User_preferredCurrency(ctx, field)
-			case "favoriteTeam":
-				return ec.fieldContext_User_favoriteTeam(ctx, field)
-			case "profilePictureUrl":
-				return ec.fieldContext_User_profilePictureUrl(ctx, field)
-			case "balance":
-				return ec.fieldContext_User_balance(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type User", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Query_usersByStatus_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -10007,23 +9396,9 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
-		case "updateUserStatus":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_updateUserStatus(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
 		case "deleteUser":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_deleteUser(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "verifyUserEmail":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_verifyUserEmail(ctx, field)
 			})
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
@@ -10308,28 +9683,6 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 					}
 				}()
 				res = ec._Query_userByUsername(ctx, field)
-				return res
-			}
-
-			rrm := func(ctx context.Context) graphql.Marshaler {
-				return ec.OperationContext.RootResolverMiddleware(ctx,
-					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
-		case "usersByStatus":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Query_usersByStatus(ctx, field)
-				if res == graphql.Null {
-					atomic.AddUint32(&fs.Invalids, 1)
-				}
 				return res
 			}
 
@@ -11240,10 +10593,6 @@ func (ec *executionContext) marshalNBoolean2bool(ctx context.Context, sel ast.Se
 	return res
 }
 
-func (ec *executionContext) marshalNFastestLapBet2f1bettingᚋuser_apiᚋgraphᚋmodelᚐFastestLapBet(ctx context.Context, sel ast.SelectionSet, v model.FastestLapBet) graphql.Marshaler {
-	return ec._FastestLapBet(ctx, sel, &v)
-}
-
 func (ec *executionContext) marshalNFastestLapBet2ᚕᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐFastestLapBetᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.FastestLapBet) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
@@ -11348,10 +10697,6 @@ func (ec *executionContext) marshalNInt2int32(ctx context.Context, sel ast.Selec
 	return res
 }
 
-func (ec *executionContext) marshalNLapTimingBet2f1bettingᚋuser_apiᚋgraphᚋmodelᚐLapTimingBet(ctx context.Context, sel ast.SelectionSet, v model.LapTimingBet) graphql.Marshaler {
-	return ec._LapTimingBet(ctx, sel, &v)
-}
-
 func (ec *executionContext) marshalNLapTimingBet2ᚕᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐLapTimingBetᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.LapTimingBet) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
@@ -11409,10 +10754,6 @@ func (ec *executionContext) marshalNLapTimingBet2ᚖf1bettingᚋuser_apiᚋgraph
 func (ec *executionContext) unmarshalNLapTimingBetInput2f1bettingᚋuser_apiᚋgraphᚋmodelᚐLapTimingBetInput(ctx context.Context, v any) (model.LapTimingBetInput, error) {
 	res, err := ec.unmarshalInputLapTimingBetInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalNPodiumBet2f1bettingᚋuser_apiᚋgraphᚋmodelᚐPodiumBet(ctx context.Context, sel ast.SelectionSet, v model.PodiumBet) graphql.Marshaler {
-	return ec._PodiumBet(ctx, sel, &v)
 }
 
 func (ec *executionContext) marshalNPodiumBet2ᚕᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐPodiumBetᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.PodiumBet) graphql.Marshaler {
@@ -11474,10 +10815,6 @@ func (ec *executionContext) unmarshalNPodiumBetInput2f1bettingᚋuser_apiᚋgrap
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNPolePositionBet2f1bettingᚋuser_apiᚋgraphᚋmodelᚐPolePositionBet(ctx context.Context, sel ast.SelectionSet, v model.PolePositionBet) graphql.Marshaler {
-	return ec._PolePositionBet(ctx, sel, &v)
-}
-
 func (ec *executionContext) marshalNPolePositionBet2ᚕᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐPolePositionBetᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.PolePositionBet) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
@@ -11537,10 +10874,6 @@ func (ec *executionContext) unmarshalNPolePositionBetInput2f1bettingᚋuser_api�
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNRainBet2f1bettingᚋuser_apiᚋgraphᚋmodelᚐRainBet(ctx context.Context, sel ast.SelectionSet, v model.RainBet) graphql.Marshaler {
-	return ec._RainBet(ctx, sel, &v)
-}
-
 func (ec *executionContext) marshalNRainBet2ᚕᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐRainBetᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.RainBet) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
@@ -11598,10 +10931,6 @@ func (ec *executionContext) marshalNRainBet2ᚖf1bettingᚋuser_apiᚋgraphᚋmo
 func (ec *executionContext) unmarshalNRainBetInput2f1bettingᚋuser_apiᚋgraphᚋmodelᚐRainBetInput(ctx context.Context, v any) (model.RainBetInput, error) {
 	res, err := ec.unmarshalInputRainBetInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalNRetirementBet2f1bettingᚋuser_apiᚋgraphᚋmodelᚐRetirementBet(ctx context.Context, sel ast.SelectionSet, v model.RetirementBet) graphql.Marshaler {
-	return ec._RetirementBet(ctx, sel, &v)
 }
 
 func (ec *executionContext) marshalNRetirementBet2ᚕᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐRetirementBetᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.RetirementBet) graphql.Marshaler {
@@ -11676,64 +11005,6 @@ func (ec *executionContext) marshalNString2string(ctx context.Context, sel ast.S
 		}
 	}
 	return res
-}
-
-func (ec *executionContext) marshalNUser2f1bettingᚋuser_apiᚋgraphᚋmodelᚐUser(ctx context.Context, sel ast.SelectionSet, v model.User) graphql.Marshaler {
-	return ec._User(ctx, sel, &v)
-}
-
-func (ec *executionContext) marshalNUser2ᚕᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐUserᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.User) graphql.Marshaler {
-	ret := make(graphql.Array, len(v))
-	var wg sync.WaitGroup
-	isLen1 := len(v) == 1
-	if !isLen1 {
-		wg.Add(len(v))
-	}
-	for i := range v {
-		i := i
-		fc := &graphql.FieldContext{
-			Index:  &i,
-			Result: &v[i],
-		}
-		ctx := graphql.WithFieldContext(ctx, fc)
-		f := func(i int) {
-			defer func() {
-				if r := recover(); r != nil {
-					ec.Error(ctx, ec.Recover(ctx, r))
-					ret = nil
-				}
-			}()
-			if !isLen1 {
-				defer wg.Done()
-			}
-			ret[i] = ec.marshalNUser2ᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐUser(ctx, sel, v[i])
-		}
-		if isLen1 {
-			f(i)
-		} else {
-			go f(i)
-		}
-
-	}
-	wg.Wait()
-
-	for _, e := range ret {
-		if e == graphql.Null {
-			return graphql.Null
-		}
-	}
-
-	return ret
-}
-
-func (ec *executionContext) marshalNUser2ᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐUser(ctx context.Context, sel ast.SelectionSet, v *model.User) graphql.Marshaler {
-	if v == nil {
-		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
-			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
-		}
-		return graphql.Null
-	}
-	return ec._User(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalNUserInput2f1bettingᚋuser_apiᚋgraphᚋmodelᚐUserInput(ctx context.Context, v any) (model.UserInput, error) {

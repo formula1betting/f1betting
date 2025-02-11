@@ -8,13 +8,43 @@ import (
 	"context"
 	"f1betting/betting_system"
 	"f1betting/user_api/graph/model"
+	"f1betting/user_management"
 	"fmt"
 	"strconv"
 )
 
 // User is the resolver for the user field.
 func (r *queryResolver) User(ctx context.Context, id string) (*model.User, error) {
-	panic(fmt.Errorf("not implemented: User - user"))
+	userID, err := strconv.ParseInt(id, 10, 64)
+	if err != nil {
+		return nil, err
+	}
+	user, err := user_management.GetUserByID(ctx, r.Conn, userID)
+	if err != nil {
+		return nil, err
+	}
+
+	return &model.User{
+		ID:                strconv.FormatInt(user.ID, 10),
+		FullName:          user.FullName,
+		Email:             user.Email,
+		Username:          user.Username,
+		DateOfBirth:       user.DateOfBirth.String(),
+		PhoneNumber:       user.PhoneNumber,
+		GovernmentID:      user.GovernmentID,
+		Address:           user.Address,
+		TaxID:             user.TaxID,
+		AccountStatus:     model.AccountStatus(user.AccountStatus),
+		RegistrationDate:  user.RegistrationDate.String(),
+		Role:              model.UserRole(user.Role),
+		EmailVerified:     user.EmailVerified,
+		Country:           user.Country,
+		PreferredCurrency: user.PreferredCurrency,
+		FavoriteTeam:      user.FavoriteTeam,
+		ProfilePictureURL: user.ProfilePictureURL,
+		Balance:           user.Balance,
+	}, nil
+
 }
 
 // UserByEmail is the resolver for the userByEmail field.
@@ -25,11 +55,6 @@ func (r *queryResolver) UserByEmail(ctx context.Context, email string) (*model.U
 // UserByUsername is the resolver for the userByUsername field.
 func (r *queryResolver) UserByUsername(ctx context.Context, username string) (*model.User, error) {
 	panic(fmt.Errorf("not implemented: UserByUsername - userByUsername"))
-}
-
-// UsersByStatus is the resolver for the usersByStatus field.
-func (r *queryResolver) UsersByStatus(ctx context.Context, status model.AccountStatus) ([]*model.User, error) {
-	panic(fmt.Errorf("not implemented: UsersByStatus - usersByStatus"))
 }
 
 // UserActiveBets is the resolver for the userActiveBets field.
