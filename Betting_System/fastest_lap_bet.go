@@ -85,7 +85,7 @@ func GetFastestLapUserVisualizedPayout(ctx context.Context, conn *pgx.Conn, user
 	// Use stored bets instead of querying DB
 	for _, bet := range fastestLapBets {
 		if bet.SessionID == SessionID && bet.Status == "PENDING" {
-			totalPool += bet.Amount
+			totalPool 	+= bet.Amount
 			if bet.UserID == userID {
 				userBets = append(userBets, bet)
 			}

@@ -7,10 +7,10 @@ type Mutation {
   deleteUser(userId: ID!): Boolean!
 
   # Betting
-  createPodiumBet(userId: ID!, input: PodiumBetInput!): ID!
-  createPolePositionBet(userId: ID!, input: PolePositionBetInput!): ID!
-  createRainBet(userId: ID!, input: RainBetInput!): ID!
-  createRetirementBet(userId: ID!, input: RetirementBetInput!): ID!
+  # createPodiumBet(userId: ID!, input: PodiumBetInput!): ID!
+  # createPolePositionBet(userId: ID!, input: PolePositionBetInput!): ID!
+  # createRainBet(userId: ID!, input: RainBetInput!): ID!
+  # createRetirementBet(userId: ID!, input: RetirementBetInput!): ID!
   createFastestLapBet(userId: ID!, input: FastestLapBetInput!): ID!
-  createLapTimingBet(userId: ID!, input: LapTimingBetInput!): ID!
+  # createLapTimingBet(userId: ID!, input: LapTimingBetInput!): ID!
 }

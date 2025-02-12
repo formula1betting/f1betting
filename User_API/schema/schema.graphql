@@ -3,13 +3,13 @@ schema {
   mutation: Mutation
 }
 
-union Bet =
-    PodiumBet
-  | PolePositionBet
-  | RainBet
-  | RetirementBet
-  | FastestLapBet
-  | LapTimingBet
+# union Bet =
+#     PodiumBet
+#   | PolePositionBet
+#   | RainBet
+#   | RetirementBet
+#   | FastestLapBet
+#   | LapTimingBet
 
 scalar Date
 scalar DateTime
