@@ -10,9 +10,7 @@ import (
 	"fmt"
 	"strconv"
 
-	"f1betting/betting_system"
 	"f1betting/user_api/graph/model"
-	"f1betting/user_management"
 )
 
 // User is the resolver for the user field.
@@ -22,29 +20,36 @@ func (r *queryResolver) User(ctx context.Context, id string) (*model.User, error
 		return nil, err
 	}
 
-	user, err := user_management.GetUserByID(ctx, r.Conn, userID)
+	user, err := r.UserClient.GetUserByID(ctx, userID)
 	if err != nil {
 		return nil, err
 	}
 
+	phoneNumber := user.PhoneNumber.GetValue()
+	taxId := user.TaxId.GetValue()
+	country := user.Country.GetValue()
+	preferredCurrency := user.PreferredCurrency.GetValue()
+	favoriteTeam := user.FavoriteTeam.GetValue()
+	profilePictureUrl := user.ProfilePictureUrl.GetValue()
+
 	return &model.User{
-		ID:                strconv.FormatInt(user.ID, 10),
+		ID:                strconv.FormatInt(user.Id, 10),
 		FullName:          user.FullName,
 		Email:             user.Email,
 		Username:          user.Username,
-		DateOfBirth:       user.DateOfBirth.String(),
-		PhoneNumber:       user.PhoneNumber,
-		GovernmentID:      user.GovernmentID,
+		DateOfBirth:       user.DateOfBirth.AsTime().String(),
+		PhoneNumber:       &phoneNumber,
+		GovernmentID:      user.GovernmentId,
 		Address:           user.Address,
-		TaxID:             user.TaxID,
+		TaxID:             &taxId,
 		AccountStatus:     model.AccountStatus(user.AccountStatus),
-		RegistrationDate:  user.RegistrationDate.String(),
+		RegistrationDate:  user.RegistrationDate.AsTime().String(),
 		Role:              model.UserRole(user.Role),
 		EmailVerified:     user.EmailVerified,
-		Country:           user.Country,
-		PreferredCurrency: user.PreferredCurrency,
-		FavoriteTeam:      user.FavoriteTeam,
-		ProfilePictureURL: user.ProfilePictureURL,
+		Country:           &country,
+		PreferredCurrency: &preferredCurrency,
+		FavoriteTeam:      &favoriteTeam,
+		ProfilePictureURL: &profilePictureUrl,
 		Balance:           user.Balance,
 	}, nil
 }
@@ -61,45 +66,48 @@ func (r *queryResolver) UserByUsername(ctx context.Context, username string) (*m
 
 // FastestLapBetsAndVisualizedPayout is the resolver for the fastestLapBetsAndVisualizedPayout field.
 func (r *queryResolver) FastestLapBetsAndVisualizedPayout(ctx context.Context, sessionID int32, userID string) (*model.FastestLapBetsAndVisualizedPayout, error) {
-	bets, err := betting_system.GetFastestLapBetsByRace(ctx, r.Conn, int64(sessionID), "PENDING")
-	if err != nil {
-		return nil, err
-	}
+	// bets, err := betting_system.GetFastestLapBetsByRace(ctx, r.Conn, int64(sessionID), "PENDING")
+	// if err != nil {
+	// 	return nil, err
+	// }
 
-	var result []*model.FastestLapBet
-	for _, bet := range *bets {
-		result = append(result, &model.FastestLapBet{
-			ID:          strconv.FormatInt(bet.ID, 10),
-			UserID:      strconv.FormatInt(bet.UserID, 10),
-			SessionID:   sessionID,
-			DriverID:    int32(bet.DriverID),
-			Status:      model.BetStatus(bet.Status),
-			BettingPool: int32(bet.BettingPool),
-			CreatedAt:   bet.CreateAt.String(),
-		})
-	}
+	// var result []*model.FastestLapBet
+	// for _, bet := range *bets {
+	// 	result = append(result, &model.FastestLapBet{
+	// 		ID:          strconv.FormatInt(bet.ID, 10),
+	// 		UserID:      strconv.FormatInt(bet.UserID, 10),
+	// 		SessionID:   sessionID,
+	// 		DriverID:    int32(bet.DriverID),
+	// 		Status:      model.BetStatus(bet.Status),
+	// 		BettingPool: int32(bet.BettingPool),
+	// 		CreatedAt:   bet.CreateAt.String(),
+	// 	})
+	// }
 
-	uid, err := strconv.ParseInt(userID, 10, 64)
-	if err != nil {
-		return nil, err
-	}
-	visualizedPayout, err := betting_system.GetFastestLapUserVisualizedPayout(ctx, r.Conn, uid, int(sessionID))
-	if err != nil {
-		return nil, err
-	}
+	// uid, err := strconv.ParseInt(userID, 10, 64)
+	// if err != nil {
+	// 	return nil, err
+	// }
+	// visualizedPayout, err := betting_system.GetFastestLapUserVisualizedPayout(ctx, r.Conn, uid, int(sessionID))
+	// if err != nil {
+	// 	return nil, err
+	// }
 
-	var convertedPayout []*model.FastestLapUserPayout
-	for _, p := range *visualizedPayout {
-		convertedPayout = append(convertedPayout, &model.FastestLapUserPayout{
-			DriverID: strconv.FormatInt(int64(p.DriverID), 10),
-			Payout:   p.Payout,
-		})
-	}
+	// var convertedPayout []*model.FastestLapUserPayout
+	// for _, p := range *visualizedPayout {
+	// 	convertedPayout = append(convertedPayout, &model.FastestLapUserPayout{
+	// 		DriverID: strconv.FormatInt(int64(p.DriverID), 10),
+	// 		Payout:   p.Payout,
+	// 	})
+	// }
 
-	return &model.FastestLapBetsAndVisualizedPayout{
-		FastestLapBets:   result,
-		VisualizedPayout: convertedPayout,
-	}, nil
+	// return &model.FastestLapBetsAndVisualizedPayout{
+	// 	FastestLapBets:   result,
+	// 	VisualizedPayout: convertedPayout,
+	// }, nil
+
+	panic(fmt.Errorf("not implemented: UserByUsername - userByUsername"))
+
 }
 
 // Query returns QueryResolver implementation.

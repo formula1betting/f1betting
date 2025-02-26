@@ -15,7 +15,7 @@ func GetUserManagementQueries() *map[string]string {
 
 	onceUserManagement.Do(func() {
 		var err error
-		queries, err = loadSQLFile("./Database/sql/user_management.sql")
+		queries, err = loadSQLFile("../Database/sql/user_management.sql")
 		if err != nil {
 			log.Fatalf("Failed to load user management queries: %v", err)
 		}
@@ -28,7 +28,7 @@ func GetBettingQueries() *map[string]string {
 
 	onceBettingSystem.Do(func() {
 		var err error
-		queries, err = loadSQLFile("./Database/sql/betting_system.sql")
+		queries, err = loadSQLFile("../Database/sql/betting_system.sql")
 		if err != nil {
 			log.Fatalf("Failed to load betting queries: %v", err)
 		}

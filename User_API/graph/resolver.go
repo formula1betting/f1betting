@@ -1,13 +1,17 @@
 package graph
 
-import "github.com/jackc/pgx/v5"
-
-// This file will not be regenerated automatically.
-
-//
-
-// It serves as dependency injection for your app, add any dependencies you require here.
+import (
+	"f1betting/user_api/client"
+)
 
 type Resolver struct {
-	Conn *pgx.Conn
+	UserClient *client.UserManagementClient
+}
+
+func NewResolver(userServiceAddr string) (*Resolver, error) {
+	userClient, err := client.NewUserManagementClient(userServiceAddr)
+	if err != nil {
+		return nil, err
+	}
+	return &Resolver{UserClient: userClient}, nil
 }
