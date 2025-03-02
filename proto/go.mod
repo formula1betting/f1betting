@@ -3,6 +3,7 @@ module f1betting/proto
 go 1.23.4
 
 require (
+	github.com/golang/protobuf v1.5.4
 	google.golang.org/grpc v1.70.0
 	google.golang.org/protobuf v1.36.5
 )

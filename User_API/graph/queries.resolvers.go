@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"strconv"
 
+	"f1betting/proto"
 	"f1betting/user_api/graph/model"
 )
 
@@ -20,7 +21,7 @@ func (r *queryResolver) User(ctx context.Context, id string) (*model.User, error
 		return nil, err
 	}
 
-	user, err := r.UserClient.GetUserByID(ctx, userID)
+	user, err := r.UserClient.GetUserByID(ctx, &proto.GetUserByIDRequest{Id: userID})
 	if err != nil {
 		return nil, err
 	}
@@ -66,48 +67,51 @@ func (r *queryResolver) UserByUsername(ctx context.Context, username string) (*m
 
 // FastestLapBetsAndVisualizedPayout is the resolver for the fastestLapBetsAndVisualizedPayout field.
 func (r *queryResolver) FastestLapBetsAndVisualizedPayout(ctx context.Context, sessionID int32, userID string) (*model.FastestLapBetsAndVisualizedPayout, error) {
-	// bets, err := betting_system.GetFastestLapBetsByRace(ctx, r.Conn, int64(sessionID), "PENDING")
-	// if err != nil {
-	// 	return nil, err
-	// }
+	// Get all bets for session
+	sessionReq := &proto.SessionRequest{
+		SessionId: sessionID,
+	}
+	sessionBets, err := r.BettingClient.GetPendingBetsForSession(ctx, sessionReq)
+	if err != nil {
+		return nil, err
+	}
 
-	// var result []*model.FastestLapBet
-	// for _, bet := range *bets {
-	// 	result = append(result, &model.FastestLapBet{
-	// 		ID:          strconv.FormatInt(bet.ID, 10),
-	// 		UserID:      strconv.FormatInt(bet.UserID, 10),
-	// 		SessionID:   sessionID,
-	// 		DriverID:    int32(bet.DriverID),
-	// 		Status:      model.BetStatus(bet.Status),
-	// 		BettingPool: int32(bet.BettingPool),
-	// 		CreatedAt:   bet.CreateAt.String(),
-	// 	})
-	// }
+	var result []*model.FastestLapBet
+	driverPayoutMap := make(map[int32]float64)
 
-	// uid, err := strconv.ParseInt(userID, 10, 64)
-	// if err != nil {
-	// 	return nil, err
-	// }
-	// visualizedPayout, err := betting_system.GetFastestLapUserVisualizedPayout(ctx, r.Conn, uid, int(sessionID))
-	// if err != nil {
-	// 	return nil, err
-	// }
+	// Convert session bets to GraphQL model
+	for _, bet := range sessionBets.Bets {
+		if bet.BetType == "FASTEST_LAP" {
+			result = append(result, &model.FastestLapBet{
+				ID:          strconv.FormatInt(bet.Id, 10),
+				UserID:      strconv.FormatInt(bet.UserId, 10),
+				SessionID:   bet.SessionId,
+				DriverID:    bet.GetDriver().DriverId,
+				Status:      model.BetStatus(bet.Status),
+				BettingPool: int32(bet.BettingPool),
+				CreatedAt:   bet.CreatedAt.AsTime().String(),
+			})
 
-	// var convertedPayout []*model.FastestLapUserPayout
-	// for _, p := range *visualizedPayout {
-	// 	convertedPayout = append(convertedPayout, &model.FastestLapUserPayout{
-	// 		DriverID: strconv.FormatInt(int64(p.DriverID), 10),
-	// 		Payout:   p.Payout,
-	// 	})
-	// }
+			// Calculate payout for each driver
+			if bet.GetDriver() != nil {
+				driverPayoutMap[bet.GetDriver().DriverId] += bet.Amount
+			}
+		}
+	}
 
-	// return &model.FastestLapBetsAndVisualizedPayout{
-	// 	FastestLapBets:   result,
-	// 	VisualizedPayout: convertedPayout,
-	// }, nil
+	// Convert payout map to response format
+	var payouts []*model.FastestLapUserPayout
+	for driverID, amount := range driverPayoutMap {
+		payouts = append(payouts, &model.FastestLapUserPayout{
+			DriverID: strconv.FormatInt(int64(driverID), 10),
+			Payout:   amount,
+		})
+	}
 
-	panic(fmt.Errorf("not implemented: UserByUsername - userByUsername"))
-
+	return &model.FastestLapBetsAndVisualizedPayout{
+		FastestLapBets:   result,
+		VisualizedPayout: payouts,
+	}, nil
 }
 
 // Query returns QueryResolver implementation.

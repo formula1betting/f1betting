@@ -41,11 +41,14 @@ func (r *mutationResolver) CreateUser(ctx context.Context, input model.UserInput
 		Balance:           0.0,
 	}
 
-	userID, err := r.UserClient.CreateUser(ctx, user)
+	req := &proto.CreateUserRequest{
+		User: user,
+	}
+	resp, err := r.UserClient.CreateUser(ctx, req)
 	if err != nil {
 		return "", err
 	}
-	return strconv.FormatInt(userID, 10), nil
+	return strconv.FormatInt(resp.UserId, 10), nil
 }
 
 // UpdateUserProfile is the resolver for the updateUserProfile field.
@@ -69,21 +72,24 @@ func (r *mutationResolver) DeleteUser(ctx context.Context, userID string) (bool,
 }
 
 func (r *mutationResolver) CreateFastestLapBet(ctx context.Context, userID string, input model.FastestLapBetInput) (string, error) {
-	// userIDInt, err := strconv.ParseInt(userID, 10, 64)
-	// if err != nil {
-	// 	return "", fmt.Errorf("invalid userID: %v", err)
-	// }
+	uid, err := strconv.ParseInt(userID, 10, 64)
+	if err != nil {
+		return "", fmt.Errorf("invalid userID: %v", err)
+	}
 
-	// var bet betting_system.FastestLapBet
-	// bet.SetFastestLapBet(userIDInt, int(input.SessionID), int32(input.DriverID), int64(input.BettingPool))
+	req := &proto.FastestLapBetRequest{
+		UserId:      uid,
+		SessionId:   input.SessionID,
+		DriverId:    int32(input.DriverID),
+		BettingPool: int32(input.BettingPool),
+	}
 
-	// betId, err := betting_system.CreateFastestLapBet(ctx, r.Conn, bet)
-	// if err != nil {
-	// 	return "", err
-	// }
-	// return fmt.Sprintf("%d", betId), nil
-	panic(fmt.Errorf("not implemented: DeleteUser - deleteUser"))
+	resp, err := r.BettingClient.CreateFastestLapBet(ctx, req)
+	if err != nil {
+		return "", err
+	}
 
+	return fmt.Sprintf("%d", resp.BetId), nil
 }
 
 // Mutation returns MutationResolver implementation.
