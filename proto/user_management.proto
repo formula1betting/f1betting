@@ -1,0 +1,89 @@
+syntax = "proto3";
+
+package proto;
+
+option go_package = "f1betting/proto";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+service UserManagement {
+  rpc CreateUser(CreateUserRequest) returns (CreateUserResponse);
+  rpc GetUserByID(GetUserByIDRequest) returns (User);
+  rpc GetUserByEmail(GetUserByEmailRequest) returns (User);
+  rpc GetUserByUsername(GetUserByUsernameRequest) returns (User);
+  rpc UpdateUserProfile(UpdateUserProfileRequest) returns (UpdateUserResponse);
+  rpc UpdateUserEmail(UpdateUserEmailRequest) returns (UpdateUserResponse);
+  rpc UpdateUserPassword(UpdateUserPasswordRequest) returns (UpdateUserResponse);
+  rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse);
+}
+
+message User {
+  int64 id = 1;
+  string full_name = 2;
+  string email = 3;
+  string username = 4;
+  string password_hash = 5;
+  google.protobuf.Timestamp date_of_birth = 6;
+  google.protobuf.StringValue phone_number = 7;
+  string government_id = 8;
+  string address = 9;
+  google.protobuf.StringValue tax_id = 10;
+  string account_status = 11;
+  google.protobuf.Timestamp registration_date = 12;
+  string role = 13;
+  bool email_verified = 14;
+  google.protobuf.Timestamp last_password_change = 15;
+  google.protobuf.StringValue country = 16;
+  google.protobuf.StringValue preferred_currency = 17;
+  google.protobuf.StringValue favorite_team = 18;
+  google.protobuf.StringValue profile_picture_url = 19;
+  double balance = 20;
+}
+
+message CreateUserRequest {
+  User user = 1;
+}
+
+message CreateUserResponse {
+  int64 user_id = 1;
+}
+
+message GetUserByIDRequest {
+  int64 id = 1;
+}
+
+message GetUserByEmailRequest {
+  string email = 1;
+}
+
+message GetUserByUsernameRequest {
+  string username = 1;
+}
+
+message UpdateUserProfileRequest {
+  int64 user_id = 1;
+  User updates = 2;
+}
+
+message UpdateUserResponse {
+  bool success = 1;
+}
+
+message UpdateUserEmailRequest {
+  int64 user_id = 1;
+  string new_email = 2;
+}
+
+message UpdateUserPasswordRequest {
+  int64 user_id = 1;
+  string new_password_hash = 2;
+}
+
+message DeleteUserRequest {
+  int64 user_id = 1;
+}
+
+message DeleteUserResponse {
+  bool success = 1;
+}

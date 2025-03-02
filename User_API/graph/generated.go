@@ -57,144 +57,67 @@ type ComplexityRoot struct {
 		UserID      func(childComplexity int) int
 	}
 
-	LapTimingBet struct {
-		BettingPool func(childComplexity int) int
-		CreatedAt   func(childComplexity int) int
-		DriverID    func(childComplexity int) int
-		ID          func(childComplexity int) int
-		LapNumber   func(childComplexity int) int
-		SessionID   func(childComplexity int) int
-		Status      func(childComplexity int) int
-		UserID      func(childComplexity int) int
+	FastestLapUserPayout struct {
+		DriverID func(childComplexity int) int
+		Payout   func(childComplexity int) int
 	}
 
 	Mutation struct {
-		CreateFastestLapBet   func(childComplexity int, userID string, input model.FastestLapBetInput) int
-		CreateLapTimingBet    func(childComplexity int, userID string, input model.LapTimingBetInput) int
-		CreatePodiumBet       func(childComplexity int, userID string, input model.PodiumBetInput) int
-		CreatePolePositionBet func(childComplexity int, userID string, input model.PolePositionBetInput) int
-		CreateRainBet         func(childComplexity int, userID string, input model.RainBetInput) int
-		CreateRetirementBet   func(childComplexity int, userID string, input model.RetirementBetInput) int
-		CreateUser            func(childComplexity int, input model.UserInput) int
-		DeleteUser            func(childComplexity int, userID string) int
-		UpdateUserEmail       func(childComplexity int, userID string, email string) int
-		UpdateUserPassword    func(childComplexity int, userID string, newPassword string) int
-		UpdateUserProfile     func(childComplexity int, userID string, input model.UserProfileUpdateInput) int
-		UpdateUserStatus      func(childComplexity int, userID string, status model.AccountStatus) int
-		VerifyUserEmail       func(childComplexity int, userID string) int
-	}
-
-	PodiumBet struct {
-		BettingPool    func(childComplexity int) int
-		CreatedAt      func(childComplexity int) int
-		FirstPosition  func(childComplexity int) int
-		ID             func(childComplexity int) int
-		SecondPosition func(childComplexity int) int
-		SessionID      func(childComplexity int) int
-		Status         func(childComplexity int) int
-		ThirdPosition  func(childComplexity int) int
-		UserID         func(childComplexity int) int
-	}
-
-	PolePositionBet struct {
-		BettingPool func(childComplexity int) int
-		CreatedAt   func(childComplexity int) int
-		DriverID    func(childComplexity int) int
-		ID          func(childComplexity int) int
-		SessionID   func(childComplexity int) int
-		Status      func(childComplexity int) int
-		UserID      func(childComplexity int) int
+		CreateFastestLapBet func(childComplexity int, userID string, input model.FastestLapBetInput) int
+		CreateUser          func(childComplexity int, input model.UserInput) int
+		DeleteUser          func(childComplexity int, userID string) int
+		UpdateUserEmail     func(childComplexity int, userID string, email string) int
+		UpdateUserPassword  func(childComplexity int, userID string, newPassword string) int
+		UpdateUserProfile   func(childComplexity int, userID string, input model.UserProfileUpdateInput) int
 	}
 
 	Query struct {
-		PendingBetsForSession   func(childComplexity int, sessionID int32) int
-		SessionFastestLapBets   func(childComplexity int, sessionID int32, status *model.BetStatus) int
-		SessionLapTimingBets    func(childComplexity int, sessionID int32, status *model.BetStatus) int
-		SessionPodiumBets       func(childComplexity int, sessionID int32, status *model.BetStatus) int
-		SessionPolePositionBets func(childComplexity int, sessionID int32, status *model.BetStatus) int
-		SessionRainBets         func(childComplexity int, sessionID int32, status *model.BetStatus) int
-		SessionRetirementBets   func(childComplexity int, sessionID int32, status *model.BetStatus) int
-		User                    func(childComplexity int, id string) int
-		UserActiveBets          func(childComplexity int, userID string) int
-		UserBetHistory          func(childComplexity int, userID string) int
-		UserByEmail             func(childComplexity int, email string) int
-		UserByUsername          func(childComplexity int, username string) int
-		UsersByStatus           func(childComplexity int, status model.AccountStatus) int
-	}
-
-	RainBet struct {
-		BettingPool    func(childComplexity int) int
-		CreatedAt      func(childComplexity int) int
-		ID             func(childComplexity int) int
-		RainPrediction func(childComplexity int) int
-		SessionID      func(childComplexity int) int
-		Status         func(childComplexity int) int
-		UserID         func(childComplexity int) int
-	}
-
-	RetirementBet struct {
-		BettingPool func(childComplexity int) int
-		CreatedAt   func(childComplexity int) int
-		DriverID    func(childComplexity int) int
-		ID          func(childComplexity int) int
-		SessionID   func(childComplexity int) int
-		Status      func(childComplexity int) int
-		UserID      func(childComplexity int) int
+		FastestLapBetsAndVisualizedPayout func(childComplexity int, sessionID int32, userID string) int
+		User                              func(childComplexity int, id string) int
+		UserByEmail                       func(childComplexity int, email string) int
+		UserByUsername                    func(childComplexity int, username string) int
 	}
 
 	User struct {
-		AccountStatus      func(childComplexity int) int
-		Address            func(childComplexity int) int
-		Balance            func(childComplexity int) int
-		Country            func(childComplexity int) int
-		DateOfBirth        func(childComplexity int) int
-		DeletedAt          func(childComplexity int) int
-		Email              func(childComplexity int) int
-		EmailVerified      func(childComplexity int) int
-		FavoriteTeam       func(childComplexity int) int
-		FullName           func(childComplexity int) int
-		GovernmentID       func(childComplexity int) int
-		ID                 func(childComplexity int) int
-		LastPasswordChange func(childComplexity int) int
-		PhoneNumber        func(childComplexity int) int
-		PreferredCurrency  func(childComplexity int) int
-		ProfilePictureURL  func(childComplexity int) int
-		RegistrationDate   func(childComplexity int) int
-		Role               func(childComplexity int) int
-		TaxID              func(childComplexity int) int
-		Username           func(childComplexity int) int
+		AccountStatus     func(childComplexity int) int
+		Address           func(childComplexity int) int
+		Balance           func(childComplexity int) int
+		Country           func(childComplexity int) int
+		DateOfBirth       func(childComplexity int) int
+		Email             func(childComplexity int) int
+		EmailVerified     func(childComplexity int) int
+		FavoriteTeam      func(childComplexity int) int
+		FullName          func(childComplexity int) int
+		GovernmentID      func(childComplexity int) int
+		ID                func(childComplexity int) int
+		PhoneNumber       func(childComplexity int) int
+		PreferredCurrency func(childComplexity int) int
+		ProfilePictureURL func(childComplexity int) int
+		RegistrationDate  func(childComplexity int) int
+		Role              func(childComplexity int) int
+		TaxID             func(childComplexity int) int
+		Username          func(childComplexity int) int
+	}
+
+	FastestLapBetsAndVisualizedPayout struct {
+		FastestLapBets   func(childComplexity int) int
+		VisualizedPayout func(childComplexity int) int
 	}
 }
 
 type MutationResolver interface {
-	CreateUser(ctx context.Context, input model.UserInput) (*model.User, error)
-	UpdateUserProfile(ctx context.Context, userID string, input model.UserProfileUpdateInput) (*model.User, error)
-	UpdateUserEmail(ctx context.Context, userID string, email string) (*model.User, error)
+	CreateUser(ctx context.Context, input model.UserInput) (string, error)
+	UpdateUserProfile(ctx context.Context, userID string, input model.UserProfileUpdateInput) (bool, error)
+	UpdateUserEmail(ctx context.Context, userID string, email string) (bool, error)
 	UpdateUserPassword(ctx context.Context, userID string, newPassword string) (bool, error)
-	UpdateUserStatus(ctx context.Context, userID string, status model.AccountStatus) (*model.User, error)
 	DeleteUser(ctx context.Context, userID string) (bool, error)
-	VerifyUserEmail(ctx context.Context, userID string) (bool, error)
-	CreatePodiumBet(ctx context.Context, userID string, input model.PodiumBetInput) (*model.PodiumBet, error)
-	CreatePolePositionBet(ctx context.Context, userID string, input model.PolePositionBetInput) (*model.PolePositionBet, error)
-	CreateRainBet(ctx context.Context, userID string, input model.RainBetInput) (*model.RainBet, error)
-	CreateRetirementBet(ctx context.Context, userID string, input model.RetirementBetInput) (*model.RetirementBet, error)
-	CreateFastestLapBet(ctx context.Context, userID string, input model.FastestLapBetInput) (*model.FastestLapBet, error)
-	CreateLapTimingBet(ctx context.Context, userID string, input model.LapTimingBetInput) (*model.LapTimingBet, error)
+	CreateFastestLapBet(ctx context.Context, userID string, input model.FastestLapBetInput) (string, error)
 }
 type QueryResolver interface {
 	User(ctx context.Context, id string) (*model.User, error)
 	UserByEmail(ctx context.Context, email string) (*model.User, error)
 	UserByUsername(ctx context.Context, username string) (*model.User, error)
-	UsersByStatus(ctx context.Context, status model.AccountStatus) ([]*model.User, error)
-	UserActiveBets(ctx context.Context, userID string) ([]model.Bet, error)
-	UserBetHistory(ctx context.Context, userID string) ([]model.Bet, error)
-	SessionPodiumBets(ctx context.Context, sessionID int32, status *model.BetStatus) ([]*model.PodiumBet, error)
-	SessionPolePositionBets(ctx context.Context, sessionID int32, status *model.BetStatus) ([]*model.PolePositionBet, error)
-	SessionRainBets(ctx context.Context, sessionID int32, status *model.BetStatus) ([]*model.RainBet, error)
-	SessionRetirementBets(ctx context.Context, sessionID int32, status *model.BetStatus) ([]*model.RetirementBet, error)
-	SessionFastestLapBets(ctx context.Context, sessionID int32, status *model.BetStatus) ([]*model.FastestLapBet, error)
-	SessionLapTimingBets(ctx context.Context, sessionID int32, status *model.BetStatus) ([]*model.LapTimingBet, error)
-	PendingBetsForSession(ctx context.Context, sessionID int32) ([]model.Bet, error)
+	FastestLapBetsAndVisualizedPayout(ctx context.Context, sessionID int32, userID string) (*model.FastestLapBetsAndVisualizedPayout, error)
 }
 
 type executableSchema struct {
@@ -272,61 +195,19 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.FastestLapBet.UserID(childComplexity), true
 
-	case "LapTimingBet.bettingPool":
-		if e.complexity.LapTimingBet.BettingPool == nil {
+	case "FastestLapUserPayout.driverId":
+		if e.complexity.FastestLapUserPayout.DriverID == nil {
 			break
 		}
 
-		return e.complexity.LapTimingBet.BettingPool(childComplexity), true
+		return e.complexity.FastestLapUserPayout.DriverID(childComplexity), true
 
-	case "LapTimingBet.createdAt":
-		if e.complexity.LapTimingBet.CreatedAt == nil {
+	case "FastestLapUserPayout.payout":
+		if e.complexity.FastestLapUserPayout.Payout == nil {
 			break
 		}
 
-		return e.complexity.LapTimingBet.CreatedAt(childComplexity), true
-
-	case "LapTimingBet.driverId":
-		if e.complexity.LapTimingBet.DriverID == nil {
-			break
-		}
-
-		return e.complexity.LapTimingBet.DriverID(childComplexity), true
-
-	case "LapTimingBet.id":
-		if e.complexity.LapTimingBet.ID == nil {
-			break
-		}
-
-		return e.complexity.LapTimingBet.ID(childComplexity), true
-
-	case "LapTimingBet.lapNumber":
-		if e.complexity.LapTimingBet.LapNumber == nil {
-			break
-		}
-
-		return e.complexity.LapTimingBet.LapNumber(childComplexity), true
-
-	case "LapTimingBet.sessionId":
-		if e.complexity.LapTimingBet.SessionID == nil {
-			break
-		}
-
-		return e.complexity.LapTimingBet.SessionID(childComplexity), true
-
-	case "LapTimingBet.status":
-		if e.complexity.LapTimingBet.Status == nil {
-			break
-		}
-
-		return e.complexity.LapTimingBet.Status(childComplexity), true
-
-	case "LapTimingBet.userId":
-		if e.complexity.LapTimingBet.UserID == nil {
-			break
-		}
-
-		return e.complexity.LapTimingBet.UserID(childComplexity), true
+		return e.complexity.FastestLapUserPayout.Payout(childComplexity), true
 
 	case "Mutation.createFastestLapBet":
 		if e.complexity.Mutation.CreateFastestLapBet == nil {
@@ -339,66 +220,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.CreateFastestLapBet(childComplexity, args["userId"].(string), args["input"].(model.FastestLapBetInput)), true
-
-	case "Mutation.createLapTimingBet":
-		if e.complexity.Mutation.CreateLapTimingBet == nil {
-			break
-		}
-
-		args, err := ec.field_Mutation_createLapTimingBet_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Mutation.CreateLapTimingBet(childComplexity, args["userId"].(string), args["input"].(model.LapTimingBetInput)), true
-
-	case "Mutation.createPodiumBet":
-		if e.complexity.Mutation.CreatePodiumBet == nil {
-			break
-		}
-
-		args, err := ec.field_Mutation_createPodiumBet_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Mutation.CreatePodiumBet(childComplexity, args["userId"].(string), args["input"].(model.PodiumBetInput)), true
-
-	case "Mutation.createPolePositionBet":
-		if e.complexity.Mutation.CreatePolePositionBet == nil {
-			break
-		}
-
-		args, err := ec.field_Mutation_createPolePositionBet_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Mutation.CreatePolePositionBet(childComplexity, args["userId"].(string), args["input"].(model.PolePositionBetInput)), true
-
-	case "Mutation.createRainBet":
-		if e.complexity.Mutation.CreateRainBet == nil {
-			break
-		}
-
-		args, err := ec.field_Mutation_createRainBet_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Mutation.CreateRainBet(childComplexity, args["userId"].(string), args["input"].(model.RainBetInput)), true
-
-	case "Mutation.createRetirementBet":
-		if e.complexity.Mutation.CreateRetirementBet == nil {
-			break
-		}
-
-		args, err := ec.field_Mutation_createRetirementBet_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Mutation.CreateRetirementBet(childComplexity, args["userId"].(string), args["input"].(model.RetirementBetInput)), true
 
 	case "Mutation.createUser":
 		if e.complexity.Mutation.CreateUser == nil {
@@ -460,225 +281,17 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.UpdateUserProfile(childComplexity, args["userId"].(string), args["input"].(model.UserProfileUpdateInput)), true
 
-	case "Mutation.updateUserStatus":
-		if e.complexity.Mutation.UpdateUserStatus == nil {
+	case "Query.fastestLapBetsAndVisualizedPayout":
+		if e.complexity.Query.FastestLapBetsAndVisualizedPayout == nil {
 			break
 		}
 
-		args, err := ec.field_Mutation_updateUserStatus_args(context.TODO(), rawArgs)
+		args, err := ec.field_Query_fastestLapBetsAndVisualizedPayout_args(context.TODO(), rawArgs)
 		if err != nil {
 			return 0, false
 		}
 
-		return e.complexity.Mutation.UpdateUserStatus(childComplexity, args["userId"].(string), args["status"].(model.AccountStatus)), true
-
-	case "Mutation.verifyUserEmail":
-		if e.complexity.Mutation.VerifyUserEmail == nil {
-			break
-		}
-
-		args, err := ec.field_Mutation_verifyUserEmail_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Mutation.VerifyUserEmail(childComplexity, args["userId"].(string)), true
-
-	case "PodiumBet.bettingPool":
-		if e.complexity.PodiumBet.BettingPool == nil {
-			break
-		}
-
-		return e.complexity.PodiumBet.BettingPool(childComplexity), true
-
-	case "PodiumBet.createdAt":
-		if e.complexity.PodiumBet.CreatedAt == nil {
-			break
-		}
-
-		return e.complexity.PodiumBet.CreatedAt(childComplexity), true
-
-	case "PodiumBet.firstPosition":
-		if e.complexity.PodiumBet.FirstPosition == nil {
-			break
-		}
-
-		return e.complexity.PodiumBet.FirstPosition(childComplexity), true
-
-	case "PodiumBet.id":
-		if e.complexity.PodiumBet.ID == nil {
-			break
-		}
-
-		return e.complexity.PodiumBet.ID(childComplexity), true
-
-	case "PodiumBet.secondPosition":
-		if e.complexity.PodiumBet.SecondPosition == nil {
-			break
-		}
-
-		return e.complexity.PodiumBet.SecondPosition(childComplexity), true
-
-	case "PodiumBet.sessionId":
-		if e.complexity.PodiumBet.SessionID == nil {
-			break
-		}
-
-		return e.complexity.PodiumBet.SessionID(childComplexity), true
-
-	case "PodiumBet.status":
-		if e.complexity.PodiumBet.Status == nil {
-			break
-		}
-
-		return e.complexity.PodiumBet.Status(childComplexity), true
-
-	case "PodiumBet.thirdPosition":
-		if e.complexity.PodiumBet.ThirdPosition == nil {
-			break
-		}
-
-		return e.complexity.PodiumBet.ThirdPosition(childComplexity), true
-
-	case "PodiumBet.userId":
-		if e.complexity.PodiumBet.UserID == nil {
-			break
-		}
-
-		return e.complexity.PodiumBet.UserID(childComplexity), true
-
-	case "PolePositionBet.bettingPool":
-		if e.complexity.PolePositionBet.BettingPool == nil {
-			break
-		}
-
-		return e.complexity.PolePositionBet.BettingPool(childComplexity), true
-
-	case "PolePositionBet.createdAt":
-		if e.complexity.PolePositionBet.CreatedAt == nil {
-			break
-		}
-
-		return e.complexity.PolePositionBet.CreatedAt(childComplexity), true
-
-	case "PolePositionBet.driverId":
-		if e.complexity.PolePositionBet.DriverID == nil {
-			break
-		}
-
-		return e.complexity.PolePositionBet.DriverID(childComplexity), true
-
-	case "PolePositionBet.id":
-		if e.complexity.PolePositionBet.ID == nil {
-			break
-		}
-
-		return e.complexity.PolePositionBet.ID(childComplexity), true
-
-	case "PolePositionBet.sessionId":
-		if e.complexity.PolePositionBet.SessionID == nil {
-			break
-		}
-
-		return e.complexity.PolePositionBet.SessionID(childComplexity), true
-
-	case "PolePositionBet.status":
-		if e.complexity.PolePositionBet.Status == nil {
-			break
-		}
-
-		return e.complexity.PolePositionBet.Status(childComplexity), true
-
-	case "PolePositionBet.userId":
-		if e.complexity.PolePositionBet.UserID == nil {
-			break
-		}
-
-		return e.complexity.PolePositionBet.UserID(childComplexity), true
-
-	case "Query.pendingBetsForSession":
-		if e.complexity.Query.PendingBetsForSession == nil {
-			break
-		}
-
-		args, err := ec.field_Query_pendingBetsForSession_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Query.PendingBetsForSession(childComplexity, args["sessionId"].(int32)), true
-
-	case "Query.sessionFastestLapBets":
-		if e.complexity.Query.SessionFastestLapBets == nil {
-			break
-		}
-
-		args, err := ec.field_Query_sessionFastestLapBets_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Query.SessionFastestLapBets(childComplexity, args["sessionId"].(int32), args["status"].(*model.BetStatus)), true
-
-	case "Query.sessionLapTimingBets":
-		if e.complexity.Query.SessionLapTimingBets == nil {
-			break
-		}
-
-		args, err := ec.field_Query_sessionLapTimingBets_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Query.SessionLapTimingBets(childComplexity, args["sessionId"].(int32), args["status"].(*model.BetStatus)), true
-
-	case "Query.sessionPodiumBets":
-		if e.complexity.Query.SessionPodiumBets == nil {
-			break
-		}
-
-		args, err := ec.field_Query_sessionPodiumBets_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Query.SessionPodiumBets(childComplexity, args["sessionId"].(int32), args["status"].(*model.BetStatus)), true
-
-	case "Query.sessionPolePositionBets":
-		if e.complexity.Query.SessionPolePositionBets == nil {
-			break
-		}
-
-		args, err := ec.field_Query_sessionPolePositionBets_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Query.SessionPolePositionBets(childComplexity, args["sessionId"].(int32), args["status"].(*model.BetStatus)), true
-
-	case "Query.sessionRainBets":
-		if e.complexity.Query.SessionRainBets == nil {
-			break
-		}
-
-		args, err := ec.field_Query_sessionRainBets_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Query.SessionRainBets(childComplexity, args["sessionId"].(int32), args["status"].(*model.BetStatus)), true
-
-	case "Query.sessionRetirementBets":
-		if e.complexity.Query.SessionRetirementBets == nil {
-			break
-		}
-
-		args, err := ec.field_Query_sessionRetirementBets_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Query.SessionRetirementBets(childComplexity, args["sessionId"].(int32), args["status"].(*model.BetStatus)), true
+		return e.complexity.Query.FastestLapBetsAndVisualizedPayout(childComplexity, args["sessionId"].(int32), args["userId"].(string)), true
 
 	case "Query.user":
 		if e.complexity.Query.User == nil {
@@ -691,30 +304,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Query.User(childComplexity, args["id"].(string)), true
-
-	case "Query.userActiveBets":
-		if e.complexity.Query.UserActiveBets == nil {
-			break
-		}
-
-		args, err := ec.field_Query_userActiveBets_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Query.UserActiveBets(childComplexity, args["userId"].(string)), true
-
-	case "Query.userBetHistory":
-		if e.complexity.Query.UserBetHistory == nil {
-			break
-		}
-
-		args, err := ec.field_Query_userBetHistory_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Query.UserBetHistory(childComplexity, args["userId"].(string)), true
 
 	case "Query.userByEmail":
 		if e.complexity.Query.UserByEmail == nil {
@@ -739,116 +328,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Query.UserByUsername(childComplexity, args["username"].(string)), true
-
-	case "Query.usersByStatus":
-		if e.complexity.Query.UsersByStatus == nil {
-			break
-		}
-
-		args, err := ec.field_Query_usersByStatus_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Query.UsersByStatus(childComplexity, args["status"].(model.AccountStatus)), true
-
-	case "RainBet.bettingPool":
-		if e.complexity.RainBet.BettingPool == nil {
-			break
-		}
-
-		return e.complexity.RainBet.BettingPool(childComplexity), true
-
-	case "RainBet.createdAt":
-		if e.complexity.RainBet.CreatedAt == nil {
-			break
-		}
-
-		return e.complexity.RainBet.CreatedAt(childComplexity), true
-
-	case "RainBet.id":
-		if e.complexity.RainBet.ID == nil {
-			break
-		}
-
-		return e.complexity.RainBet.ID(childComplexity), true
-
-	case "RainBet.rainPrediction":
-		if e.complexity.RainBet.RainPrediction == nil {
-			break
-		}
-
-		return e.complexity.RainBet.RainPrediction(childComplexity), true
-
-	case "RainBet.sessionId":
-		if e.complexity.RainBet.SessionID == nil {
-			break
-		}
-
-		return e.complexity.RainBet.SessionID(childComplexity), true
-
-	case "RainBet.status":
-		if e.complexity.RainBet.Status == nil {
-			break
-		}
-
-		return e.complexity.RainBet.Status(childComplexity), true
-
-	case "RainBet.userId":
-		if e.complexity.RainBet.UserID == nil {
-			break
-		}
-
-		return e.complexity.RainBet.UserID(childComplexity), true
-
-	case "RetirementBet.bettingPool":
-		if e.complexity.RetirementBet.BettingPool == nil {
-			break
-		}
-
-		return e.complexity.RetirementBet.BettingPool(childComplexity), true
-
-	case "RetirementBet.createdAt":
-		if e.complexity.RetirementBet.CreatedAt == nil {
-			break
-		}
-
-		return e.complexity.RetirementBet.CreatedAt(childComplexity), true
-
-	case "RetirementBet.driverId":
-		if e.complexity.RetirementBet.DriverID == nil {
-			break
-		}
-
-		return e.complexity.RetirementBet.DriverID(childComplexity), true
-
-	case "RetirementBet.id":
-		if e.complexity.RetirementBet.ID == nil {
-			break
-		}
-
-		return e.complexity.RetirementBet.ID(childComplexity), true
-
-	case "RetirementBet.sessionId":
-		if e.complexity.RetirementBet.SessionID == nil {
-			break
-		}
-
-		return e.complexity.RetirementBet.SessionID(childComplexity), true
-
-	case "RetirementBet.status":
-		if e.complexity.RetirementBet.Status == nil {
-			break
-		}
-
-		return e.complexity.RetirementBet.Status(childComplexity), true
-
-	case "RetirementBet.userId":
-		if e.complexity.RetirementBet.UserID == nil {
-			break
-		}
-
-		return e.complexity.RetirementBet.UserID(childComplexity), true
 
 	case "User.accountStatus":
 		if e.complexity.User.AccountStatus == nil {
@@ -884,13 +363,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.User.DateOfBirth(childComplexity), true
-
-	case "User.deletedAt":
-		if e.complexity.User.DeletedAt == nil {
-			break
-		}
-
-		return e.complexity.User.DeletedAt(childComplexity), true
 
 	case "User.email":
 		if e.complexity.User.Email == nil {
@@ -933,13 +405,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.User.ID(childComplexity), true
-
-	case "User.lastPasswordChange":
-		if e.complexity.User.LastPasswordChange == nil {
-			break
-		}
-
-		return e.complexity.User.LastPasswordChange(childComplexity), true
 
 	case "User.phoneNumber":
 		if e.complexity.User.PhoneNumber == nil {
@@ -990,6 +455,20 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.User.Username(childComplexity), true
 
+	case "fastestLapBetsAndVisualizedPayout.fastestLapBets":
+		if e.complexity.FastestLapBetsAndVisualizedPayout.FastestLapBets == nil {
+			break
+		}
+
+		return e.complexity.FastestLapBetsAndVisualizedPayout.FastestLapBets(childComplexity), true
+
+	case "fastestLapBetsAndVisualizedPayout.visualizedPayout":
+		if e.complexity.FastestLapBetsAndVisualizedPayout.VisualizedPayout == nil {
+			break
+		}
+
+		return e.complexity.FastestLapBetsAndVisualizedPayout.VisualizedPayout(childComplexity), true
+
 	}
 	return 0, false
 }
@@ -998,13 +477,7 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 	opCtx := graphql.GetOperationContext(ctx)
 	ec := executionContext{opCtx, e, 0, 0, make(chan graphql.DeferredResult)}
 	inputUnmarshalMap := graphql.BuildUnmarshalerMap(
-		ec.unmarshalInputBetInput,
 		ec.unmarshalInputFastestLapBetInput,
-		ec.unmarshalInputLapTimingBetInput,
-		ec.unmarshalInputPodiumBetInput,
-		ec.unmarshalInputPolePositionBetInput,
-		ec.unmarshalInputRainBetInput,
-		ec.unmarshalInputRetirementBetInput,
 		ec.unmarshalInputUserInput,
 		ec.unmarshalInputUserProfileUpdateInput,
 	)
@@ -1106,44 +579,44 @@ func (ec *executionContext) introspectType(name string) (*introspection.Type, er
 var sources = []*ast.Source{
 	{Name: "../schema/mutations.graphql", Input: `type Mutation {
   # User Management
-  createUser(input: UserInput!): User!
-  updateUserProfile(userId: ID!, input: UserProfileUpdateInput!): User!
-  updateUserEmail(userId: ID!, email: String!): User!
+  createUser(input: UserInput!): ID!
+  updateUserProfile(userId: ID!, input: UserProfileUpdateInput!): Boolean!
+  updateUserEmail(userId: ID!, email: String!): Boolean!
   updateUserPassword(userId: ID!, newPassword: String!): Boolean!
-  updateUserStatus(userId: ID!, status: AccountStatus!): User!
   deleteUser(userId: ID!): Boolean!
-  verifyUserEmail(userId: ID!): Boolean!
 
   # Betting
-  createPodiumBet(userId: ID!, input: PodiumBetInput!): PodiumBet!
-  createPolePositionBet(
-    userId: ID!
-    input: PolePositionBetInput!
-  ): PolePositionBet!
-  createRainBet(userId: ID!, input: RainBetInput!): RainBet!
-  createRetirementBet(userId: ID!, input: RetirementBetInput!): RetirementBet!
-  createFastestLapBet(userId: ID!, input: FastestLapBetInput!): FastestLapBet!
-  createLapTimingBet(userId: ID!, input: LapTimingBetInput!): LapTimingBet!
+  # createPodiumBet(userId: ID!, input: PodiumBetInput!): ID!
+  # createPolePositionBet(userId: ID!, input: PolePositionBetInput!): ID!
+  # createRainBet(userId: ID!, input: RainBetInput!): ID!
+  # createRetirementBet(userId: ID!, input: RetirementBetInput!): ID!
+  createFastestLapBet(userId: ID!, input: FastestLapBetInput!): ID!
+  # createLapTimingBet(userId: ID!, input: LapTimingBetInput!): ID!
 }
 `, BuiltIn: false},
 	{Name: "../schema/queries.graphql", Input: `type Query {
   user(id: ID!): User
   userByEmail(email: String!): User
   userByUsername(username: String!): User
-  usersByStatus(status: AccountStatus!): [User!]!
-  
-  userActiveBets(userId: ID!): [Bet!]!
-  userBetHistory(userId: ID!): [Bet!]!
-  
-  sessionPodiumBets(sessionId: Int!, status: BetStatus): [PodiumBet!]!
-  sessionPolePositionBets(sessionId: Int!, status: BetStatus): [PolePositionBet!]!
-  sessionRainBets(sessionId: Int!, status: BetStatus): [RainBet!]!
-  
-  sessionRetirementBets(sessionId: Int!, status: BetStatus): [RetirementBet!]!
-  sessionFastestLapBets(sessionId: Int!, status: BetStatus): [FastestLapBet!]!
-  sessionLapTimingBets(sessionId: Int!, status: BetStatus): [LapTimingBet!]!
-  
-  pendingBetsForSession(sessionId: Int!): [Bet!]!
+
+  # userActiveBets(userId: ID!): [Bet!]!
+  # userBetHistory(userId: ID!): [Bet!]!
+
+  # sessionPodiumBets(sessionId: Int!, status: BetStatus): [PodiumBet!]!
+  # sessionPolePositionBets(
+  #   sessionId: Int!
+  #   status: BetStatus
+  # ): [PolePositionBet!]!
+  # sessionRainBets(sessionId: Int!, status: BetStatus): [RainBet!]!
+
+  # sessionRetirementBets(sessionId: Int!, status: BetStatus): [RetirementBet!]!
+  # sessionFastestLapBets(sessionId: Int!, status: BetStatus): [FastestLapBet!]!
+  # sessionLapTimingBets(sessionId: Int!, status: BetStatus): [LapTimingBet!]!
+
+  fastestLapBetsAndVisualizedPayout(
+    sessionId: Int!
+    userId: ID!
+  ): fastestLapBetsAndVisualizedPayout!
 }
 `, BuiltIn: false},
 	{Name: "../schema/schema.graphql", Input: `schema {
@@ -1151,13 +624,13 @@ var sources = []*ast.Source{
   mutation: Mutation
 }
 
-union Bet =
-    PodiumBet
-  | PolePositionBet
-  | RainBet
-  | RetirementBet
-  | FastestLapBet
-  | LapTimingBet
+# union Bet =
+#     PodiumBet
+#   | PolePositionBet
+#   | RainBet
+#   | RetirementBet
+#   | FastestLapBet
+#   | LapTimingBet
 
 scalar Date
 scalar DateTime
@@ -1176,8 +649,6 @@ scalar DateTime
   registrationDate: String!
   role: UserRole!
   emailVerified: Boolean!
-  lastPasswordChange: String
-  deletedAt: String
   country: String
   preferredCurrency: String
   favoriteTeam: String
@@ -1185,47 +656,47 @@ scalar DateTime
   balance: Float!
 }
 
-type PodiumBet {
-  id: ID!
-  userId: ID!
-  sessionId: Int!
-  firstPosition: Int!
-  secondPosition: Int!
-  thirdPosition: Int!
-  status: BetStatus!
-  bettingPool: Int!
-  createdAt: String!
-}
+# type PodiumBet {
+#   id: ID!
+#   userId: ID!
+#   sessionId: Int!
+#   firstPosition: Int!
+#   secondPosition: Int!
+#   thirdPosition: Int!
+#   status: BetStatus!
+#   bettingPool: Int!
+#   createdAt: String!
+# }
 
-type PolePositionBet {
-  id: ID!
-  userId: ID!
-  sessionId: Int!
-  driverId: Int!
-  status: BetStatus!
-  bettingPool: Int!
-  createdAt: String!
-}
+# type PolePositionBet {
+#   id: ID!
+#   userId: ID!
+#   sessionId: Int!
+#   driverId: Int!
+#   status: BetStatus!
+#   bettingPool: Int!
+#   createdAt: String!
+# }
 
-type RainBet {
-  id: ID!
-  userId: ID!
-  sessionId: Int!
-  rainPrediction: Boolean!
-  status: BetStatus!
-  bettingPool: Int!
-  createdAt: String!
-}
+# type RainBet {
+#   id: ID!
+#   userId: ID!
+#   sessionId: Int!
+#   rainPrediction: Boolean!
+#   status: BetStatus!
+#   bettingPool: Int!
+#   createdAt: String!
+# }
 
-type RetirementBet {
-  id: ID!
-  userId: ID!
-  sessionId: Int!
-  driverId: Int!
-  status: BetStatus!
-  bettingPool: Int!
-  createdAt: String!
-}
+# type RetirementBet {
+#   id: ID!
+#   userId: ID!
+#   sessionId: Int!
+#   driverId: Int!
+#   status: BetStatus!
+#   bettingPool: Int!
+#   createdAt: String!
+# }
 
 type FastestLapBet {
   id: ID!
@@ -1238,15 +709,25 @@ type FastestLapBet {
   createdAt: String!
 }
 
-type LapTimingBet {
-  id: ID!
-  userId: ID!
-  sessionId: Int!
-  lapNumber: Int!
-  driverId: Int!
-  status: BetStatus!
-  bettingPool: Int!
-  createdAt: String!
+# type LapTimingBet {
+#   id: ID!
+#   userId: ID!
+#   sessionId: Int!
+#   lapNumber: Int!
+#   driverId: Int!
+#   status: BetStatus!
+#   bettingPool: Int!
+#   createdAt: String!
+# }
+
+type FastestLapUserPayout {
+  driverId: ID!
+  payout: Float!
+}
+
+type fastestLapBetsAndVisualizedPayout {
+  fastestLapBets: [FastestLapBet!]!
+  visualizedPayout: [FastestLapUserPayout]!
 }
 
 enum AccountStatus {
@@ -1292,36 +773,31 @@ input UserProfileUpdateInput {
   favoriteTeam: String
 }
 
-input BetInput {
-  sessionId: Int!
-  bettingPool: Int!
-}
+# input PodiumBetInput {
+#   sessionId: Int!
+#   firstPosition: Int!
+#   secondPosition: Int!
+#   thirdPosition: Int!
+#   bettingPool: Int!
+# }
 
-input PodiumBetInput {
-  sessionId: Int!
-  firstPosition: Int!
-  secondPosition: Int!
-  thirdPosition: Int!
-  bettingPool: Int!
-}
+# input PolePositionBetInput {
+#   sessionId: Int!
+#   driverId: Int!
+#   bettingPool: Int!
+# }
 
-input PolePositionBetInput {
-  sessionId: Int!
-  driverId: Int!
-  bettingPool: Int!
-}
+# input RainBetInput {
+#   sessionId: Int!
+#   rainPrediction: Boolean!
+#   bettingPool: Int!
+# }
 
-input RainBetInput {
-  sessionId: Int!
-  rainPrediction: Boolean!
-  bettingPool: Int!
-}
-
-input RetirementBetInput {
-  sessionId: Int!
-  driverId: Int!
-  bettingPool: Int!
-}
+# input RetirementBetInput {
+#   sessionId: Int!
+#   driverId: Int!
+#   bettingPool: Int!
+# }
 
 input FastestLapBetInput {
   sessionId: Int!
@@ -1329,12 +805,12 @@ input FastestLapBetInput {
   bettingPool: Int!
 }
 
-input LapTimingBetInput {
-  sessionId: Int!
-  lapNumber: Int!
-  driverId: Int!
-  bettingPool: Int!
-}
+# input LapTimingBetInput {
+#   sessionId: Int!
+#   lapNumber: Int!
+#   driverId: Int!
+#   bettingPool: Int!
+# }
 `, BuiltIn: false},
 }
 var parsedSchema = gqlparser.MustLoadSchema(sources...)
@@ -1381,211 +857,6 @@ func (ec *executionContext) field_Mutation_createFastestLapBet_argsInput(
 	}
 
 	var zeroVal model.FastestLapBetInput
-	return zeroVal, nil
-}
-
-func (ec *executionContext) field_Mutation_createLapTimingBet_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
-	var err error
-	args := map[string]any{}
-	arg0, err := ec.field_Mutation_createLapTimingBet_argsUserID(ctx, rawArgs)
-	if err != nil {
-		return nil, err
-	}
-	args["userId"] = arg0
-	arg1, err := ec.field_Mutation_createLapTimingBet_argsInput(ctx, rawArgs)
-	if err != nil {
-		return nil, err
-	}
-	args["input"] = arg1
-	return args, nil
-}
-func (ec *executionContext) field_Mutation_createLapTimingBet_argsUserID(
-	ctx context.Context,
-	rawArgs map[string]any,
-) (string, error) {
-	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("userId"))
-	if tmp, ok := rawArgs["userId"]; ok {
-		return ec.unmarshalNID2string(ctx, tmp)
-	}
-
-	var zeroVal string
-	return zeroVal, nil
-}
-
-func (ec *executionContext) field_Mutation_createLapTimingBet_argsInput(
-	ctx context.Context,
-	rawArgs map[string]any,
-) (model.LapTimingBetInput, error) {
-	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-	if tmp, ok := rawArgs["input"]; ok {
-		return ec.unmarshalNLapTimingBetInput2f1bettingᚋuser_apiᚋgraphᚋmodelᚐLapTimingBetInput(ctx, tmp)
-	}
-
-	var zeroVal model.LapTimingBetInput
-	return zeroVal, nil
-}
-
-func (ec *executionContext) field_Mutation_createPodiumBet_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
-	var err error
-	args := map[string]any{}
-	arg0, err := ec.field_Mutation_createPodiumBet_argsUserID(ctx, rawArgs)
-	if err != nil {
-		return nil, err
-	}
-	args["userId"] = arg0
-	arg1, err := ec.field_Mutation_createPodiumBet_argsInput(ctx, rawArgs)
-	if err != nil {
-		return nil, err
-	}
-	args["input"] = arg1
-	return args, nil
-}
-func (ec *executionContext) field_Mutation_createPodiumBet_argsUserID(
-	ctx context.Context,
-	rawArgs map[string]any,
-) (string, error) {
-	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("userId"))
-	if tmp, ok := rawArgs["userId"]; ok {
-		return ec.unmarshalNID2string(ctx, tmp)
-	}
-
-	var zeroVal string
-	return zeroVal, nil
-}
-
-func (ec *executionContext) field_Mutation_createPodiumBet_argsInput(
-	ctx context.Context,
-	rawArgs map[string]any,
-) (model.PodiumBetInput, error) {
-	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-	if tmp, ok := rawArgs["input"]; ok {
-		return ec.unmarshalNPodiumBetInput2f1bettingᚋuser_apiᚋgraphᚋmodelᚐPodiumBetInput(ctx, tmp)
-	}
-
-	var zeroVal model.PodiumBetInput
-	return zeroVal, nil
-}
-
-func (ec *executionContext) field_Mutation_createPolePositionBet_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
-	var err error
-	args := map[string]any{}
-	arg0, err := ec.field_Mutation_createPolePositionBet_argsUserID(ctx, rawArgs)
-	if err != nil {
-		return nil, err
-	}
-	args["userId"] = arg0
-	arg1, err := ec.field_Mutation_createPolePositionBet_argsInput(ctx, rawArgs)
-	if err != nil {
-		return nil, err
-	}
-	args["input"] = arg1
-	return args, nil
-}
-func (ec *executionContext) field_Mutation_createPolePositionBet_argsUserID(
-	ctx context.Context,
-	rawArgs map[string]any,
-) (string, error) {
-	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("userId"))
-	if tmp, ok := rawArgs["userId"]; ok {
-		return ec.unmarshalNID2string(ctx, tmp)
-	}
-
-	var zeroVal string
-	return zeroVal, nil
-}
-
-func (ec *executionContext) field_Mutation_createPolePositionBet_argsInput(
-	ctx context.Context,
-	rawArgs map[string]any,
-) (model.PolePositionBetInput, error) {
-	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-	if tmp, ok := rawArgs["input"]; ok {
-		return ec.unmarshalNPolePositionBetInput2f1bettingᚋuser_apiᚋgraphᚋmodelᚐPolePositionBetInput(ctx, tmp)
-	}
-
-	var zeroVal model.PolePositionBetInput
-	return zeroVal, nil
-}
-
-func (ec *executionContext) field_Mutation_createRainBet_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
-	var err error
-	args := map[string]any{}
-	arg0, err := ec.field_Mutation_createRainBet_argsUserID(ctx, rawArgs)
-	if err != nil {
-		return nil, err
-	}
-	args["userId"] = arg0
-	arg1, err := ec.field_Mutation_createRainBet_argsInput(ctx, rawArgs)
-	if err != nil {
-		return nil, err
-	}
-	args["input"] = arg1
-	return args, nil
-}
-func (ec *executionContext) field_Mutation_createRainBet_argsUserID(
-	ctx context.Context,
-	rawArgs map[string]any,
-) (string, error) {
-	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("userId"))
-	if tmp, ok := rawArgs["userId"]; ok {
-		return ec.unmarshalNID2string(ctx, tmp)
-	}
-
-	var zeroVal string
-	return zeroVal, nil
-}
-
-func (ec *executionContext) field_Mutation_createRainBet_argsInput(
-	ctx context.Context,
-	rawArgs map[string]any,
-) (model.RainBetInput, error) {
-	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-	if tmp, ok := rawArgs["input"]; ok {
-		return ec.unmarshalNRainBetInput2f1bettingᚋuser_apiᚋgraphᚋmodelᚐRainBetInput(ctx, tmp)
-	}
-
-	var zeroVal model.RainBetInput
-	return zeroVal, nil
-}
-
-func (ec *executionContext) field_Mutation_createRetirementBet_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
-	var err error
-	args := map[string]any{}
-	arg0, err := ec.field_Mutation_createRetirementBet_argsUserID(ctx, rawArgs)
-	if err != nil {
-		return nil, err
-	}
-	args["userId"] = arg0
-	arg1, err := ec.field_Mutation_createRetirementBet_argsInput(ctx, rawArgs)
-	if err != nil {
-		return nil, err
-	}
-	args["input"] = arg1
-	return args, nil
-}
-func (ec *executionContext) field_Mutation_createRetirementBet_argsUserID(
-	ctx context.Context,
-	rawArgs map[string]any,
-) (string, error) {
-	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("userId"))
-	if tmp, ok := rawArgs["userId"]; ok {
-		return ec.unmarshalNID2string(ctx, tmp)
-	}
-
-	var zeroVal string
-	return zeroVal, nil
-}
-
-func (ec *executionContext) field_Mutation_createRetirementBet_argsInput(
-	ctx context.Context,
-	rawArgs map[string]any,
-) (model.RetirementBetInput, error) {
-	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-	if tmp, ok := rawArgs["input"]; ok {
-		return ec.unmarshalNRetirementBetInput2f1bettingᚋuser_apiᚋgraphᚋmodelᚐRetirementBetInput(ctx, tmp)
-	}
-
-	var zeroVal model.RetirementBetInput
 	return zeroVal, nil
 }
 
@@ -1758,70 +1029,6 @@ func (ec *executionContext) field_Mutation_updateUserProfile_argsInput(
 	return zeroVal, nil
 }
 
-func (ec *executionContext) field_Mutation_updateUserStatus_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
-	var err error
-	args := map[string]any{}
-	arg0, err := ec.field_Mutation_updateUserStatus_argsUserID(ctx, rawArgs)
-	if err != nil {
-		return nil, err
-	}
-	args["userId"] = arg0
-	arg1, err := ec.field_Mutation_updateUserStatus_argsStatus(ctx, rawArgs)
-	if err != nil {
-		return nil, err
-	}
-	args["status"] = arg1
-	return args, nil
-}
-func (ec *executionContext) field_Mutation_updateUserStatus_argsUserID(
-	ctx context.Context,
-	rawArgs map[string]any,
-) (string, error) {
-	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("userId"))
-	if tmp, ok := rawArgs["userId"]; ok {
-		return ec.unmarshalNID2string(ctx, tmp)
-	}
-
-	var zeroVal string
-	return zeroVal, nil
-}
-
-func (ec *executionContext) field_Mutation_updateUserStatus_argsStatus(
-	ctx context.Context,
-	rawArgs map[string]any,
-) (model.AccountStatus, error) {
-	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("status"))
-	if tmp, ok := rawArgs["status"]; ok {
-		return ec.unmarshalNAccountStatus2f1bettingᚋuser_apiᚋgraphᚋmodelᚐAccountStatus(ctx, tmp)
-	}
-
-	var zeroVal model.AccountStatus
-	return zeroVal, nil
-}
-
-func (ec *executionContext) field_Mutation_verifyUserEmail_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
-	var err error
-	args := map[string]any{}
-	arg0, err := ec.field_Mutation_verifyUserEmail_argsUserID(ctx, rawArgs)
-	if err != nil {
-		return nil, err
-	}
-	args["userId"] = arg0
-	return args, nil
-}
-func (ec *executionContext) field_Mutation_verifyUserEmail_argsUserID(
-	ctx context.Context,
-	rawArgs map[string]any,
-) (string, error) {
-	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("userId"))
-	if tmp, ok := rawArgs["userId"]; ok {
-		return ec.unmarshalNID2string(ctx, tmp)
-	}
-
-	var zeroVal string
-	return zeroVal, nil
-}
-
 func (ec *executionContext) field_Query___type_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
 	var err error
 	args := map[string]any{}
@@ -1845,17 +1052,22 @@ func (ec *executionContext) field_Query___type_argsName(
 	return zeroVal, nil
 }
 
-func (ec *executionContext) field_Query_pendingBetsForSession_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
+func (ec *executionContext) field_Query_fastestLapBetsAndVisualizedPayout_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
 	var err error
 	args := map[string]any{}
-	arg0, err := ec.field_Query_pendingBetsForSession_argsSessionID(ctx, rawArgs)
+	arg0, err := ec.field_Query_fastestLapBetsAndVisualizedPayout_argsSessionID(ctx, rawArgs)
 	if err != nil {
 		return nil, err
 	}
 	args["sessionId"] = arg0
+	arg1, err := ec.field_Query_fastestLapBetsAndVisualizedPayout_argsUserID(ctx, rawArgs)
+	if err != nil {
+		return nil, err
+	}
+	args["userId"] = arg1
 	return args, nil
 }
-func (ec *executionContext) field_Query_pendingBetsForSession_argsSessionID(
+func (ec *executionContext) field_Query_fastestLapBetsAndVisualizedPayout_argsSessionID(
 	ctx context.Context,
 	rawArgs map[string]any,
 ) (int32, error) {
@@ -1868,286 +1080,7 @@ func (ec *executionContext) field_Query_pendingBetsForSession_argsSessionID(
 	return zeroVal, nil
 }
 
-func (ec *executionContext) field_Query_sessionFastestLapBets_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
-	var err error
-	args := map[string]any{}
-	arg0, err := ec.field_Query_sessionFastestLapBets_argsSessionID(ctx, rawArgs)
-	if err != nil {
-		return nil, err
-	}
-	args["sessionId"] = arg0
-	arg1, err := ec.field_Query_sessionFastestLapBets_argsStatus(ctx, rawArgs)
-	if err != nil {
-		return nil, err
-	}
-	args["status"] = arg1
-	return args, nil
-}
-func (ec *executionContext) field_Query_sessionFastestLapBets_argsSessionID(
-	ctx context.Context,
-	rawArgs map[string]any,
-) (int32, error) {
-	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("sessionId"))
-	if tmp, ok := rawArgs["sessionId"]; ok {
-		return ec.unmarshalNInt2int32(ctx, tmp)
-	}
-
-	var zeroVal int32
-	return zeroVal, nil
-}
-
-func (ec *executionContext) field_Query_sessionFastestLapBets_argsStatus(
-	ctx context.Context,
-	rawArgs map[string]any,
-) (*model.BetStatus, error) {
-	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("status"))
-	if tmp, ok := rawArgs["status"]; ok {
-		return ec.unmarshalOBetStatus2ᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐBetStatus(ctx, tmp)
-	}
-
-	var zeroVal *model.BetStatus
-	return zeroVal, nil
-}
-
-func (ec *executionContext) field_Query_sessionLapTimingBets_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
-	var err error
-	args := map[string]any{}
-	arg0, err := ec.field_Query_sessionLapTimingBets_argsSessionID(ctx, rawArgs)
-	if err != nil {
-		return nil, err
-	}
-	args["sessionId"] = arg0
-	arg1, err := ec.field_Query_sessionLapTimingBets_argsStatus(ctx, rawArgs)
-	if err != nil {
-		return nil, err
-	}
-	args["status"] = arg1
-	return args, nil
-}
-func (ec *executionContext) field_Query_sessionLapTimingBets_argsSessionID(
-	ctx context.Context,
-	rawArgs map[string]any,
-) (int32, error) {
-	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("sessionId"))
-	if tmp, ok := rawArgs["sessionId"]; ok {
-		return ec.unmarshalNInt2int32(ctx, tmp)
-	}
-
-	var zeroVal int32
-	return zeroVal, nil
-}
-
-func (ec *executionContext) field_Query_sessionLapTimingBets_argsStatus(
-	ctx context.Context,
-	rawArgs map[string]any,
-) (*model.BetStatus, error) {
-	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("status"))
-	if tmp, ok := rawArgs["status"]; ok {
-		return ec.unmarshalOBetStatus2ᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐBetStatus(ctx, tmp)
-	}
-
-	var zeroVal *model.BetStatus
-	return zeroVal, nil
-}
-
-func (ec *executionContext) field_Query_sessionPodiumBets_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
-	var err error
-	args := map[string]any{}
-	arg0, err := ec.field_Query_sessionPodiumBets_argsSessionID(ctx, rawArgs)
-	if err != nil {
-		return nil, err
-	}
-	args["sessionId"] = arg0
-	arg1, err := ec.field_Query_sessionPodiumBets_argsStatus(ctx, rawArgs)
-	if err != nil {
-		return nil, err
-	}
-	args["status"] = arg1
-	return args, nil
-}
-func (ec *executionContext) field_Query_sessionPodiumBets_argsSessionID(
-	ctx context.Context,
-	rawArgs map[string]any,
-) (int32, error) {
-	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("sessionId"))
-	if tmp, ok := rawArgs["sessionId"]; ok {
-		return ec.unmarshalNInt2int32(ctx, tmp)
-	}
-
-	var zeroVal int32
-	return zeroVal, nil
-}
-
-func (ec *executionContext) field_Query_sessionPodiumBets_argsStatus(
-	ctx context.Context,
-	rawArgs map[string]any,
-) (*model.BetStatus, error) {
-	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("status"))
-	if tmp, ok := rawArgs["status"]; ok {
-		return ec.unmarshalOBetStatus2ᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐBetStatus(ctx, tmp)
-	}
-
-	var zeroVal *model.BetStatus
-	return zeroVal, nil
-}
-
-func (ec *executionContext) field_Query_sessionPolePositionBets_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
-	var err error
-	args := map[string]any{}
-	arg0, err := ec.field_Query_sessionPolePositionBets_argsSessionID(ctx, rawArgs)
-	if err != nil {
-		return nil, err
-	}
-	args["sessionId"] = arg0
-	arg1, err := ec.field_Query_sessionPolePositionBets_argsStatus(ctx, rawArgs)
-	if err != nil {
-		return nil, err
-	}
-	args["status"] = arg1
-	return args, nil
-}
-func (ec *executionContext) field_Query_sessionPolePositionBets_argsSessionID(
-	ctx context.Context,
-	rawArgs map[string]any,
-) (int32, error) {
-	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("sessionId"))
-	if tmp, ok := rawArgs["sessionId"]; ok {
-		return ec.unmarshalNInt2int32(ctx, tmp)
-	}
-
-	var zeroVal int32
-	return zeroVal, nil
-}
-
-func (ec *executionContext) field_Query_sessionPolePositionBets_argsStatus(
-	ctx context.Context,
-	rawArgs map[string]any,
-) (*model.BetStatus, error) {
-	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("status"))
-	if tmp, ok := rawArgs["status"]; ok {
-		return ec.unmarshalOBetStatus2ᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐBetStatus(ctx, tmp)
-	}
-
-	var zeroVal *model.BetStatus
-	return zeroVal, nil
-}
-
-func (ec *executionContext) field_Query_sessionRainBets_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
-	var err error
-	args := map[string]any{}
-	arg0, err := ec.field_Query_sessionRainBets_argsSessionID(ctx, rawArgs)
-	if err != nil {
-		return nil, err
-	}
-	args["sessionId"] = arg0
-	arg1, err := ec.field_Query_sessionRainBets_argsStatus(ctx, rawArgs)
-	if err != nil {
-		return nil, err
-	}
-	args["status"] = arg1
-	return args, nil
-}
-func (ec *executionContext) field_Query_sessionRainBets_argsSessionID(
-	ctx context.Context,
-	rawArgs map[string]any,
-) (int32, error) {
-	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("sessionId"))
-	if tmp, ok := rawArgs["sessionId"]; ok {
-		return ec.unmarshalNInt2int32(ctx, tmp)
-	}
-
-	var zeroVal int32
-	return zeroVal, nil
-}
-
-func (ec *executionContext) field_Query_sessionRainBets_argsStatus(
-	ctx context.Context,
-	rawArgs map[string]any,
-) (*model.BetStatus, error) {
-	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("status"))
-	if tmp, ok := rawArgs["status"]; ok {
-		return ec.unmarshalOBetStatus2ᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐBetStatus(ctx, tmp)
-	}
-
-	var zeroVal *model.BetStatus
-	return zeroVal, nil
-}
-
-func (ec *executionContext) field_Query_sessionRetirementBets_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
-	var err error
-	args := map[string]any{}
-	arg0, err := ec.field_Query_sessionRetirementBets_argsSessionID(ctx, rawArgs)
-	if err != nil {
-		return nil, err
-	}
-	args["sessionId"] = arg0
-	arg1, err := ec.field_Query_sessionRetirementBets_argsStatus(ctx, rawArgs)
-	if err != nil {
-		return nil, err
-	}
-	args["status"] = arg1
-	return args, nil
-}
-func (ec *executionContext) field_Query_sessionRetirementBets_argsSessionID(
-	ctx context.Context,
-	rawArgs map[string]any,
-) (int32, error) {
-	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("sessionId"))
-	if tmp, ok := rawArgs["sessionId"]; ok {
-		return ec.unmarshalNInt2int32(ctx, tmp)
-	}
-
-	var zeroVal int32
-	return zeroVal, nil
-}
-
-func (ec *executionContext) field_Query_sessionRetirementBets_argsStatus(
-	ctx context.Context,
-	rawArgs map[string]any,
-) (*model.BetStatus, error) {
-	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("status"))
-	if tmp, ok := rawArgs["status"]; ok {
-		return ec.unmarshalOBetStatus2ᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐBetStatus(ctx, tmp)
-	}
-
-	var zeroVal *model.BetStatus
-	return zeroVal, nil
-}
-
-func (ec *executionContext) field_Query_userActiveBets_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
-	var err error
-	args := map[string]any{}
-	arg0, err := ec.field_Query_userActiveBets_argsUserID(ctx, rawArgs)
-	if err != nil {
-		return nil, err
-	}
-	args["userId"] = arg0
-	return args, nil
-}
-func (ec *executionContext) field_Query_userActiveBets_argsUserID(
-	ctx context.Context,
-	rawArgs map[string]any,
-) (string, error) {
-	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("userId"))
-	if tmp, ok := rawArgs["userId"]; ok {
-		return ec.unmarshalNID2string(ctx, tmp)
-	}
-
-	var zeroVal string
-	return zeroVal, nil
-}
-
-func (ec *executionContext) field_Query_userBetHistory_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
-	var err error
-	args := map[string]any{}
-	arg0, err := ec.field_Query_userBetHistory_argsUserID(ctx, rawArgs)
-	if err != nil {
-		return nil, err
-	}
-	args["userId"] = arg0
-	return args, nil
-}
-func (ec *executionContext) field_Query_userBetHistory_argsUserID(
+func (ec *executionContext) field_Query_fastestLapBetsAndVisualizedPayout_argsUserID(
 	ctx context.Context,
 	rawArgs map[string]any,
 ) (string, error) {
@@ -2226,29 +1159,6 @@ func (ec *executionContext) field_Query_user_argsID(
 	}
 
 	var zeroVal string
-	return zeroVal, nil
-}
-
-func (ec *executionContext) field_Query_usersByStatus_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
-	var err error
-	args := map[string]any{}
-	arg0, err := ec.field_Query_usersByStatus_argsStatus(ctx, rawArgs)
-	if err != nil {
-		return nil, err
-	}
-	args["status"] = arg0
-	return args, nil
-}
-func (ec *executionContext) field_Query_usersByStatus_argsStatus(
-	ctx context.Context,
-	rawArgs map[string]any,
-) (model.AccountStatus, error) {
-	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("status"))
-	if tmp, ok := rawArgs["status"]; ok {
-		return ec.unmarshalNAccountStatus2f1bettingᚋuser_apiᚋgraphᚋmodelᚐAccountStatus(ctx, tmp)
-	}
-
-	var zeroVal model.AccountStatus
 	return zeroVal, nil
 }
 
@@ -2704,184 +1614,8 @@ func (ec *executionContext) fieldContext_FastestLapBet_createdAt(_ context.Conte
 	return fc, nil
 }
 
-func (ec *executionContext) _LapTimingBet_id(ctx context.Context, field graphql.CollectedField, obj *model.LapTimingBet) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_LapTimingBet_id(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.ID, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(string)
-	fc.Result = res
-	return ec.marshalNID2string(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_LapTimingBet_id(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "LapTimingBet",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type ID does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _LapTimingBet_userId(ctx context.Context, field graphql.CollectedField, obj *model.LapTimingBet) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_LapTimingBet_userId(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.UserID, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(string)
-	fc.Result = res
-	return ec.marshalNID2string(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_LapTimingBet_userId(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "LapTimingBet",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type ID does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _LapTimingBet_sessionId(ctx context.Context, field graphql.CollectedField, obj *model.LapTimingBet) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_LapTimingBet_sessionId(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.SessionID, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(int32)
-	fc.Result = res
-	return ec.marshalNInt2int32(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_LapTimingBet_sessionId(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "LapTimingBet",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Int does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _LapTimingBet_lapNumber(ctx context.Context, field graphql.CollectedField, obj *model.LapTimingBet) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_LapTimingBet_lapNumber(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.LapNumber, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(int32)
-	fc.Result = res
-	return ec.marshalNInt2int32(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_LapTimingBet_lapNumber(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "LapTimingBet",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Int does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _LapTimingBet_driverId(ctx context.Context, field graphql.CollectedField, obj *model.LapTimingBet) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_LapTimingBet_driverId(ctx, field)
+func (ec *executionContext) _FastestLapUserPayout_driverId(ctx context.Context, field graphql.CollectedField, obj *model.FastestLapUserPayout) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_FastestLapUserPayout_driverId(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -2906,151 +1640,63 @@ func (ec *executionContext) _LapTimingBet_driverId(ctx context.Context, field gr
 		}
 		return graphql.Null
 	}
-	res := resTmp.(int32)
-	fc.Result = res
-	return ec.marshalNInt2int32(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_LapTimingBet_driverId(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "LapTimingBet",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Int does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _LapTimingBet_status(ctx context.Context, field graphql.CollectedField, obj *model.LapTimingBet) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_LapTimingBet_status(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.Status, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(model.BetStatus)
-	fc.Result = res
-	return ec.marshalNBetStatus2f1bettingᚋuser_apiᚋgraphᚋmodelᚐBetStatus(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_LapTimingBet_status(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "LapTimingBet",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type BetStatus does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _LapTimingBet_bettingPool(ctx context.Context, field graphql.CollectedField, obj *model.LapTimingBet) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_LapTimingBet_bettingPool(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.BettingPool, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(int32)
-	fc.Result = res
-	return ec.marshalNInt2int32(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_LapTimingBet_bettingPool(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "LapTimingBet",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Int does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _LapTimingBet_createdAt(ctx context.Context, field graphql.CollectedField, obj *model.LapTimingBet) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_LapTimingBet_createdAt(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.CreatedAt, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
 	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalNString2string(ctx, field.Selections, res)
+	return ec.marshalNID2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_LapTimingBet_createdAt(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_FastestLapUserPayout_driverId(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "LapTimingBet",
+		Object:     "FastestLapUserPayout",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
+			return nil, errors.New("field of type ID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _FastestLapUserPayout_payout(ctx context.Context, field graphql.CollectedField, obj *model.FastestLapUserPayout) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_FastestLapUserPayout_payout(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Payout, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(float64)
+	fc.Result = res
+	return ec.marshalNFloat2float64(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_FastestLapUserPayout_payout(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "FastestLapUserPayout",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Float does not have child fields")
 		},
 	}
 	return fc, nil
@@ -3082,9 +1728,9 @@ func (ec *executionContext) _Mutation_createUser(ctx context.Context, field grap
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*model.User)
+	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalNUser2ᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐUser(ctx, field.Selections, res)
+	return ec.marshalNID2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_createUser(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -3094,49 +1740,7 @@ func (ec *executionContext) fieldContext_Mutation_createUser(ctx context.Context
 		IsMethod:   true,
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_User_id(ctx, field)
-			case "fullName":
-				return ec.fieldContext_User_fullName(ctx, field)
-			case "email":
-				return ec.fieldContext_User_email(ctx, field)
-			case "username":
-				return ec.fieldContext_User_username(ctx, field)
-			case "dateOfBirth":
-				return ec.fieldContext_User_dateOfBirth(ctx, field)
-			case "phoneNumber":
-				return ec.fieldContext_User_phoneNumber(ctx, field)
-			case "governmentId":
-				return ec.fieldContext_User_governmentId(ctx, field)
-			case "address":
-				return ec.fieldContext_User_address(ctx, field)
-			case "taxId":
-				return ec.fieldContext_User_taxId(ctx, field)
-			case "accountStatus":
-				return ec.fieldContext_User_accountStatus(ctx, field)
-			case "registrationDate":
-				return ec.fieldContext_User_registrationDate(ctx, field)
-			case "role":
-				return ec.fieldContext_User_role(ctx, field)
-			case "emailVerified":
-				return ec.fieldContext_User_emailVerified(ctx, field)
-			case "lastPasswordChange":
-				return ec.fieldContext_User_lastPasswordChange(ctx, field)
-			case "deletedAt":
-				return ec.fieldContext_User_deletedAt(ctx, field)
-			case "country":
-				return ec.fieldContext_User_country(ctx, field)
-			case "preferredCurrency":
-				return ec.fieldContext_User_preferredCurrency(ctx, field)
-			case "favoriteTeam":
-				return ec.fieldContext_User_favoriteTeam(ctx, field)
-			case "profilePictureUrl":
-				return ec.fieldContext_User_profilePictureUrl(ctx, field)
-			case "balance":
-				return ec.fieldContext_User_balance(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type User", field.Name)
+			return nil, errors.New("field of type ID does not have child fields")
 		},
 	}
 	defer func() {
@@ -3179,9 +1783,9 @@ func (ec *executionContext) _Mutation_updateUserProfile(ctx context.Context, fie
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*model.User)
+	res := resTmp.(bool)
 	fc.Result = res
-	return ec.marshalNUser2ᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐUser(ctx, field.Selections, res)
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_updateUserProfile(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -3191,49 +1795,7 @@ func (ec *executionContext) fieldContext_Mutation_updateUserProfile(ctx context.
 		IsMethod:   true,
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_User_id(ctx, field)
-			case "fullName":
-				return ec.fieldContext_User_fullName(ctx, field)
-			case "email":
-				return ec.fieldContext_User_email(ctx, field)
-			case "username":
-				return ec.fieldContext_User_username(ctx, field)
-			case "dateOfBirth":
-				return ec.fieldContext_User_dateOfBirth(ctx, field)
-			case "phoneNumber":
-				return ec.fieldContext_User_phoneNumber(ctx, field)
-			case "governmentId":
-				return ec.fieldContext_User_governmentId(ctx, field)
-			case "address":
-				return ec.fieldContext_User_address(ctx, field)
-			case "taxId":
-				return ec.fieldContext_User_taxId(ctx, field)
-			case "accountStatus":
-				return ec.fieldContext_User_accountStatus(ctx, field)
-			case "registrationDate":
-				return ec.fieldContext_User_registrationDate(ctx, field)
-			case "role":
-				return ec.fieldContext_User_role(ctx, field)
-			case "emailVerified":
-				return ec.fieldContext_User_emailVerified(ctx, field)
-			case "lastPasswordChange":
-				return ec.fieldContext_User_lastPasswordChange(ctx, field)
-			case "deletedAt":
-				return ec.fieldContext_User_deletedAt(ctx, field)
-			case "country":
-				return ec.fieldContext_User_country(ctx, field)
-			case "preferredCurrency":
-				return ec.fieldContext_User_preferredCurrency(ctx, field)
-			case "favoriteTeam":
-				return ec.fieldContext_User_favoriteTeam(ctx, field)
-			case "profilePictureUrl":
-				return ec.fieldContext_User_profilePictureUrl(ctx, field)
-			case "balance":
-				return ec.fieldContext_User_balance(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type User", field.Name)
+			return nil, errors.New("field of type Boolean does not have child fields")
 		},
 	}
 	defer func() {
@@ -3276,9 +1838,9 @@ func (ec *executionContext) _Mutation_updateUserEmail(ctx context.Context, field
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*model.User)
+	res := resTmp.(bool)
 	fc.Result = res
-	return ec.marshalNUser2ᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐUser(ctx, field.Selections, res)
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_updateUserEmail(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -3288,49 +1850,7 @@ func (ec *executionContext) fieldContext_Mutation_updateUserEmail(ctx context.Co
 		IsMethod:   true,
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_User_id(ctx, field)
-			case "fullName":
-				return ec.fieldContext_User_fullName(ctx, field)
-			case "email":
-				return ec.fieldContext_User_email(ctx, field)
-			case "username":
-				return ec.fieldContext_User_username(ctx, field)
-			case "dateOfBirth":
-				return ec.fieldContext_User_dateOfBirth(ctx, field)
-			case "phoneNumber":
-				return ec.fieldContext_User_phoneNumber(ctx, field)
-			case "governmentId":
-				return ec.fieldContext_User_governmentId(ctx, field)
-			case "address":
-				return ec.fieldContext_User_address(ctx, field)
-			case "taxId":
-				return ec.fieldContext_User_taxId(ctx, field)
-			case "accountStatus":
-				return ec.fieldContext_User_accountStatus(ctx, field)
-			case "registrationDate":
-				return ec.fieldContext_User_registrationDate(ctx, field)
-			case "role":
-				return ec.fieldContext_User_role(ctx, field)
-			case "emailVerified":
-				return ec.fieldContext_User_emailVerified(ctx, field)
-			case "lastPasswordChange":
-				return ec.fieldContext_User_lastPasswordChange(ctx, field)
-			case "deletedAt":
-				return ec.fieldContext_User_deletedAt(ctx, field)
-			case "country":
-				return ec.fieldContext_User_country(ctx, field)
-			case "preferredCurrency":
-				return ec.fieldContext_User_preferredCurrency(ctx, field)
-			case "favoriteTeam":
-				return ec.fieldContext_User_favoriteTeam(ctx, field)
-			case "profilePictureUrl":
-				return ec.fieldContext_User_profilePictureUrl(ctx, field)
-			case "balance":
-				return ec.fieldContext_User_balance(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type User", field.Name)
+			return nil, errors.New("field of type Boolean does not have child fields")
 		},
 	}
 	defer func() {
@@ -3402,103 +1922,6 @@ func (ec *executionContext) fieldContext_Mutation_updateUserPassword(ctx context
 	return fc, nil
 }
 
-func (ec *executionContext) _Mutation_updateUserStatus(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_updateUserStatus(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Mutation().UpdateUserStatus(rctx, fc.Args["userId"].(string), fc.Args["status"].(model.AccountStatus))
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*model.User)
-	fc.Result = res
-	return ec.marshalNUser2ᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐUser(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_updateUserStatus(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_User_id(ctx, field)
-			case "fullName":
-				return ec.fieldContext_User_fullName(ctx, field)
-			case "email":
-				return ec.fieldContext_User_email(ctx, field)
-			case "username":
-				return ec.fieldContext_User_username(ctx, field)
-			case "dateOfBirth":
-				return ec.fieldContext_User_dateOfBirth(ctx, field)
-			case "phoneNumber":
-				return ec.fieldContext_User_phoneNumber(ctx, field)
-			case "governmentId":
-				return ec.fieldContext_User_governmentId(ctx, field)
-			case "address":
-				return ec.fieldContext_User_address(ctx, field)
-			case "taxId":
-				return ec.fieldContext_User_taxId(ctx, field)
-			case "accountStatus":
-				return ec.fieldContext_User_accountStatus(ctx, field)
-			case "registrationDate":
-				return ec.fieldContext_User_registrationDate(ctx, field)
-			case "role":
-				return ec.fieldContext_User_role(ctx, field)
-			case "emailVerified":
-				return ec.fieldContext_User_emailVerified(ctx, field)
-			case "lastPasswordChange":
-				return ec.fieldContext_User_lastPasswordChange(ctx, field)
-			case "deletedAt":
-				return ec.fieldContext_User_deletedAt(ctx, field)
-			case "country":
-				return ec.fieldContext_User_country(ctx, field)
-			case "preferredCurrency":
-				return ec.fieldContext_User_preferredCurrency(ctx, field)
-			case "favoriteTeam":
-				return ec.fieldContext_User_favoriteTeam(ctx, field)
-			case "profilePictureUrl":
-				return ec.fieldContext_User_profilePictureUrl(ctx, field)
-			case "balance":
-				return ec.fieldContext_User_balance(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type User", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_updateUserStatus_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
 func (ec *executionContext) _Mutation_deleteUser(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Mutation_deleteUser(ctx, field)
 	if err != nil {
@@ -3554,349 +1977,6 @@ func (ec *executionContext) fieldContext_Mutation_deleteUser(ctx context.Context
 	return fc, nil
 }
 
-func (ec *executionContext) _Mutation_verifyUserEmail(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_verifyUserEmail(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Mutation().VerifyUserEmail(rctx, fc.Args["userId"].(string))
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(bool)
-	fc.Result = res
-	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_verifyUserEmail(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Boolean does not have child fields")
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_verifyUserEmail_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_createPodiumBet(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_createPodiumBet(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Mutation().CreatePodiumBet(rctx, fc.Args["userId"].(string), fc.Args["input"].(model.PodiumBetInput))
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*model.PodiumBet)
-	fc.Result = res
-	return ec.marshalNPodiumBet2ᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐPodiumBet(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_createPodiumBet(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_PodiumBet_id(ctx, field)
-			case "userId":
-				return ec.fieldContext_PodiumBet_userId(ctx, field)
-			case "sessionId":
-				return ec.fieldContext_PodiumBet_sessionId(ctx, field)
-			case "firstPosition":
-				return ec.fieldContext_PodiumBet_firstPosition(ctx, field)
-			case "secondPosition":
-				return ec.fieldContext_PodiumBet_secondPosition(ctx, field)
-			case "thirdPosition":
-				return ec.fieldContext_PodiumBet_thirdPosition(ctx, field)
-			case "status":
-				return ec.fieldContext_PodiumBet_status(ctx, field)
-			case "bettingPool":
-				return ec.fieldContext_PodiumBet_bettingPool(ctx, field)
-			case "createdAt":
-				return ec.fieldContext_PodiumBet_createdAt(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type PodiumBet", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_createPodiumBet_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_createPolePositionBet(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_createPolePositionBet(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Mutation().CreatePolePositionBet(rctx, fc.Args["userId"].(string), fc.Args["input"].(model.PolePositionBetInput))
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*model.PolePositionBet)
-	fc.Result = res
-	return ec.marshalNPolePositionBet2ᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐPolePositionBet(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_createPolePositionBet(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_PolePositionBet_id(ctx, field)
-			case "userId":
-				return ec.fieldContext_PolePositionBet_userId(ctx, field)
-			case "sessionId":
-				return ec.fieldContext_PolePositionBet_sessionId(ctx, field)
-			case "driverId":
-				return ec.fieldContext_PolePositionBet_driverId(ctx, field)
-			case "status":
-				return ec.fieldContext_PolePositionBet_status(ctx, field)
-			case "bettingPool":
-				return ec.fieldContext_PolePositionBet_bettingPool(ctx, field)
-			case "createdAt":
-				return ec.fieldContext_PolePositionBet_createdAt(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type PolePositionBet", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_createPolePositionBet_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_createRainBet(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_createRainBet(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Mutation().CreateRainBet(rctx, fc.Args["userId"].(string), fc.Args["input"].(model.RainBetInput))
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*model.RainBet)
-	fc.Result = res
-	return ec.marshalNRainBet2ᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐRainBet(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_createRainBet(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_RainBet_id(ctx, field)
-			case "userId":
-				return ec.fieldContext_RainBet_userId(ctx, field)
-			case "sessionId":
-				return ec.fieldContext_RainBet_sessionId(ctx, field)
-			case "rainPrediction":
-				return ec.fieldContext_RainBet_rainPrediction(ctx, field)
-			case "status":
-				return ec.fieldContext_RainBet_status(ctx, field)
-			case "bettingPool":
-				return ec.fieldContext_RainBet_bettingPool(ctx, field)
-			case "createdAt":
-				return ec.fieldContext_RainBet_createdAt(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type RainBet", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_createRainBet_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_createRetirementBet(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_createRetirementBet(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Mutation().CreateRetirementBet(rctx, fc.Args["userId"].(string), fc.Args["input"].(model.RetirementBetInput))
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*model.RetirementBet)
-	fc.Result = res
-	return ec.marshalNRetirementBet2ᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐRetirementBet(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_createRetirementBet(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_RetirementBet_id(ctx, field)
-			case "userId":
-				return ec.fieldContext_RetirementBet_userId(ctx, field)
-			case "sessionId":
-				return ec.fieldContext_RetirementBet_sessionId(ctx, field)
-			case "driverId":
-				return ec.fieldContext_RetirementBet_driverId(ctx, field)
-			case "status":
-				return ec.fieldContext_RetirementBet_status(ctx, field)
-			case "bettingPool":
-				return ec.fieldContext_RetirementBet_bettingPool(ctx, field)
-			case "createdAt":
-				return ec.fieldContext_RetirementBet_createdAt(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type RetirementBet", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_createRetirementBet_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
 func (ec *executionContext) _Mutation_createFastestLapBet(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Mutation_createFastestLapBet(ctx, field)
 	if err != nil {
@@ -3923,9 +2003,9 @@ func (ec *executionContext) _Mutation_createFastestLapBet(ctx context.Context, f
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*model.FastestLapBet)
+	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalNFastestLapBet2ᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐFastestLapBet(ctx, field.Selections, res)
+	return ec.marshalNID2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_createFastestLapBet(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -3935,25 +2015,7 @@ func (ec *executionContext) fieldContext_Mutation_createFastestLapBet(ctx contex
 		IsMethod:   true,
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_FastestLapBet_id(ctx, field)
-			case "userId":
-				return ec.fieldContext_FastestLapBet_userId(ctx, field)
-			case "sessionId":
-				return ec.fieldContext_FastestLapBet_sessionId(ctx, field)
-			case "driverId":
-				return ec.fieldContext_FastestLapBet_driverId(ctx, field)
-			case "status":
-				return ec.fieldContext_FastestLapBet_status(ctx, field)
-			case "amount":
-				return ec.fieldContext_FastestLapBet_amount(ctx, field)
-			case "bettingPool":
-				return ec.fieldContext_FastestLapBet_bettingPool(ctx, field)
-			case "createdAt":
-				return ec.fieldContext_FastestLapBet_createdAt(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type FastestLapBet", field.Name)
+			return nil, errors.New("field of type ID does not have child fields")
 		},
 	}
 	defer func() {
@@ -3966,783 +2028,6 @@ func (ec *executionContext) fieldContext_Mutation_createFastestLapBet(ctx contex
 	if fc.Args, err = ec.field_Mutation_createFastestLapBet_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_createLapTimingBet(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_createLapTimingBet(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Mutation().CreateLapTimingBet(rctx, fc.Args["userId"].(string), fc.Args["input"].(model.LapTimingBetInput))
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*model.LapTimingBet)
-	fc.Result = res
-	return ec.marshalNLapTimingBet2ᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐLapTimingBet(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_createLapTimingBet(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_LapTimingBet_id(ctx, field)
-			case "userId":
-				return ec.fieldContext_LapTimingBet_userId(ctx, field)
-			case "sessionId":
-				return ec.fieldContext_LapTimingBet_sessionId(ctx, field)
-			case "lapNumber":
-				return ec.fieldContext_LapTimingBet_lapNumber(ctx, field)
-			case "driverId":
-				return ec.fieldContext_LapTimingBet_driverId(ctx, field)
-			case "status":
-				return ec.fieldContext_LapTimingBet_status(ctx, field)
-			case "bettingPool":
-				return ec.fieldContext_LapTimingBet_bettingPool(ctx, field)
-			case "createdAt":
-				return ec.fieldContext_LapTimingBet_createdAt(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type LapTimingBet", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_createLapTimingBet_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _PodiumBet_id(ctx context.Context, field graphql.CollectedField, obj *model.PodiumBet) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PodiumBet_id(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.ID, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(string)
-	fc.Result = res
-	return ec.marshalNID2string(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_PodiumBet_id(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "PodiumBet",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type ID does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _PodiumBet_userId(ctx context.Context, field graphql.CollectedField, obj *model.PodiumBet) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PodiumBet_userId(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.UserID, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(string)
-	fc.Result = res
-	return ec.marshalNID2string(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_PodiumBet_userId(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "PodiumBet",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type ID does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _PodiumBet_sessionId(ctx context.Context, field graphql.CollectedField, obj *model.PodiumBet) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PodiumBet_sessionId(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.SessionID, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(int32)
-	fc.Result = res
-	return ec.marshalNInt2int32(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_PodiumBet_sessionId(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "PodiumBet",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Int does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _PodiumBet_firstPosition(ctx context.Context, field graphql.CollectedField, obj *model.PodiumBet) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PodiumBet_firstPosition(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.FirstPosition, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(int32)
-	fc.Result = res
-	return ec.marshalNInt2int32(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_PodiumBet_firstPosition(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "PodiumBet",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Int does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _PodiumBet_secondPosition(ctx context.Context, field graphql.CollectedField, obj *model.PodiumBet) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PodiumBet_secondPosition(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.SecondPosition, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(int32)
-	fc.Result = res
-	return ec.marshalNInt2int32(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_PodiumBet_secondPosition(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "PodiumBet",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Int does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _PodiumBet_thirdPosition(ctx context.Context, field graphql.CollectedField, obj *model.PodiumBet) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PodiumBet_thirdPosition(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.ThirdPosition, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(int32)
-	fc.Result = res
-	return ec.marshalNInt2int32(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_PodiumBet_thirdPosition(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "PodiumBet",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Int does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _PodiumBet_status(ctx context.Context, field graphql.CollectedField, obj *model.PodiumBet) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PodiumBet_status(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.Status, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(model.BetStatus)
-	fc.Result = res
-	return ec.marshalNBetStatus2f1bettingᚋuser_apiᚋgraphᚋmodelᚐBetStatus(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_PodiumBet_status(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "PodiumBet",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type BetStatus does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _PodiumBet_bettingPool(ctx context.Context, field graphql.CollectedField, obj *model.PodiumBet) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PodiumBet_bettingPool(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.BettingPool, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(int32)
-	fc.Result = res
-	return ec.marshalNInt2int32(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_PodiumBet_bettingPool(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "PodiumBet",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Int does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _PodiumBet_createdAt(ctx context.Context, field graphql.CollectedField, obj *model.PodiumBet) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PodiumBet_createdAt(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.CreatedAt, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(string)
-	fc.Result = res
-	return ec.marshalNString2string(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_PodiumBet_createdAt(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "PodiumBet",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _PolePositionBet_id(ctx context.Context, field graphql.CollectedField, obj *model.PolePositionBet) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PolePositionBet_id(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.ID, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(string)
-	fc.Result = res
-	return ec.marshalNID2string(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_PolePositionBet_id(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "PolePositionBet",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type ID does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _PolePositionBet_userId(ctx context.Context, field graphql.CollectedField, obj *model.PolePositionBet) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PolePositionBet_userId(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.UserID, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(string)
-	fc.Result = res
-	return ec.marshalNID2string(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_PolePositionBet_userId(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "PolePositionBet",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type ID does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _PolePositionBet_sessionId(ctx context.Context, field graphql.CollectedField, obj *model.PolePositionBet) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PolePositionBet_sessionId(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.SessionID, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(int32)
-	fc.Result = res
-	return ec.marshalNInt2int32(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_PolePositionBet_sessionId(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "PolePositionBet",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Int does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _PolePositionBet_driverId(ctx context.Context, field graphql.CollectedField, obj *model.PolePositionBet) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PolePositionBet_driverId(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.DriverID, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(int32)
-	fc.Result = res
-	return ec.marshalNInt2int32(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_PolePositionBet_driverId(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "PolePositionBet",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Int does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _PolePositionBet_status(ctx context.Context, field graphql.CollectedField, obj *model.PolePositionBet) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PolePositionBet_status(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.Status, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(model.BetStatus)
-	fc.Result = res
-	return ec.marshalNBetStatus2f1bettingᚋuser_apiᚋgraphᚋmodelᚐBetStatus(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_PolePositionBet_status(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "PolePositionBet",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type BetStatus does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _PolePositionBet_bettingPool(ctx context.Context, field graphql.CollectedField, obj *model.PolePositionBet) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PolePositionBet_bettingPool(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.BettingPool, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(int32)
-	fc.Result = res
-	return ec.marshalNInt2int32(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_PolePositionBet_bettingPool(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "PolePositionBet",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Int does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _PolePositionBet_createdAt(ctx context.Context, field graphql.CollectedField, obj *model.PolePositionBet) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PolePositionBet_createdAt(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.CreatedAt, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(string)
-	fc.Result = res
-	return ec.marshalNString2string(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_PolePositionBet_createdAt(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "PolePositionBet",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
-		},
 	}
 	return fc, nil
 }
@@ -4809,10 +2094,6 @@ func (ec *executionContext) fieldContext_Query_user(ctx context.Context, field g
 				return ec.fieldContext_User_role(ctx, field)
 			case "emailVerified":
 				return ec.fieldContext_User_emailVerified(ctx, field)
-			case "lastPasswordChange":
-				return ec.fieldContext_User_lastPasswordChange(ctx, field)
-			case "deletedAt":
-				return ec.fieldContext_User_deletedAt(ctx, field)
 			case "country":
 				return ec.fieldContext_User_country(ctx, field)
 			case "preferredCurrency":
@@ -4903,10 +2184,6 @@ func (ec *executionContext) fieldContext_Query_userByEmail(ctx context.Context, 
 				return ec.fieldContext_User_role(ctx, field)
 			case "emailVerified":
 				return ec.fieldContext_User_emailVerified(ctx, field)
-			case "lastPasswordChange":
-				return ec.fieldContext_User_lastPasswordChange(ctx, field)
-			case "deletedAt":
-				return ec.fieldContext_User_deletedAt(ctx, field)
 			case "country":
 				return ec.fieldContext_User_country(ctx, field)
 			case "preferredCurrency":
@@ -4997,10 +2274,6 @@ func (ec *executionContext) fieldContext_Query_userByUsername(ctx context.Contex
 				return ec.fieldContext_User_role(ctx, field)
 			case "emailVerified":
 				return ec.fieldContext_User_emailVerified(ctx, field)
-			case "lastPasswordChange":
-				return ec.fieldContext_User_lastPasswordChange(ctx, field)
-			case "deletedAt":
-				return ec.fieldContext_User_deletedAt(ctx, field)
 			case "country":
 				return ec.fieldContext_User_country(ctx, field)
 			case "preferredCurrency":
@@ -5029,8 +2302,8 @@ func (ec *executionContext) fieldContext_Query_userByUsername(ctx context.Contex
 	return fc, nil
 }
 
-func (ec *executionContext) _Query_usersByStatus(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Query_usersByStatus(ctx, field)
+func (ec *executionContext) _Query_fastestLapBetsAndVisualizedPayout(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_fastestLapBetsAndVisualizedPayout(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -5043,7 +2316,7 @@ func (ec *executionContext) _Query_usersByStatus(ctx context.Context, field grap
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().UsersByStatus(rctx, fc.Args["status"].(model.AccountStatus))
+		return ec.resolvers.Query().FastestLapBetsAndVisualizedPayout(rctx, fc.Args["sessionId"].(int32), fc.Args["userId"].(string))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -5055,12 +2328,12 @@ func (ec *executionContext) _Query_usersByStatus(ctx context.Context, field grap
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]*model.User)
+	res := resTmp.(*model.FastestLapBetsAndVisualizedPayout)
 	fc.Result = res
-	return ec.marshalNUser2ᚕᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐUserᚄ(ctx, field.Selections, res)
+	return ec.marshalNfastestLapBetsAndVisualizedPayout2ᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐFastestLapBetsAndVisualizedPayout(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Query_usersByStatus(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Query_fastestLapBetsAndVisualizedPayout(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Query",
 		Field:      field,
@@ -5068,48 +2341,12 @@ func (ec *executionContext) fieldContext_Query_usersByStatus(ctx context.Context
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
-			case "id":
-				return ec.fieldContext_User_id(ctx, field)
-			case "fullName":
-				return ec.fieldContext_User_fullName(ctx, field)
-			case "email":
-				return ec.fieldContext_User_email(ctx, field)
-			case "username":
-				return ec.fieldContext_User_username(ctx, field)
-			case "dateOfBirth":
-				return ec.fieldContext_User_dateOfBirth(ctx, field)
-			case "phoneNumber":
-				return ec.fieldContext_User_phoneNumber(ctx, field)
-			case "governmentId":
-				return ec.fieldContext_User_governmentId(ctx, field)
-			case "address":
-				return ec.fieldContext_User_address(ctx, field)
-			case "taxId":
-				return ec.fieldContext_User_taxId(ctx, field)
-			case "accountStatus":
-				return ec.fieldContext_User_accountStatus(ctx, field)
-			case "registrationDate":
-				return ec.fieldContext_User_registrationDate(ctx, field)
-			case "role":
-				return ec.fieldContext_User_role(ctx, field)
-			case "emailVerified":
-				return ec.fieldContext_User_emailVerified(ctx, field)
-			case "lastPasswordChange":
-				return ec.fieldContext_User_lastPasswordChange(ctx, field)
-			case "deletedAt":
-				return ec.fieldContext_User_deletedAt(ctx, field)
-			case "country":
-				return ec.fieldContext_User_country(ctx, field)
-			case "preferredCurrency":
-				return ec.fieldContext_User_preferredCurrency(ctx, field)
-			case "favoriteTeam":
-				return ec.fieldContext_User_favoriteTeam(ctx, field)
-			case "profilePictureUrl":
-				return ec.fieldContext_User_profilePictureUrl(ctx, field)
-			case "balance":
-				return ec.fieldContext_User_balance(ctx, field)
+			case "fastestLapBets":
+				return ec.fieldContext_fastestLapBetsAndVisualizedPayout_fastestLapBets(ctx, field)
+			case "visualizedPayout":
+				return ec.fieldContext_fastestLapBetsAndVisualizedPayout_visualizedPayout(ctx, field)
 			}
-			return nil, fmt.Errorf("no field named %q was found under type User", field.Name)
+			return nil, fmt.Errorf("no field named %q was found under type fastestLapBetsAndVisualizedPayout", field.Name)
 		},
 	}
 	defer func() {
@@ -5119,606 +2356,7 @@ func (ec *executionContext) fieldContext_Query_usersByStatus(ctx context.Context
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Query_usersByStatus_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Query_userActiveBets(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Query_userActiveBets(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().UserActiveBets(rctx, fc.Args["userId"].(string))
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.([]model.Bet)
-	fc.Result = res
-	return ec.marshalNBet2ᚕf1bettingᚋuser_apiᚋgraphᚋmodelᚐBetᚄ(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Query_userActiveBets(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Query",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Bet does not have child fields")
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Query_userActiveBets_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Query_userBetHistory(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Query_userBetHistory(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().UserBetHistory(rctx, fc.Args["userId"].(string))
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.([]model.Bet)
-	fc.Result = res
-	return ec.marshalNBet2ᚕf1bettingᚋuser_apiᚋgraphᚋmodelᚐBetᚄ(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Query_userBetHistory(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Query",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Bet does not have child fields")
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Query_userBetHistory_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Query_sessionPodiumBets(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Query_sessionPodiumBets(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().SessionPodiumBets(rctx, fc.Args["sessionId"].(int32), fc.Args["status"].(*model.BetStatus))
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.([]*model.PodiumBet)
-	fc.Result = res
-	return ec.marshalNPodiumBet2ᚕᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐPodiumBetᚄ(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Query_sessionPodiumBets(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Query",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_PodiumBet_id(ctx, field)
-			case "userId":
-				return ec.fieldContext_PodiumBet_userId(ctx, field)
-			case "sessionId":
-				return ec.fieldContext_PodiumBet_sessionId(ctx, field)
-			case "firstPosition":
-				return ec.fieldContext_PodiumBet_firstPosition(ctx, field)
-			case "secondPosition":
-				return ec.fieldContext_PodiumBet_secondPosition(ctx, field)
-			case "thirdPosition":
-				return ec.fieldContext_PodiumBet_thirdPosition(ctx, field)
-			case "status":
-				return ec.fieldContext_PodiumBet_status(ctx, field)
-			case "bettingPool":
-				return ec.fieldContext_PodiumBet_bettingPool(ctx, field)
-			case "createdAt":
-				return ec.fieldContext_PodiumBet_createdAt(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type PodiumBet", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Query_sessionPodiumBets_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Query_sessionPolePositionBets(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Query_sessionPolePositionBets(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().SessionPolePositionBets(rctx, fc.Args["sessionId"].(int32), fc.Args["status"].(*model.BetStatus))
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.([]*model.PolePositionBet)
-	fc.Result = res
-	return ec.marshalNPolePositionBet2ᚕᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐPolePositionBetᚄ(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Query_sessionPolePositionBets(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Query",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_PolePositionBet_id(ctx, field)
-			case "userId":
-				return ec.fieldContext_PolePositionBet_userId(ctx, field)
-			case "sessionId":
-				return ec.fieldContext_PolePositionBet_sessionId(ctx, field)
-			case "driverId":
-				return ec.fieldContext_PolePositionBet_driverId(ctx, field)
-			case "status":
-				return ec.fieldContext_PolePositionBet_status(ctx, field)
-			case "bettingPool":
-				return ec.fieldContext_PolePositionBet_bettingPool(ctx, field)
-			case "createdAt":
-				return ec.fieldContext_PolePositionBet_createdAt(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type PolePositionBet", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Query_sessionPolePositionBets_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Query_sessionRainBets(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Query_sessionRainBets(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().SessionRainBets(rctx, fc.Args["sessionId"].(int32), fc.Args["status"].(*model.BetStatus))
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.([]*model.RainBet)
-	fc.Result = res
-	return ec.marshalNRainBet2ᚕᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐRainBetᚄ(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Query_sessionRainBets(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Query",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_RainBet_id(ctx, field)
-			case "userId":
-				return ec.fieldContext_RainBet_userId(ctx, field)
-			case "sessionId":
-				return ec.fieldContext_RainBet_sessionId(ctx, field)
-			case "rainPrediction":
-				return ec.fieldContext_RainBet_rainPrediction(ctx, field)
-			case "status":
-				return ec.fieldContext_RainBet_status(ctx, field)
-			case "bettingPool":
-				return ec.fieldContext_RainBet_bettingPool(ctx, field)
-			case "createdAt":
-				return ec.fieldContext_RainBet_createdAt(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type RainBet", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Query_sessionRainBets_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Query_sessionRetirementBets(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Query_sessionRetirementBets(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().SessionRetirementBets(rctx, fc.Args["sessionId"].(int32), fc.Args["status"].(*model.BetStatus))
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.([]*model.RetirementBet)
-	fc.Result = res
-	return ec.marshalNRetirementBet2ᚕᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐRetirementBetᚄ(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Query_sessionRetirementBets(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Query",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_RetirementBet_id(ctx, field)
-			case "userId":
-				return ec.fieldContext_RetirementBet_userId(ctx, field)
-			case "sessionId":
-				return ec.fieldContext_RetirementBet_sessionId(ctx, field)
-			case "driverId":
-				return ec.fieldContext_RetirementBet_driverId(ctx, field)
-			case "status":
-				return ec.fieldContext_RetirementBet_status(ctx, field)
-			case "bettingPool":
-				return ec.fieldContext_RetirementBet_bettingPool(ctx, field)
-			case "createdAt":
-				return ec.fieldContext_RetirementBet_createdAt(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type RetirementBet", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Query_sessionRetirementBets_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Query_sessionFastestLapBets(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Query_sessionFastestLapBets(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().SessionFastestLapBets(rctx, fc.Args["sessionId"].(int32), fc.Args["status"].(*model.BetStatus))
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.([]*model.FastestLapBet)
-	fc.Result = res
-	return ec.marshalNFastestLapBet2ᚕᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐFastestLapBetᚄ(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Query_sessionFastestLapBets(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Query",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_FastestLapBet_id(ctx, field)
-			case "userId":
-				return ec.fieldContext_FastestLapBet_userId(ctx, field)
-			case "sessionId":
-				return ec.fieldContext_FastestLapBet_sessionId(ctx, field)
-			case "driverId":
-				return ec.fieldContext_FastestLapBet_driverId(ctx, field)
-			case "status":
-				return ec.fieldContext_FastestLapBet_status(ctx, field)
-			case "amount":
-				return ec.fieldContext_FastestLapBet_amount(ctx, field)
-			case "bettingPool":
-				return ec.fieldContext_FastestLapBet_bettingPool(ctx, field)
-			case "createdAt":
-				return ec.fieldContext_FastestLapBet_createdAt(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type FastestLapBet", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Query_sessionFastestLapBets_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Query_sessionLapTimingBets(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Query_sessionLapTimingBets(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().SessionLapTimingBets(rctx, fc.Args["sessionId"].(int32), fc.Args["status"].(*model.BetStatus))
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.([]*model.LapTimingBet)
-	fc.Result = res
-	return ec.marshalNLapTimingBet2ᚕᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐLapTimingBetᚄ(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Query_sessionLapTimingBets(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Query",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_LapTimingBet_id(ctx, field)
-			case "userId":
-				return ec.fieldContext_LapTimingBet_userId(ctx, field)
-			case "sessionId":
-				return ec.fieldContext_LapTimingBet_sessionId(ctx, field)
-			case "lapNumber":
-				return ec.fieldContext_LapTimingBet_lapNumber(ctx, field)
-			case "driverId":
-				return ec.fieldContext_LapTimingBet_driverId(ctx, field)
-			case "status":
-				return ec.fieldContext_LapTimingBet_status(ctx, field)
-			case "bettingPool":
-				return ec.fieldContext_LapTimingBet_bettingPool(ctx, field)
-			case "createdAt":
-				return ec.fieldContext_LapTimingBet_createdAt(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type LapTimingBet", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Query_sessionLapTimingBets_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Query_pendingBetsForSession(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Query_pendingBetsForSession(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().PendingBetsForSession(rctx, fc.Args["sessionId"].(int32))
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.([]model.Bet)
-	fc.Result = res
-	return ec.marshalNBet2ᚕf1bettingᚋuser_apiᚋgraphᚋmodelᚐBetᚄ(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Query_pendingBetsForSession(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Query",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Bet does not have child fields")
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Query_pendingBetsForSession_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_Query_fastestLapBetsAndVisualizedPayout_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -5851,622 +2489,6 @@ func (ec *executionContext) fieldContext_Query___schema(_ context.Context, field
 				return ec.fieldContext___Schema_directives(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type __Schema", field.Name)
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _RainBet_id(ctx context.Context, field graphql.CollectedField, obj *model.RainBet) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_RainBet_id(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.ID, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(string)
-	fc.Result = res
-	return ec.marshalNID2string(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_RainBet_id(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "RainBet",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type ID does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _RainBet_userId(ctx context.Context, field graphql.CollectedField, obj *model.RainBet) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_RainBet_userId(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.UserID, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(string)
-	fc.Result = res
-	return ec.marshalNID2string(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_RainBet_userId(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "RainBet",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type ID does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _RainBet_sessionId(ctx context.Context, field graphql.CollectedField, obj *model.RainBet) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_RainBet_sessionId(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.SessionID, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(int32)
-	fc.Result = res
-	return ec.marshalNInt2int32(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_RainBet_sessionId(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "RainBet",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Int does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _RainBet_rainPrediction(ctx context.Context, field graphql.CollectedField, obj *model.RainBet) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_RainBet_rainPrediction(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.RainPrediction, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(bool)
-	fc.Result = res
-	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_RainBet_rainPrediction(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "RainBet",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Boolean does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _RainBet_status(ctx context.Context, field graphql.CollectedField, obj *model.RainBet) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_RainBet_status(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.Status, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(model.BetStatus)
-	fc.Result = res
-	return ec.marshalNBetStatus2f1bettingᚋuser_apiᚋgraphᚋmodelᚐBetStatus(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_RainBet_status(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "RainBet",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type BetStatus does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _RainBet_bettingPool(ctx context.Context, field graphql.CollectedField, obj *model.RainBet) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_RainBet_bettingPool(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.BettingPool, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(int32)
-	fc.Result = res
-	return ec.marshalNInt2int32(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_RainBet_bettingPool(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "RainBet",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Int does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _RainBet_createdAt(ctx context.Context, field graphql.CollectedField, obj *model.RainBet) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_RainBet_createdAt(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.CreatedAt, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(string)
-	fc.Result = res
-	return ec.marshalNString2string(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_RainBet_createdAt(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "RainBet",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _RetirementBet_id(ctx context.Context, field graphql.CollectedField, obj *model.RetirementBet) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_RetirementBet_id(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.ID, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(string)
-	fc.Result = res
-	return ec.marshalNID2string(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_RetirementBet_id(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "RetirementBet",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type ID does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _RetirementBet_userId(ctx context.Context, field graphql.CollectedField, obj *model.RetirementBet) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_RetirementBet_userId(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.UserID, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(string)
-	fc.Result = res
-	return ec.marshalNID2string(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_RetirementBet_userId(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "RetirementBet",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type ID does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _RetirementBet_sessionId(ctx context.Context, field graphql.CollectedField, obj *model.RetirementBet) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_RetirementBet_sessionId(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.SessionID, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(int32)
-	fc.Result = res
-	return ec.marshalNInt2int32(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_RetirementBet_sessionId(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "RetirementBet",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Int does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _RetirementBet_driverId(ctx context.Context, field graphql.CollectedField, obj *model.RetirementBet) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_RetirementBet_driverId(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.DriverID, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(int32)
-	fc.Result = res
-	return ec.marshalNInt2int32(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_RetirementBet_driverId(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "RetirementBet",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Int does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _RetirementBet_status(ctx context.Context, field graphql.CollectedField, obj *model.RetirementBet) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_RetirementBet_status(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.Status, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(model.BetStatus)
-	fc.Result = res
-	return ec.marshalNBetStatus2f1bettingᚋuser_apiᚋgraphᚋmodelᚐBetStatus(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_RetirementBet_status(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "RetirementBet",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type BetStatus does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _RetirementBet_bettingPool(ctx context.Context, field graphql.CollectedField, obj *model.RetirementBet) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_RetirementBet_bettingPool(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.BettingPool, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(int32)
-	fc.Result = res
-	return ec.marshalNInt2int32(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_RetirementBet_bettingPool(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "RetirementBet",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Int does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _RetirementBet_createdAt(ctx context.Context, field graphql.CollectedField, obj *model.RetirementBet) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_RetirementBet_createdAt(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.CreatedAt, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(string)
-	fc.Result = res
-	return ec.marshalNString2string(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_RetirementBet_createdAt(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "RetirementBet",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
 		},
 	}
 	return fc, nil
@@ -7033,88 +3055,6 @@ func (ec *executionContext) fieldContext_User_emailVerified(_ context.Context, f
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type Boolean does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _User_lastPasswordChange(ctx context.Context, field graphql.CollectedField, obj *model.User) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_User_lastPasswordChange(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.LastPasswordChange, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*string)
-	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_User_lastPasswordChange(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "User",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _User_deletedAt(ctx context.Context, field graphql.CollectedField, obj *model.User) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_User_deletedAt(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.DeletedAt, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*string)
-	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_User_deletedAt(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "User",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
 		},
 	}
 	return fc, nil
@@ -9275,272 +5215,124 @@ func (ec *executionContext) fieldContext___Type_isOneOf(_ context.Context, field
 	return fc, nil
 }
 
+func (ec *executionContext) _fastestLapBetsAndVisualizedPayout_fastestLapBets(ctx context.Context, field graphql.CollectedField, obj *model.FastestLapBetsAndVisualizedPayout) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_fastestLapBetsAndVisualizedPayout_fastestLapBets(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.FastestLapBets, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]*model.FastestLapBet)
+	fc.Result = res
+	return ec.marshalNFastestLapBet2ᚕᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐFastestLapBetᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_fastestLapBetsAndVisualizedPayout_fastestLapBets(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "fastestLapBetsAndVisualizedPayout",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_FastestLapBet_id(ctx, field)
+			case "userId":
+				return ec.fieldContext_FastestLapBet_userId(ctx, field)
+			case "sessionId":
+				return ec.fieldContext_FastestLapBet_sessionId(ctx, field)
+			case "driverId":
+				return ec.fieldContext_FastestLapBet_driverId(ctx, field)
+			case "status":
+				return ec.fieldContext_FastestLapBet_status(ctx, field)
+			case "amount":
+				return ec.fieldContext_FastestLapBet_amount(ctx, field)
+			case "bettingPool":
+				return ec.fieldContext_FastestLapBet_bettingPool(ctx, field)
+			case "createdAt":
+				return ec.fieldContext_FastestLapBet_createdAt(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type FastestLapBet", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _fastestLapBetsAndVisualizedPayout_visualizedPayout(ctx context.Context, field graphql.CollectedField, obj *model.FastestLapBetsAndVisualizedPayout) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_fastestLapBetsAndVisualizedPayout_visualizedPayout(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.VisualizedPayout, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]*model.FastestLapUserPayout)
+	fc.Result = res
+	return ec.marshalNFastestLapUserPayout2ᚕᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐFastestLapUserPayout(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_fastestLapBetsAndVisualizedPayout_visualizedPayout(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "fastestLapBetsAndVisualizedPayout",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "driverId":
+				return ec.fieldContext_FastestLapUserPayout_driverId(ctx, field)
+			case "payout":
+				return ec.fieldContext_FastestLapUserPayout_payout(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type FastestLapUserPayout", field.Name)
+		},
+	}
+	return fc, nil
+}
+
 // endregion **************************** field.gotpl *****************************
 
 // region    **************************** input.gotpl *****************************
 
-func (ec *executionContext) unmarshalInputBetInput(ctx context.Context, obj any) (model.BetInput, error) {
-	var it model.BetInput
-	asMap := map[string]any{}
-	for k, v := range obj.(map[string]any) {
-		asMap[k] = v
-	}
-
-	fieldsInOrder := [...]string{"sessionId", "bettingPool"}
-	for _, k := range fieldsInOrder {
-		v, ok := asMap[k]
-		if !ok {
-			continue
-		}
-		switch k {
-		case "sessionId":
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("sessionId"))
-			data, err := ec.unmarshalNInt2int32(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.SessionID = data
-		case "bettingPool":
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("bettingPool"))
-			data, err := ec.unmarshalNInt2int32(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.BettingPool = data
-		}
-	}
-
-	return it, nil
-}
-
 func (ec *executionContext) unmarshalInputFastestLapBetInput(ctx context.Context, obj any) (model.FastestLapBetInput, error) {
 	var it model.FastestLapBetInput
-	asMap := map[string]any{}
-	for k, v := range obj.(map[string]any) {
-		asMap[k] = v
-	}
-
-	fieldsInOrder := [...]string{"sessionId", "driverId", "bettingPool"}
-	for _, k := range fieldsInOrder {
-		v, ok := asMap[k]
-		if !ok {
-			continue
-		}
-		switch k {
-		case "sessionId":
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("sessionId"))
-			data, err := ec.unmarshalNInt2int32(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.SessionID = data
-		case "driverId":
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("driverId"))
-			data, err := ec.unmarshalNInt2int32(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.DriverID = data
-		case "bettingPool":
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("bettingPool"))
-			data, err := ec.unmarshalNInt2int32(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.BettingPool = data
-		}
-	}
-
-	return it, nil
-}
-
-func (ec *executionContext) unmarshalInputLapTimingBetInput(ctx context.Context, obj any) (model.LapTimingBetInput, error) {
-	var it model.LapTimingBetInput
-	asMap := map[string]any{}
-	for k, v := range obj.(map[string]any) {
-		asMap[k] = v
-	}
-
-	fieldsInOrder := [...]string{"sessionId", "lapNumber", "driverId", "bettingPool"}
-	for _, k := range fieldsInOrder {
-		v, ok := asMap[k]
-		if !ok {
-			continue
-		}
-		switch k {
-		case "sessionId":
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("sessionId"))
-			data, err := ec.unmarshalNInt2int32(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.SessionID = data
-		case "lapNumber":
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("lapNumber"))
-			data, err := ec.unmarshalNInt2int32(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.LapNumber = data
-		case "driverId":
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("driverId"))
-			data, err := ec.unmarshalNInt2int32(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.DriverID = data
-		case "bettingPool":
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("bettingPool"))
-			data, err := ec.unmarshalNInt2int32(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.BettingPool = data
-		}
-	}
-
-	return it, nil
-}
-
-func (ec *executionContext) unmarshalInputPodiumBetInput(ctx context.Context, obj any) (model.PodiumBetInput, error) {
-	var it model.PodiumBetInput
-	asMap := map[string]any{}
-	for k, v := range obj.(map[string]any) {
-		asMap[k] = v
-	}
-
-	fieldsInOrder := [...]string{"sessionId", "firstPosition", "secondPosition", "thirdPosition", "bettingPool"}
-	for _, k := range fieldsInOrder {
-		v, ok := asMap[k]
-		if !ok {
-			continue
-		}
-		switch k {
-		case "sessionId":
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("sessionId"))
-			data, err := ec.unmarshalNInt2int32(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.SessionID = data
-		case "firstPosition":
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("firstPosition"))
-			data, err := ec.unmarshalNInt2int32(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.FirstPosition = data
-		case "secondPosition":
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("secondPosition"))
-			data, err := ec.unmarshalNInt2int32(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.SecondPosition = data
-		case "thirdPosition":
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("thirdPosition"))
-			data, err := ec.unmarshalNInt2int32(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.ThirdPosition = data
-		case "bettingPool":
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("bettingPool"))
-			data, err := ec.unmarshalNInt2int32(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.BettingPool = data
-		}
-	}
-
-	return it, nil
-}
-
-func (ec *executionContext) unmarshalInputPolePositionBetInput(ctx context.Context, obj any) (model.PolePositionBetInput, error) {
-	var it model.PolePositionBetInput
-	asMap := map[string]any{}
-	for k, v := range obj.(map[string]any) {
-		asMap[k] = v
-	}
-
-	fieldsInOrder := [...]string{"sessionId", "driverId", "bettingPool"}
-	for _, k := range fieldsInOrder {
-		v, ok := asMap[k]
-		if !ok {
-			continue
-		}
-		switch k {
-		case "sessionId":
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("sessionId"))
-			data, err := ec.unmarshalNInt2int32(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.SessionID = data
-		case "driverId":
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("driverId"))
-			data, err := ec.unmarshalNInt2int32(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.DriverID = data
-		case "bettingPool":
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("bettingPool"))
-			data, err := ec.unmarshalNInt2int32(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.BettingPool = data
-		}
-	}
-
-	return it, nil
-}
-
-func (ec *executionContext) unmarshalInputRainBetInput(ctx context.Context, obj any) (model.RainBetInput, error) {
-	var it model.RainBetInput
-	asMap := map[string]any{}
-	for k, v := range obj.(map[string]any) {
-		asMap[k] = v
-	}
-
-	fieldsInOrder := [...]string{"sessionId", "rainPrediction", "bettingPool"}
-	for _, k := range fieldsInOrder {
-		v, ok := asMap[k]
-		if !ok {
-			continue
-		}
-		switch k {
-		case "sessionId":
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("sessionId"))
-			data, err := ec.unmarshalNInt2int32(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.SessionID = data
-		case "rainPrediction":
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("rainPrediction"))
-			data, err := ec.unmarshalNBoolean2bool(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.RainPrediction = data
-		case "bettingPool":
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("bettingPool"))
-			data, err := ec.unmarshalNInt2int32(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.BettingPool = data
-		}
-	}
-
-	return it, nil
-}
-
-func (ec *executionContext) unmarshalInputRetirementBetInput(ctx context.Context, obj any) (model.RetirementBetInput, error) {
-	var it model.RetirementBetInput
 	asMap := map[string]any{}
 	for k, v := range obj.(map[string]any) {
 		asMap[k] = v
@@ -9757,62 +5549,11 @@ func (ec *executionContext) unmarshalInputUserProfileUpdateInput(ctx context.Con
 
 // region    ************************** interface.gotpl ***************************
 
-func (ec *executionContext) _Bet(ctx context.Context, sel ast.SelectionSet, obj model.Bet) graphql.Marshaler {
-	switch obj := (obj).(type) {
-	case nil:
-		return graphql.Null
-	case model.PodiumBet:
-		return ec._PodiumBet(ctx, sel, &obj)
-	case *model.PodiumBet:
-		if obj == nil {
-			return graphql.Null
-		}
-		return ec._PodiumBet(ctx, sel, obj)
-	case model.PolePositionBet:
-		return ec._PolePositionBet(ctx, sel, &obj)
-	case *model.PolePositionBet:
-		if obj == nil {
-			return graphql.Null
-		}
-		return ec._PolePositionBet(ctx, sel, obj)
-	case model.RainBet:
-		return ec._RainBet(ctx, sel, &obj)
-	case *model.RainBet:
-		if obj == nil {
-			return graphql.Null
-		}
-		return ec._RainBet(ctx, sel, obj)
-	case model.RetirementBet:
-		return ec._RetirementBet(ctx, sel, &obj)
-	case *model.RetirementBet:
-		if obj == nil {
-			return graphql.Null
-		}
-		return ec._RetirementBet(ctx, sel, obj)
-	case model.FastestLapBet:
-		return ec._FastestLapBet(ctx, sel, &obj)
-	case *model.FastestLapBet:
-		if obj == nil {
-			return graphql.Null
-		}
-		return ec._FastestLapBet(ctx, sel, obj)
-	case model.LapTimingBet:
-		return ec._LapTimingBet(ctx, sel, &obj)
-	case *model.LapTimingBet:
-		if obj == nil {
-			return graphql.Null
-		}
-		return ec._LapTimingBet(ctx, sel, obj)
-	default:
-		panic(fmt.Errorf("unexpected type %T", obj))
-	}
-}
-
 // endregion ************************** interface.gotpl ***************************
 
 // region    **************************** object.gotpl ****************************
 
-var fastestLapBetImplementors = []string{"FastestLapBet", "Bet"}
+var fastestLapBetImplementors = []string{"FastestLapBet"}
 
 func (ec *executionContext) _FastestLapBet(ctx context.Context, sel ast.SelectionSet, obj *model.FastestLapBet) graphql.Marshaler {
 	fields := graphql.CollectFields(ec.OperationContext, sel, fastestLapBetImplementors)
@@ -9886,54 +5627,24 @@ func (ec *executionContext) _FastestLapBet(ctx context.Context, sel ast.Selectio
 	return out
 }
 
-var lapTimingBetImplementors = []string{"LapTimingBet", "Bet"}
+var fastestLapUserPayoutImplementors = []string{"FastestLapUserPayout"}
 
-func (ec *executionContext) _LapTimingBet(ctx context.Context, sel ast.SelectionSet, obj *model.LapTimingBet) graphql.Marshaler {
-	fields := graphql.CollectFields(ec.OperationContext, sel, lapTimingBetImplementors)
+func (ec *executionContext) _FastestLapUserPayout(ctx context.Context, sel ast.SelectionSet, obj *model.FastestLapUserPayout) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, fastestLapUserPayoutImplementors)
 
 	out := graphql.NewFieldSet(fields)
 	deferred := make(map[string]*graphql.FieldSet)
 	for i, field := range fields {
 		switch field.Name {
 		case "__typename":
-			out.Values[i] = graphql.MarshalString("LapTimingBet")
-		case "id":
-			out.Values[i] = ec._LapTimingBet_id(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "userId":
-			out.Values[i] = ec._LapTimingBet_userId(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "sessionId":
-			out.Values[i] = ec._LapTimingBet_sessionId(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "lapNumber":
-			out.Values[i] = ec._LapTimingBet_lapNumber(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
+			out.Values[i] = graphql.MarshalString("FastestLapUserPayout")
 		case "driverId":
-			out.Values[i] = ec._LapTimingBet_driverId(ctx, field, obj)
+			out.Values[i] = ec._FastestLapUserPayout_driverId(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
-		case "status":
-			out.Values[i] = ec._LapTimingBet_status(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "bettingPool":
-			out.Values[i] = ec._LapTimingBet_bettingPool(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "createdAt":
-			out.Values[i] = ec._LapTimingBet_createdAt(ctx, field, obj)
+		case "payout":
+			out.Values[i] = ec._FastestLapUserPayout_payout(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
@@ -10007,51 +5718,9 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
-		case "updateUserStatus":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_updateUserStatus(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
 		case "deleteUser":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_deleteUser(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "verifyUserEmail":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_verifyUserEmail(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "createPodiumBet":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_createPodiumBet(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "createPolePositionBet":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_createPolePositionBet(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "createRainBet":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_createRainBet(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "createRetirementBet":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_createRetirementBet(ctx, field)
 			})
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
@@ -10060,161 +5729,6 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_createFastestLapBet(ctx, field)
 			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "createLapTimingBet":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_createLapTimingBet(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		default:
-			panic("unknown field " + strconv.Quote(field.Name))
-		}
-	}
-	out.Dispatch(ctx)
-	if out.Invalids > 0 {
-		return graphql.Null
-	}
-
-	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
-
-	for label, dfs := range deferred {
-		ec.processDeferredGroup(graphql.DeferredGroup{
-			Label:    label,
-			Path:     graphql.GetPath(ctx),
-			FieldSet: dfs,
-			Context:  ctx,
-		})
-	}
-
-	return out
-}
-
-var podiumBetImplementors = []string{"PodiumBet", "Bet"}
-
-func (ec *executionContext) _PodiumBet(ctx context.Context, sel ast.SelectionSet, obj *model.PodiumBet) graphql.Marshaler {
-	fields := graphql.CollectFields(ec.OperationContext, sel, podiumBetImplementors)
-
-	out := graphql.NewFieldSet(fields)
-	deferred := make(map[string]*graphql.FieldSet)
-	for i, field := range fields {
-		switch field.Name {
-		case "__typename":
-			out.Values[i] = graphql.MarshalString("PodiumBet")
-		case "id":
-			out.Values[i] = ec._PodiumBet_id(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "userId":
-			out.Values[i] = ec._PodiumBet_userId(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "sessionId":
-			out.Values[i] = ec._PodiumBet_sessionId(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "firstPosition":
-			out.Values[i] = ec._PodiumBet_firstPosition(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "secondPosition":
-			out.Values[i] = ec._PodiumBet_secondPosition(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "thirdPosition":
-			out.Values[i] = ec._PodiumBet_thirdPosition(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "status":
-			out.Values[i] = ec._PodiumBet_status(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "bettingPool":
-			out.Values[i] = ec._PodiumBet_bettingPool(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "createdAt":
-			out.Values[i] = ec._PodiumBet_createdAt(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		default:
-			panic("unknown field " + strconv.Quote(field.Name))
-		}
-	}
-	out.Dispatch(ctx)
-	if out.Invalids > 0 {
-		return graphql.Null
-	}
-
-	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
-
-	for label, dfs := range deferred {
-		ec.processDeferredGroup(graphql.DeferredGroup{
-			Label:    label,
-			Path:     graphql.GetPath(ctx),
-			FieldSet: dfs,
-			Context:  ctx,
-		})
-	}
-
-	return out
-}
-
-var polePositionBetImplementors = []string{"PolePositionBet", "Bet"}
-
-func (ec *executionContext) _PolePositionBet(ctx context.Context, sel ast.SelectionSet, obj *model.PolePositionBet) graphql.Marshaler {
-	fields := graphql.CollectFields(ec.OperationContext, sel, polePositionBetImplementors)
-
-	out := graphql.NewFieldSet(fields)
-	deferred := make(map[string]*graphql.FieldSet)
-	for i, field := range fields {
-		switch field.Name {
-		case "__typename":
-			out.Values[i] = graphql.MarshalString("PolePositionBet")
-		case "id":
-			out.Values[i] = ec._PolePositionBet_id(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "userId":
-			out.Values[i] = ec._PolePositionBet_userId(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "sessionId":
-			out.Values[i] = ec._PolePositionBet_sessionId(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "driverId":
-			out.Values[i] = ec._PolePositionBet_driverId(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "status":
-			out.Values[i] = ec._PolePositionBet_status(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "bettingPool":
-			out.Values[i] = ec._PolePositionBet_bettingPool(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "createdAt":
-			out.Values[i] = ec._PolePositionBet_createdAt(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
@@ -10317,7 +5831,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
-		case "usersByStatus":
+		case "fastestLapBetsAndVisualizedPayout":
 			field := field
 
 			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
@@ -10326,205 +5840,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
-				res = ec._Query_usersByStatus(ctx, field)
-				if res == graphql.Null {
-					atomic.AddUint32(&fs.Invalids, 1)
-				}
-				return res
-			}
-
-			rrm := func(ctx context.Context) graphql.Marshaler {
-				return ec.OperationContext.RootResolverMiddleware(ctx,
-					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
-		case "userActiveBets":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Query_userActiveBets(ctx, field)
-				if res == graphql.Null {
-					atomic.AddUint32(&fs.Invalids, 1)
-				}
-				return res
-			}
-
-			rrm := func(ctx context.Context) graphql.Marshaler {
-				return ec.OperationContext.RootResolverMiddleware(ctx,
-					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
-		case "userBetHistory":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Query_userBetHistory(ctx, field)
-				if res == graphql.Null {
-					atomic.AddUint32(&fs.Invalids, 1)
-				}
-				return res
-			}
-
-			rrm := func(ctx context.Context) graphql.Marshaler {
-				return ec.OperationContext.RootResolverMiddleware(ctx,
-					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
-		case "sessionPodiumBets":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Query_sessionPodiumBets(ctx, field)
-				if res == graphql.Null {
-					atomic.AddUint32(&fs.Invalids, 1)
-				}
-				return res
-			}
-
-			rrm := func(ctx context.Context) graphql.Marshaler {
-				return ec.OperationContext.RootResolverMiddleware(ctx,
-					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
-		case "sessionPolePositionBets":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Query_sessionPolePositionBets(ctx, field)
-				if res == graphql.Null {
-					atomic.AddUint32(&fs.Invalids, 1)
-				}
-				return res
-			}
-
-			rrm := func(ctx context.Context) graphql.Marshaler {
-				return ec.OperationContext.RootResolverMiddleware(ctx,
-					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
-		case "sessionRainBets":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Query_sessionRainBets(ctx, field)
-				if res == graphql.Null {
-					atomic.AddUint32(&fs.Invalids, 1)
-				}
-				return res
-			}
-
-			rrm := func(ctx context.Context) graphql.Marshaler {
-				return ec.OperationContext.RootResolverMiddleware(ctx,
-					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
-		case "sessionRetirementBets":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Query_sessionRetirementBets(ctx, field)
-				if res == graphql.Null {
-					atomic.AddUint32(&fs.Invalids, 1)
-				}
-				return res
-			}
-
-			rrm := func(ctx context.Context) graphql.Marshaler {
-				return ec.OperationContext.RootResolverMiddleware(ctx,
-					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
-		case "sessionFastestLapBets":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Query_sessionFastestLapBets(ctx, field)
-				if res == graphql.Null {
-					atomic.AddUint32(&fs.Invalids, 1)
-				}
-				return res
-			}
-
-			rrm := func(ctx context.Context) graphql.Marshaler {
-				return ec.OperationContext.RootResolverMiddleware(ctx,
-					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
-		case "sessionLapTimingBets":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Query_sessionLapTimingBets(ctx, field)
-				if res == graphql.Null {
-					atomic.AddUint32(&fs.Invalids, 1)
-				}
-				return res
-			}
-
-			rrm := func(ctx context.Context) graphql.Marshaler {
-				return ec.OperationContext.RootResolverMiddleware(ctx,
-					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
-		case "pendingBetsForSession":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Query_pendingBetsForSession(ctx, field)
+				res = ec._Query_fastestLapBetsAndVisualizedPayout(ctx, field)
 				if res == graphql.Null {
 					atomic.AddUint32(&fs.Invalids, 1)
 				}
@@ -10545,144 +5861,6 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Query___schema(ctx, field)
 			})
-		default:
-			panic("unknown field " + strconv.Quote(field.Name))
-		}
-	}
-	out.Dispatch(ctx)
-	if out.Invalids > 0 {
-		return graphql.Null
-	}
-
-	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
-
-	for label, dfs := range deferred {
-		ec.processDeferredGroup(graphql.DeferredGroup{
-			Label:    label,
-			Path:     graphql.GetPath(ctx),
-			FieldSet: dfs,
-			Context:  ctx,
-		})
-	}
-
-	return out
-}
-
-var rainBetImplementors = []string{"RainBet", "Bet"}
-
-func (ec *executionContext) _RainBet(ctx context.Context, sel ast.SelectionSet, obj *model.RainBet) graphql.Marshaler {
-	fields := graphql.CollectFields(ec.OperationContext, sel, rainBetImplementors)
-
-	out := graphql.NewFieldSet(fields)
-	deferred := make(map[string]*graphql.FieldSet)
-	for i, field := range fields {
-		switch field.Name {
-		case "__typename":
-			out.Values[i] = graphql.MarshalString("RainBet")
-		case "id":
-			out.Values[i] = ec._RainBet_id(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "userId":
-			out.Values[i] = ec._RainBet_userId(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "sessionId":
-			out.Values[i] = ec._RainBet_sessionId(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "rainPrediction":
-			out.Values[i] = ec._RainBet_rainPrediction(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "status":
-			out.Values[i] = ec._RainBet_status(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "bettingPool":
-			out.Values[i] = ec._RainBet_bettingPool(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "createdAt":
-			out.Values[i] = ec._RainBet_createdAt(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		default:
-			panic("unknown field " + strconv.Quote(field.Name))
-		}
-	}
-	out.Dispatch(ctx)
-	if out.Invalids > 0 {
-		return graphql.Null
-	}
-
-	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
-
-	for label, dfs := range deferred {
-		ec.processDeferredGroup(graphql.DeferredGroup{
-			Label:    label,
-			Path:     graphql.GetPath(ctx),
-			FieldSet: dfs,
-			Context:  ctx,
-		})
-	}
-
-	return out
-}
-
-var retirementBetImplementors = []string{"RetirementBet", "Bet"}
-
-func (ec *executionContext) _RetirementBet(ctx context.Context, sel ast.SelectionSet, obj *model.RetirementBet) graphql.Marshaler {
-	fields := graphql.CollectFields(ec.OperationContext, sel, retirementBetImplementors)
-
-	out := graphql.NewFieldSet(fields)
-	deferred := make(map[string]*graphql.FieldSet)
-	for i, field := range fields {
-		switch field.Name {
-		case "__typename":
-			out.Values[i] = graphql.MarshalString("RetirementBet")
-		case "id":
-			out.Values[i] = ec._RetirementBet_id(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "userId":
-			out.Values[i] = ec._RetirementBet_userId(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "sessionId":
-			out.Values[i] = ec._RetirementBet_sessionId(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "driverId":
-			out.Values[i] = ec._RetirementBet_driverId(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "status":
-			out.Values[i] = ec._RetirementBet_status(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "bettingPool":
-			out.Values[i] = ec._RetirementBet_bettingPool(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "createdAt":
-			out.Values[i] = ec._RetirementBet_createdAt(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -10776,10 +5954,6 @@ func (ec *executionContext) _User(ctx context.Context, sel ast.SelectionSet, obj
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
-		case "lastPasswordChange":
-			out.Values[i] = ec._User_lastPasswordChange(ctx, field, obj)
-		case "deletedAt":
-			out.Values[i] = ec._User_deletedAt(ctx, field, obj)
 		case "country":
 			out.Values[i] = ec._User_country(ctx, field, obj)
 		case "preferredCurrency":
@@ -11147,6 +6321,50 @@ func (ec *executionContext) ___Type(ctx context.Context, sel ast.SelectionSet, o
 	return out
 }
 
+var fastestLapBetsAndVisualizedPayoutImplementors = []string{"fastestLapBetsAndVisualizedPayout"}
+
+func (ec *executionContext) _fastestLapBetsAndVisualizedPayout(ctx context.Context, sel ast.SelectionSet, obj *model.FastestLapBetsAndVisualizedPayout) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, fastestLapBetsAndVisualizedPayoutImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("fastestLapBetsAndVisualizedPayout")
+		case "fastestLapBets":
+			out.Values[i] = ec._fastestLapBetsAndVisualizedPayout_fastestLapBets(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "visualizedPayout":
+			out.Values[i] = ec._fastestLapBetsAndVisualizedPayout_visualizedPayout(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
 // endregion **************************** object.gotpl ****************************
 
 // region    ***************************** type.gotpl *****************************
@@ -11159,60 +6377,6 @@ func (ec *executionContext) unmarshalNAccountStatus2f1bettingᚋuser_apiᚋgraph
 
 func (ec *executionContext) marshalNAccountStatus2f1bettingᚋuser_apiᚋgraphᚋmodelᚐAccountStatus(ctx context.Context, sel ast.SelectionSet, v model.AccountStatus) graphql.Marshaler {
 	return v
-}
-
-func (ec *executionContext) marshalNBet2f1bettingᚋuser_apiᚋgraphᚋmodelᚐBet(ctx context.Context, sel ast.SelectionSet, v model.Bet) graphql.Marshaler {
-	if v == nil {
-		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
-			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
-		}
-		return graphql.Null
-	}
-	return ec._Bet(ctx, sel, v)
-}
-
-func (ec *executionContext) marshalNBet2ᚕf1bettingᚋuser_apiᚋgraphᚋmodelᚐBetᚄ(ctx context.Context, sel ast.SelectionSet, v []model.Bet) graphql.Marshaler {
-	ret := make(graphql.Array, len(v))
-	var wg sync.WaitGroup
-	isLen1 := len(v) == 1
-	if !isLen1 {
-		wg.Add(len(v))
-	}
-	for i := range v {
-		i := i
-		fc := &graphql.FieldContext{
-			Index:  &i,
-			Result: &v[i],
-		}
-		ctx := graphql.WithFieldContext(ctx, fc)
-		f := func(i int) {
-			defer func() {
-				if r := recover(); r != nil {
-					ec.Error(ctx, ec.Recover(ctx, r))
-					ret = nil
-				}
-			}()
-			if !isLen1 {
-				defer wg.Done()
-			}
-			ret[i] = ec.marshalNBet2f1bettingᚋuser_apiᚋgraphᚋmodelᚐBet(ctx, sel, v[i])
-		}
-		if isLen1 {
-			f(i)
-		} else {
-			go f(i)
-		}
-
-	}
-	wg.Wait()
-
-	for _, e := range ret {
-		if e == graphql.Null {
-			return graphql.Null
-		}
-	}
-
-	return ret
 }
 
 func (ec *executionContext) unmarshalNBetStatus2f1bettingᚋuser_apiᚋgraphᚋmodelᚐBetStatus(ctx context.Context, v any) (model.BetStatus, error) {
@@ -11238,10 +6402,6 @@ func (ec *executionContext) marshalNBoolean2bool(ctx context.Context, sel ast.Se
 		}
 	}
 	return res
-}
-
-func (ec *executionContext) marshalNFastestLapBet2f1bettingᚋuser_apiᚋgraphᚋmodelᚐFastestLapBet(ctx context.Context, sel ast.SelectionSet, v model.FastestLapBet) graphql.Marshaler {
-	return ec._FastestLapBet(ctx, sel, &v)
 }
 
 func (ec *executionContext) marshalNFastestLapBet2ᚕᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐFastestLapBetᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.FastestLapBet) graphql.Marshaler {
@@ -11303,6 +6463,44 @@ func (ec *executionContext) unmarshalNFastestLapBetInput2f1bettingᚋuser_apiᚋ
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
+func (ec *executionContext) marshalNFastestLapUserPayout2ᚕᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐFastestLapUserPayout(ctx context.Context, sel ast.SelectionSet, v []*model.FastestLapUserPayout) graphql.Marshaler {
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalOFastestLapUserPayout2ᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐFastestLapUserPayout(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	return ret
+}
+
 func (ec *executionContext) unmarshalNFloat2float64(ctx context.Context, v any) (float64, error) {
 	res, err := graphql.UnmarshalFloatContext(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
@@ -11348,321 +6546,6 @@ func (ec *executionContext) marshalNInt2int32(ctx context.Context, sel ast.Selec
 	return res
 }
 
-func (ec *executionContext) marshalNLapTimingBet2f1bettingᚋuser_apiᚋgraphᚋmodelᚐLapTimingBet(ctx context.Context, sel ast.SelectionSet, v model.LapTimingBet) graphql.Marshaler {
-	return ec._LapTimingBet(ctx, sel, &v)
-}
-
-func (ec *executionContext) marshalNLapTimingBet2ᚕᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐLapTimingBetᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.LapTimingBet) graphql.Marshaler {
-	ret := make(graphql.Array, len(v))
-	var wg sync.WaitGroup
-	isLen1 := len(v) == 1
-	if !isLen1 {
-		wg.Add(len(v))
-	}
-	for i := range v {
-		i := i
-		fc := &graphql.FieldContext{
-			Index:  &i,
-			Result: &v[i],
-		}
-		ctx := graphql.WithFieldContext(ctx, fc)
-		f := func(i int) {
-			defer func() {
-				if r := recover(); r != nil {
-					ec.Error(ctx, ec.Recover(ctx, r))
-					ret = nil
-				}
-			}()
-			if !isLen1 {
-				defer wg.Done()
-			}
-			ret[i] = ec.marshalNLapTimingBet2ᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐLapTimingBet(ctx, sel, v[i])
-		}
-		if isLen1 {
-			f(i)
-		} else {
-			go f(i)
-		}
-
-	}
-	wg.Wait()
-
-	for _, e := range ret {
-		if e == graphql.Null {
-			return graphql.Null
-		}
-	}
-
-	return ret
-}
-
-func (ec *executionContext) marshalNLapTimingBet2ᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐLapTimingBet(ctx context.Context, sel ast.SelectionSet, v *model.LapTimingBet) graphql.Marshaler {
-	if v == nil {
-		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
-			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
-		}
-		return graphql.Null
-	}
-	return ec._LapTimingBet(ctx, sel, v)
-}
-
-func (ec *executionContext) unmarshalNLapTimingBetInput2f1bettingᚋuser_apiᚋgraphᚋmodelᚐLapTimingBetInput(ctx context.Context, v any) (model.LapTimingBetInput, error) {
-	res, err := ec.unmarshalInputLapTimingBetInput(ctx, v)
-	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalNPodiumBet2f1bettingᚋuser_apiᚋgraphᚋmodelᚐPodiumBet(ctx context.Context, sel ast.SelectionSet, v model.PodiumBet) graphql.Marshaler {
-	return ec._PodiumBet(ctx, sel, &v)
-}
-
-func (ec *executionContext) marshalNPodiumBet2ᚕᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐPodiumBetᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.PodiumBet) graphql.Marshaler {
-	ret := make(graphql.Array, len(v))
-	var wg sync.WaitGroup
-	isLen1 := len(v) == 1
-	if !isLen1 {
-		wg.Add(len(v))
-	}
-	for i := range v {
-		i := i
-		fc := &graphql.FieldContext{
-			Index:  &i,
-			Result: &v[i],
-		}
-		ctx := graphql.WithFieldContext(ctx, fc)
-		f := func(i int) {
-			defer func() {
-				if r := recover(); r != nil {
-					ec.Error(ctx, ec.Recover(ctx, r))
-					ret = nil
-				}
-			}()
-			if !isLen1 {
-				defer wg.Done()
-			}
-			ret[i] = ec.marshalNPodiumBet2ᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐPodiumBet(ctx, sel, v[i])
-		}
-		if isLen1 {
-			f(i)
-		} else {
-			go f(i)
-		}
-
-	}
-	wg.Wait()
-
-	for _, e := range ret {
-		if e == graphql.Null {
-			return graphql.Null
-		}
-	}
-
-	return ret
-}
-
-func (ec *executionContext) marshalNPodiumBet2ᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐPodiumBet(ctx context.Context, sel ast.SelectionSet, v *model.PodiumBet) graphql.Marshaler {
-	if v == nil {
-		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
-			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
-		}
-		return graphql.Null
-	}
-	return ec._PodiumBet(ctx, sel, v)
-}
-
-func (ec *executionContext) unmarshalNPodiumBetInput2f1bettingᚋuser_apiᚋgraphᚋmodelᚐPodiumBetInput(ctx context.Context, v any) (model.PodiumBetInput, error) {
-	res, err := ec.unmarshalInputPodiumBetInput(ctx, v)
-	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalNPolePositionBet2f1bettingᚋuser_apiᚋgraphᚋmodelᚐPolePositionBet(ctx context.Context, sel ast.SelectionSet, v model.PolePositionBet) graphql.Marshaler {
-	return ec._PolePositionBet(ctx, sel, &v)
-}
-
-func (ec *executionContext) marshalNPolePositionBet2ᚕᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐPolePositionBetᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.PolePositionBet) graphql.Marshaler {
-	ret := make(graphql.Array, len(v))
-	var wg sync.WaitGroup
-	isLen1 := len(v) == 1
-	if !isLen1 {
-		wg.Add(len(v))
-	}
-	for i := range v {
-		i := i
-		fc := &graphql.FieldContext{
-			Index:  &i,
-			Result: &v[i],
-		}
-		ctx := graphql.WithFieldContext(ctx, fc)
-		f := func(i int) {
-			defer func() {
-				if r := recover(); r != nil {
-					ec.Error(ctx, ec.Recover(ctx, r))
-					ret = nil
-				}
-			}()
-			if !isLen1 {
-				defer wg.Done()
-			}
-			ret[i] = ec.marshalNPolePositionBet2ᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐPolePositionBet(ctx, sel, v[i])
-		}
-		if isLen1 {
-			f(i)
-		} else {
-			go f(i)
-		}
-
-	}
-	wg.Wait()
-
-	for _, e := range ret {
-		if e == graphql.Null {
-			return graphql.Null
-		}
-	}
-
-	return ret
-}
-
-func (ec *executionContext) marshalNPolePositionBet2ᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐPolePositionBet(ctx context.Context, sel ast.SelectionSet, v *model.PolePositionBet) graphql.Marshaler {
-	if v == nil {
-		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
-			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
-		}
-		return graphql.Null
-	}
-	return ec._PolePositionBet(ctx, sel, v)
-}
-
-func (ec *executionContext) unmarshalNPolePositionBetInput2f1bettingᚋuser_apiᚋgraphᚋmodelᚐPolePositionBetInput(ctx context.Context, v any) (model.PolePositionBetInput, error) {
-	res, err := ec.unmarshalInputPolePositionBetInput(ctx, v)
-	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalNRainBet2f1bettingᚋuser_apiᚋgraphᚋmodelᚐRainBet(ctx context.Context, sel ast.SelectionSet, v model.RainBet) graphql.Marshaler {
-	return ec._RainBet(ctx, sel, &v)
-}
-
-func (ec *executionContext) marshalNRainBet2ᚕᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐRainBetᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.RainBet) graphql.Marshaler {
-	ret := make(graphql.Array, len(v))
-	var wg sync.WaitGroup
-	isLen1 := len(v) == 1
-	if !isLen1 {
-		wg.Add(len(v))
-	}
-	for i := range v {
-		i := i
-		fc := &graphql.FieldContext{
-			Index:  &i,
-			Result: &v[i],
-		}
-		ctx := graphql.WithFieldContext(ctx, fc)
-		f := func(i int) {
-			defer func() {
-				if r := recover(); r != nil {
-					ec.Error(ctx, ec.Recover(ctx, r))
-					ret = nil
-				}
-			}()
-			if !isLen1 {
-				defer wg.Done()
-			}
-			ret[i] = ec.marshalNRainBet2ᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐRainBet(ctx, sel, v[i])
-		}
-		if isLen1 {
-			f(i)
-		} else {
-			go f(i)
-		}
-
-	}
-	wg.Wait()
-
-	for _, e := range ret {
-		if e == graphql.Null {
-			return graphql.Null
-		}
-	}
-
-	return ret
-}
-
-func (ec *executionContext) marshalNRainBet2ᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐRainBet(ctx context.Context, sel ast.SelectionSet, v *model.RainBet) graphql.Marshaler {
-	if v == nil {
-		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
-			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
-		}
-		return graphql.Null
-	}
-	return ec._RainBet(ctx, sel, v)
-}
-
-func (ec *executionContext) unmarshalNRainBetInput2f1bettingᚋuser_apiᚋgraphᚋmodelᚐRainBetInput(ctx context.Context, v any) (model.RainBetInput, error) {
-	res, err := ec.unmarshalInputRainBetInput(ctx, v)
-	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalNRetirementBet2f1bettingᚋuser_apiᚋgraphᚋmodelᚐRetirementBet(ctx context.Context, sel ast.SelectionSet, v model.RetirementBet) graphql.Marshaler {
-	return ec._RetirementBet(ctx, sel, &v)
-}
-
-func (ec *executionContext) marshalNRetirementBet2ᚕᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐRetirementBetᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.RetirementBet) graphql.Marshaler {
-	ret := make(graphql.Array, len(v))
-	var wg sync.WaitGroup
-	isLen1 := len(v) == 1
-	if !isLen1 {
-		wg.Add(len(v))
-	}
-	for i := range v {
-		i := i
-		fc := &graphql.FieldContext{
-			Index:  &i,
-			Result: &v[i],
-		}
-		ctx := graphql.WithFieldContext(ctx, fc)
-		f := func(i int) {
-			defer func() {
-				if r := recover(); r != nil {
-					ec.Error(ctx, ec.Recover(ctx, r))
-					ret = nil
-				}
-			}()
-			if !isLen1 {
-				defer wg.Done()
-			}
-			ret[i] = ec.marshalNRetirementBet2ᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐRetirementBet(ctx, sel, v[i])
-		}
-		if isLen1 {
-			f(i)
-		} else {
-			go f(i)
-		}
-
-	}
-	wg.Wait()
-
-	for _, e := range ret {
-		if e == graphql.Null {
-			return graphql.Null
-		}
-	}
-
-	return ret
-}
-
-func (ec *executionContext) marshalNRetirementBet2ᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐRetirementBet(ctx context.Context, sel ast.SelectionSet, v *model.RetirementBet) graphql.Marshaler {
-	if v == nil {
-		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
-			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
-		}
-		return graphql.Null
-	}
-	return ec._RetirementBet(ctx, sel, v)
-}
-
-func (ec *executionContext) unmarshalNRetirementBetInput2f1bettingᚋuser_apiᚋgraphᚋmodelᚐRetirementBetInput(ctx context.Context, v any) (model.RetirementBetInput, error) {
-	res, err := ec.unmarshalInputRetirementBetInput(ctx, v)
-	return res, graphql.ErrorOnPath(ctx, err)
-}
-
 func (ec *executionContext) unmarshalNString2string(ctx context.Context, v any) (string, error) {
 	res, err := graphql.UnmarshalString(v)
 	return res, graphql.ErrorOnPath(ctx, err)
@@ -11676,64 +6559,6 @@ func (ec *executionContext) marshalNString2string(ctx context.Context, sel ast.S
 		}
 	}
 	return res
-}
-
-func (ec *executionContext) marshalNUser2f1bettingᚋuser_apiᚋgraphᚋmodelᚐUser(ctx context.Context, sel ast.SelectionSet, v model.User) graphql.Marshaler {
-	return ec._User(ctx, sel, &v)
-}
-
-func (ec *executionContext) marshalNUser2ᚕᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐUserᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.User) graphql.Marshaler {
-	ret := make(graphql.Array, len(v))
-	var wg sync.WaitGroup
-	isLen1 := len(v) == 1
-	if !isLen1 {
-		wg.Add(len(v))
-	}
-	for i := range v {
-		i := i
-		fc := &graphql.FieldContext{
-			Index:  &i,
-			Result: &v[i],
-		}
-		ctx := graphql.WithFieldContext(ctx, fc)
-		f := func(i int) {
-			defer func() {
-				if r := recover(); r != nil {
-					ec.Error(ctx, ec.Recover(ctx, r))
-					ret = nil
-				}
-			}()
-			if !isLen1 {
-				defer wg.Done()
-			}
-			ret[i] = ec.marshalNUser2ᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐUser(ctx, sel, v[i])
-		}
-		if isLen1 {
-			f(i)
-		} else {
-			go f(i)
-		}
-
-	}
-	wg.Wait()
-
-	for _, e := range ret {
-		if e == graphql.Null {
-			return graphql.Null
-		}
-	}
-
-	return ret
-}
-
-func (ec *executionContext) marshalNUser2ᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐUser(ctx context.Context, sel ast.SelectionSet, v *model.User) graphql.Marshaler {
-	if v == nil {
-		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
-			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
-		}
-		return graphql.Null
-	}
-	return ec._User(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalNUserInput2f1bettingᚋuser_apiᚋgraphᚋmodelᚐUserInput(ctx context.Context, v any) (model.UserInput, error) {
@@ -12009,20 +6834,18 @@ func (ec *executionContext) marshalN__TypeKind2string(ctx context.Context, sel a
 	return res
 }
 
-func (ec *executionContext) unmarshalOBetStatus2ᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐBetStatus(ctx context.Context, v any) (*model.BetStatus, error) {
-	if v == nil {
-		return nil, nil
-	}
-	var res = new(model.BetStatus)
-	err := res.UnmarshalGQL(v)
-	return res, graphql.ErrorOnPath(ctx, err)
+func (ec *executionContext) marshalNfastestLapBetsAndVisualizedPayout2f1bettingᚋuser_apiᚋgraphᚋmodelᚐFastestLapBetsAndVisualizedPayout(ctx context.Context, sel ast.SelectionSet, v model.FastestLapBetsAndVisualizedPayout) graphql.Marshaler {
+	return ec._fastestLapBetsAndVisualizedPayout(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalOBetStatus2ᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐBetStatus(ctx context.Context, sel ast.SelectionSet, v *model.BetStatus) graphql.Marshaler {
+func (ec *executionContext) marshalNfastestLapBetsAndVisualizedPayout2ᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐFastestLapBetsAndVisualizedPayout(ctx context.Context, sel ast.SelectionSet, v *model.FastestLapBetsAndVisualizedPayout) graphql.Marshaler {
 	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
 		return graphql.Null
 	}
-	return v
+	return ec._fastestLapBetsAndVisualizedPayout(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalOBoolean2bool(ctx context.Context, v any) (bool, error) {
@@ -12049,6 +6872,13 @@ func (ec *executionContext) marshalOBoolean2ᚖbool(ctx context.Context, sel ast
 	}
 	res := graphql.MarshalBoolean(*v)
 	return res
+}
+
+func (ec *executionContext) marshalOFastestLapUserPayout2ᚖf1bettingᚋuser_apiᚋgraphᚋmodelᚐFastestLapUserPayout(ctx context.Context, sel ast.SelectionSet, v *model.FastestLapUserPayout) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._FastestLapUserPayout(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalOString2ᚖstring(ctx context.Context, v any) (*string, error) {

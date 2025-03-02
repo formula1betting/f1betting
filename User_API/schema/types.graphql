@@ -12,8 +12,6 @@ type User {
   registrationDate: String!
   role: UserRole!
   emailVerified: Boolean!
-  lastPasswordChange: String
-  deletedAt: String
   country: String
   preferredCurrency: String
   favoriteTeam: String
@@ -21,47 +19,47 @@ type User {
   balance: Float!
 }
 
-type PodiumBet {
-  id: ID!
-  userId: ID!
-  sessionId: Int!
-  firstPosition: Int!
-  secondPosition: Int!
-  thirdPosition: Int!
-  status: BetStatus!
-  bettingPool: Int!
-  createdAt: String!
-}
+# type PodiumBet {
+#   id: ID!
+#   userId: ID!
+#   sessionId: Int!
+#   firstPosition: Int!
+#   secondPosition: Int!
+#   thirdPosition: Int!
+#   status: BetStatus!
+#   bettingPool: Int!
+#   createdAt: String!
+# }
 
-type PolePositionBet {
-  id: ID!
-  userId: ID!
-  sessionId: Int!
-  driverId: Int!
-  status: BetStatus!
-  bettingPool: Int!
-  createdAt: String!
-}
+# type PolePositionBet {
+#   id: ID!
+#   userId: ID!
+#   sessionId: Int!
+#   driverId: Int!
+#   status: BetStatus!
+#   bettingPool: Int!
+#   createdAt: String!
+# }
 
-type RainBet {
-  id: ID!
-  userId: ID!
-  sessionId: Int!
-  rainPrediction: Boolean!
-  status: BetStatus!
-  bettingPool: Int!
-  createdAt: String!
-}
+# type RainBet {
+#   id: ID!
+#   userId: ID!
+#   sessionId: Int!
+#   rainPrediction: Boolean!
+#   status: BetStatus!
+#   bettingPool: Int!
+#   createdAt: String!
+# }
 
-type RetirementBet {
-  id: ID!
-  userId: ID!
-  sessionId: Int!
-  driverId: Int!
-  status: BetStatus!
-  bettingPool: Int!
-  createdAt: String!
-}
+# type RetirementBet {
+#   id: ID!
+#   userId: ID!
+#   sessionId: Int!
+#   driverId: Int!
+#   status: BetStatus!
+#   bettingPool: Int!
+#   createdAt: String!
+# }
 
 type FastestLapBet {
   id: ID!
@@ -74,15 +72,25 @@ type FastestLapBet {
   createdAt: String!
 }
 
-type LapTimingBet {
-  id: ID!
-  userId: ID!
-  sessionId: Int!
-  lapNumber: Int!
-  driverId: Int!
-  status: BetStatus!
-  bettingPool: Int!
-  createdAt: String!
+# type LapTimingBet {
+#   id: ID!
+#   userId: ID!
+#   sessionId: Int!
+#   lapNumber: Int!
+#   driverId: Int!
+#   status: BetStatus!
+#   bettingPool: Int!
+#   createdAt: String!
+# }
+
+type FastestLapUserPayout {
+  driverId: ID!
+  payout: Float!
+}
+
+type fastestLapBetsAndVisualizedPayout {
+  fastestLapBets: [FastestLapBet!]!
+  visualizedPayout: [FastestLapUserPayout]!
 }
 
 enum AccountStatus {
@@ -128,36 +136,31 @@ input UserProfileUpdateInput {
   favoriteTeam: String
 }
 
-input BetInput {
-  sessionId: Int!
-  bettingPool: Int!
-}
+# input PodiumBetInput {
+#   sessionId: Int!
+#   firstPosition: Int!
+#   secondPosition: Int!
+#   thirdPosition: Int!
+#   bettingPool: Int!
+# }
 
-input PodiumBetInput {
-  sessionId: Int!
-  firstPosition: Int!
-  secondPosition: Int!
-  thirdPosition: Int!
-  bettingPool: Int!
-}
+# input PolePositionBetInput {
+#   sessionId: Int!
+#   driverId: Int!
+#   bettingPool: Int!
+# }
 
-input PolePositionBetInput {
-  sessionId: Int!
-  driverId: Int!
-  bettingPool: Int!
-}
+# input RainBetInput {
+#   sessionId: Int!
+#   rainPrediction: Boolean!
+#   bettingPool: Int!
+# }
 
-input RainBetInput {
-  sessionId: Int!
-  rainPrediction: Boolean!
-  bettingPool: Int!
-}
-
-input RetirementBetInput {
-  sessionId: Int!
-  driverId: Int!
-  bettingPool: Int!
-}
+# input RetirementBetInput {
+#   sessionId: Int!
+#   driverId: Int!
+#   bettingPool: Int!
+# }
 
 input FastestLapBetInput {
   sessionId: Int!
@@ -165,9 +168,9 @@ input FastestLapBetInput {
   bettingPool: Int!
 }
 
-input LapTimingBetInput {
-  sessionId: Int!
-  lapNumber: Int!
-  driverId: Int!
-  bettingPool: Int!
-}
+# input LapTimingBetInput {
+#   sessionId: Int!
+#   lapNumber: Int!
+#   driverId: Int!
+#   bettingPool: Int!
+# }

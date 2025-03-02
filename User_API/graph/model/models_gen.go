@@ -8,15 +8,6 @@ import (
 	"strconv"
 )
 
-type Bet interface {
-	IsBet()
-}
-
-type BetInput struct {
-	SessionID   int32 `json:"sessionId"`
-	BettingPool int32 `json:"bettingPool"`
-}
-
 type FastestLapBet struct {
 	ID          string    `json:"id"`
 	UserID      string    `json:"userId"`
@@ -28,137 +19,42 @@ type FastestLapBet struct {
 	CreatedAt   string    `json:"createdAt"`
 }
 
-func (FastestLapBet) IsBet() {}
-
 type FastestLapBetInput struct {
 	SessionID   int32 `json:"sessionId"`
 	DriverID    int32 `json:"driverId"`
 	BettingPool int32 `json:"bettingPool"`
 }
 
-type LapTimingBet struct {
-	ID          string    `json:"id"`
-	UserID      string    `json:"userId"`
-	SessionID   int32     `json:"sessionId"`
-	LapNumber   int32     `json:"lapNumber"`
-	DriverID    int32     `json:"driverId"`
-	Status      BetStatus `json:"status"`
-	BettingPool int32     `json:"bettingPool"`
-	CreatedAt   string    `json:"createdAt"`
-}
-
-func (LapTimingBet) IsBet() {}
-
-type LapTimingBetInput struct {
-	SessionID   int32 `json:"sessionId"`
-	LapNumber   int32 `json:"lapNumber"`
-	DriverID    int32 `json:"driverId"`
-	BettingPool int32 `json:"bettingPool"`
+type FastestLapUserPayout struct {
+	DriverID string  `json:"driverId"`
+	Payout   float64 `json:"payout"`
 }
 
 type Mutation struct {
 }
 
-type PodiumBet struct {
-	ID             string    `json:"id"`
-	UserID         string    `json:"userId"`
-	SessionID      int32     `json:"sessionId"`
-	FirstPosition  int32     `json:"firstPosition"`
-	SecondPosition int32     `json:"secondPosition"`
-	ThirdPosition  int32     `json:"thirdPosition"`
-	Status         BetStatus `json:"status"`
-	BettingPool    int32     `json:"bettingPool"`
-	CreatedAt      string    `json:"createdAt"`
-}
-
-func (PodiumBet) IsBet() {}
-
-type PodiumBetInput struct {
-	SessionID      int32 `json:"sessionId"`
-	FirstPosition  int32 `json:"firstPosition"`
-	SecondPosition int32 `json:"secondPosition"`
-	ThirdPosition  int32 `json:"thirdPosition"`
-	BettingPool    int32 `json:"bettingPool"`
-}
-
-type PolePositionBet struct {
-	ID          string    `json:"id"`
-	UserID      string    `json:"userId"`
-	SessionID   int32     `json:"sessionId"`
-	DriverID    int32     `json:"driverId"`
-	Status      BetStatus `json:"status"`
-	BettingPool int32     `json:"bettingPool"`
-	CreatedAt   string    `json:"createdAt"`
-}
-
-func (PolePositionBet) IsBet() {}
-
-type PolePositionBetInput struct {
-	SessionID   int32 `json:"sessionId"`
-	DriverID    int32 `json:"driverId"`
-	BettingPool int32 `json:"bettingPool"`
-}
-
 type Query struct {
 }
 
-type RainBet struct {
-	ID             string    `json:"id"`
-	UserID         string    `json:"userId"`
-	SessionID      int32     `json:"sessionId"`
-	RainPrediction bool      `json:"rainPrediction"`
-	Status         BetStatus `json:"status"`
-	BettingPool    int32     `json:"bettingPool"`
-	CreatedAt      string    `json:"createdAt"`
-}
-
-func (RainBet) IsBet() {}
-
-type RainBetInput struct {
-	SessionID      int32 `json:"sessionId"`
-	RainPrediction bool  `json:"rainPrediction"`
-	BettingPool    int32 `json:"bettingPool"`
-}
-
-type RetirementBet struct {
-	ID          string    `json:"id"`
-	UserID      string    `json:"userId"`
-	SessionID   int32     `json:"sessionId"`
-	DriverID    int32     `json:"driverId"`
-	Status      BetStatus `json:"status"`
-	BettingPool int32     `json:"bettingPool"`
-	CreatedAt   string    `json:"createdAt"`
-}
-
-func (RetirementBet) IsBet() {}
-
-type RetirementBetInput struct {
-	SessionID   int32 `json:"sessionId"`
-	DriverID    int32 `json:"driverId"`
-	BettingPool int32 `json:"bettingPool"`
-}
-
 type User struct {
-	ID                 string        `json:"id"`
-	FullName           string        `json:"fullName"`
-	Email              string        `json:"email"`
-	Username           string        `json:"username"`
-	DateOfBirth        string        `json:"dateOfBirth"`
-	PhoneNumber        *string       `json:"phoneNumber,omitempty"`
-	GovernmentID       string        `json:"governmentId"`
-	Address            string        `json:"address"`
-	TaxID              *string       `json:"taxId,omitempty"`
-	AccountStatus      AccountStatus `json:"accountStatus"`
-	RegistrationDate   string        `json:"registrationDate"`
-	Role               UserRole      `json:"role"`
-	EmailVerified      bool          `json:"emailVerified"`
-	LastPasswordChange *string       `json:"lastPasswordChange,omitempty"`
-	DeletedAt          *string       `json:"deletedAt,omitempty"`
-	Country            *string       `json:"country,omitempty"`
-	PreferredCurrency  *string       `json:"preferredCurrency,omitempty"`
-	FavoriteTeam       *string       `json:"favoriteTeam,omitempty"`
-	ProfilePictureURL  *string       `json:"profilePictureUrl,omitempty"`
-	Balance            float64       `json:"balance"`
+	ID                string        `json:"id"`
+	FullName          string        `json:"fullName"`
+	Email             string        `json:"email"`
+	Username          string        `json:"username"`
+	DateOfBirth       string        `json:"dateOfBirth"`
+	PhoneNumber       *string       `json:"phoneNumber,omitempty"`
+	GovernmentID      string        `json:"governmentId"`
+	Address           string        `json:"address"`
+	TaxID             *string       `json:"taxId,omitempty"`
+	AccountStatus     AccountStatus `json:"accountStatus"`
+	RegistrationDate  string        `json:"registrationDate"`
+	Role              UserRole      `json:"role"`
+	EmailVerified     bool          `json:"emailVerified"`
+	Country           *string       `json:"country,omitempty"`
+	PreferredCurrency *string       `json:"preferredCurrency,omitempty"`
+	FavoriteTeam      *string       `json:"favoriteTeam,omitempty"`
+	ProfilePictureURL *string       `json:"profilePictureUrl,omitempty"`
+	Balance           float64       `json:"balance"`
 }
 
 type UserInput struct {
@@ -184,6 +80,11 @@ type UserProfileUpdateInput struct {
 	Country           *string `json:"country,omitempty"`
 	PreferredCurrency *string `json:"preferredCurrency,omitempty"`
 	FavoriteTeam      *string `json:"favoriteTeam,omitempty"`
+}
+
+type FastestLapBetsAndVisualizedPayout struct {
+	FastestLapBets   []*FastestLapBet        `json:"fastestLapBets"`
+	VisualizedPayout []*FastestLapUserPayout `json:"visualizedPayout"`
 }
 
 type AccountStatus string
