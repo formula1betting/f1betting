@@ -1,0 +1,127 @@
+syntax = "proto3";
+
+package betting;
+
+option go_package = "f1betting/proto";
+
+import "google/protobuf/timestamp.proto";
+
+service BettingService {
+  rpc CreatePodiumBet (PodiumBetRequest) returns (BetResponse);
+  rpc CreatePolePositionBet (PolePositionBetRequest) returns (BetResponse);
+  rpc CreateRainBet (RainBetRequest) returns (BetResponse);
+  rpc CreateRetirementBet (RetirementBetRequest) returns (BetResponse);
+  rpc CreateFastestLapBet (FastestLapBetRequest) returns (BetResponse);
+  rpc CreateLapTimingBet (LapTimingBetRequest) returns (BetResponse);
+  rpc GetUserActiveBets (UserRequest) returns (UserBetsResponse);
+  rpc GetUserBetHistory (UserRequest) returns (UserBetsResponse);
+  rpc GetPendingBetsForSession (SessionRequest) returns (SessionBetsResponse);
+  rpc GetUserBalance (UserRequest) returns (BalanceResponse);
+}
+
+message PodiumBetRequest {
+  int64 user_id = 1;
+  int32 session_id = 2;
+  int32 first_position = 3;
+  int32 second_position = 4;
+  int32 third_position = 5;
+  int32 betting_pool = 6;
+}
+
+message PolePositionBetRequest {
+  int64 user_id = 1;
+  int32 session_id = 2;
+  int32 driver_id = 3;
+  int32 betting_pool = 4;
+}
+
+message RainBetRequest {
+  int64 user_id = 1;
+  int32 session_id = 2;
+  bool rain_prediction = 3;
+  int32 betting_pool = 4;
+}
+
+message RetirementBetRequest {
+  int64 user_id = 1;
+  int32 session_id = 2;
+  int32 driver_id = 3;
+  int32 betting_pool = 4;
+}
+
+message FastestLapBetRequest {
+  int64 user_id = 1;
+  int32 session_id = 2;
+  int32 driver_id = 3;
+  int32 betting_pool = 4;
+}
+
+message LapTimingBetRequest {
+  int64 user_id = 1;
+  int32 session_id = 2;
+  int32 lap_number = 3;
+  int32 driver_id = 4;
+  int32 betting_pool = 5;
+}
+
+message BetResponse {
+  int64 bet_id = 1;
+  string status = 2;
+  double amount = 3;
+}
+
+message UserRequest {
+  int64 user_id = 1;
+}
+
+message SessionRequest {
+  int32 session_id = 1;
+}
+
+message BalanceResponse {
+  double balance = 1;
+}
+
+message Bet {
+  string bet_type = 1;
+  int64 id = 2;
+  int64 user_id = 3;
+  int32 session_id = 4;
+  oneof bet_details {
+    PodiumBetDetails podium = 5;
+    DriverBetDetails driver = 6;
+    RainBetDetails rain = 7;
+    LapTimingBetDetails lap_timing = 8;
+  }
+  double amount = 9;
+  string status = 10;
+  int32 betting_pool = 11;
+  google.protobuf.Timestamp created_at = 12;
+}
+
+message PodiumBetDetails {
+  int32 first_position = 1;
+  int32 second_position = 2;
+  int32 third_position = 3;
+}
+
+message DriverBetDetails {
+  int32 driver_id = 1;
+}
+
+message RainBetDetails {
+  bool rain_prediction = 1;
+}
+
+message LapTimingBetDetails {
+  int32 lap_number = 1;
+  int32 driver_id = 2;
+}
+
+message UserBetsResponse {
+  repeated Bet bets = 1;
+}
+
+message SessionBetsResponse {
+  repeated Bet bets = 1;
+}
