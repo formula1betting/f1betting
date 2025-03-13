@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
-import 'screens/F1BettingLanding.dart'; // Updated import path
+import 'package:graphql_flutter/graphql_flutter.dart';
+import 'screens/F1BettingLanding.dart';
 import 'theme/theme.dart';
+import 'screens/live_race_screen.dart';
+import 'screens/api_test_screen.dart';
 
-void main() {
+void main() async {
+  await initHiveForFlutter();
   runApp(const MyApp());
 }
 
@@ -15,6 +19,10 @@ class MyApp extends StatelessWidget {
       title: 'F1 Betting',
       theme: F1Theme.darkTheme,
       home: const F1BettingLanding(),
+      routes: {
+        '/live': (context) => const LiveRaceScreen(),
+        '/test': (context) => const ApiTestScreen(),
+      },
     );
   }
 }

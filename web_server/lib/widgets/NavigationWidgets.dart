@@ -40,26 +40,44 @@ class MobileDrawer extends StatelessWidget {
                 ),
               ),
             ),
-            _buildDrawerItem('Home'),
-            _buildDrawerItem('Live Betting'),
-            _buildDrawerItem('Races'),
-            _buildDrawerItem('Drivers'),
-            _buildDrawerItem('Constructors'),
-            _buildDrawerItem('Promotions'),
-            _buildDrawerItem('My Account'),
+            _buildDrawerItem('Home', context: context),
+            _buildDrawerItem('Live Betting', context: context),
+            _buildDrawerItem('Races', context: context),
+            _buildDrawerItem('Drivers', context: context),
+            _buildDrawerItem('Constructors', context: context),
+            _buildDrawerItem('Promotions', context: context),
+            _buildDrawerItem('My Account', context: context),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildDrawerItem(String text) {
+  Widget _buildDrawerItem(String text, {required BuildContext context}) {
     return ListTile(
       title: Text(
         text,
         style: const TextStyle(color: Colors.white),
       ),
-      onTap: () {},
+      onTap: () {
+        // Add navigation based on text
+        switch (text) {
+          case 'Home':
+            Navigator.pushNamed(context, '/');
+            break;
+          case 'Live Betting':
+            Navigator.pushNamed(context, '/live');
+            break;
+          case 'Races':
+            Navigator.pushNamed(context, '/races');
+            break;
+          case 'Season Betting':
+            Navigator.pushNamed(context, '/season');
+            break;
+          default:
+            break;
+        }
+      },
     );
   }
 }
@@ -84,13 +102,12 @@ class DesktopNavigationBar extends StatelessWidget {
           ),
           Row(
             children: [
-              _buildNavLink('Home'),
-              _buildNavLink('Live Betting'),
-              _buildNavLink('Races'),
-              _buildNavLink('Drivers'),
-              _buildNavLink('Constructors'),
-              _buildNavLink('Promotions'),
-              _buildNavLink('My Account'),
+              _buildNavLink('Live Betting', context),
+              _buildNavLink('Races', context),
+              _buildNavLink('Drivers', context),
+              _buildNavLink('Constructors', context),
+              _buildNavLink('Promotions', context),
+              _buildNavLink('My Account', context),
             ],
           ),
         ],
@@ -98,11 +115,26 @@ class DesktopNavigationBar extends StatelessWidget {
     );
   }
 
-  Widget _buildNavLink(String text) {
+  Widget _buildNavLink(String text, BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 10),
       child: TextButton(
-        onPressed: () {},
+        onPressed: () {
+          // Add navigation based on text
+          switch (text) {
+            case 'Live Betting':
+              Navigator.pushNamed(context, '/live');
+              break;
+            case 'Races':
+              Navigator.pushNamed(context, '/races');
+              break;
+            case 'Season Betting':
+              Navigator.pushNamed(context, '/season');
+              break;
+            default:
+              break;
+          }
+        },
         style: TextButton.styleFrom(
           foregroundColor: Colors.white,
         ),

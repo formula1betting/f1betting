@@ -104,6 +104,11 @@ class F1BettingLanding extends StatelessWidget {
                             const SizedBox(height: 20),
                             // Current Grand Prix countdown timer
                             _buildCountdownTimer(),
+                            ElevatedButton(
+                              onPressed: () =>
+                                  Navigator.pushNamed(context, '/test'),
+                              child: const Text('API Tests'),
+                            ),
                           ],
                         ),
                       ),
@@ -337,57 +342,112 @@ class F1BettingLanding extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: 40),
+          const SizedBox(height: 20),
+
+          // Season-wide bets section
+          Text(
+            'SEASON-WIDE BETS',
+            style: TextStyle(
+              color: F1Colors.racingRed,
+              fontSize: isMobile ? 20 : 24,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: 20),
           GridView.count(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            crossAxisCount: isMobile ? 2 : 5, // Changed from 2 to 4
-            childAspectRatio:
-                isMobile ? 1.0 : 1.2, // Adjusted for better proportions
-            mainAxisSpacing: 10, // Reduced spacing
-            crossAxisSpacing: 10, // Reduced spacing
-            children: const [
+            crossAxisCount: isMobile ? 2 : 6,
+            childAspectRatio: isMobile ? 1.0 : 1.2,
+            mainAxisSpacing: 10,
+            crossAxisSpacing: 10,
+            children: [
+              BettingOptionCard(
+                title: 'Season Champions',
+                description: 'Long-term bets on championship winners',
+                onTap: () {},
+              ),
+              BettingOptionCard(
+                title: 'Constructor Points',
+                description: 'Bet on team performance and points finish',
+                onTap: () {},
+              ),
+              BettingOptionCard(
+                title: 'Driver Championship',
+                description: 'Predict final driver standings',
+                onTap: () {},
+              ),
+              BettingOptionCard(
+                title: 'Most Race Wins',
+                description: 'Bet on driver with most victories',
+                onTap: () {},
+              ),
+            ],
+          ),
+
+          const SizedBox(height: 40),
+
+          // Race weekend bets section
+          Text(
+            'RACE WEEKEND BETS',
+            style: TextStyle(
+              color: F1Colors.racingRed,
+              fontSize: isMobile ? 20 : 24,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: 20),
+          GridView.count(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            crossAxisCount: isMobile ? 2 : 6,
+            childAspectRatio: isMobile ? 1.0 : 1.2,
+            mainAxisSpacing: 10,
+            crossAxisSpacing: 10,
+            children: [
               BettingOptionCard(
                 title: 'Race Winners',
                 description:
                     'Back your favorite driver to take the checkered flag',
+                onTap: () {},
               ),
               BettingOptionCard(
                 title: 'Podium Finishes',
                 description: 'Predict who\'ll make it to the top three',
+                onTap: () {},
               ),
               BettingOptionCard(
                 title: 'Qualifying Leaders',
                 description: 'Bet on pole position and qualifying results',
-              ),
-              BettingOptionCard(
-                title: 'Season Champions',
-                description: 'Long-term bets on championship winners',
+                onTap: () {},
               ),
               BettingOptionCard(
                 title: 'Fastest Lap',
                 description:
                     'Predict which driver will set the fastest lap time',
+                onTap: () {
+                  Navigator.of(context).pushNamed('/weekend-bets/fastest-lap');
+                },
               ),
               BettingOptionCard(
                 title: 'Safety Car',
                 description: 'Bet on safety car appearances during the race',
+                onTap: () {},
               ),
               BettingOptionCard(
                 title: 'First Pit Stop',
                 description: 'Predict the first driver to make a pit stop',
+                onTap: () {},
               ),
               BettingOptionCard(
                 title: 'Head-to-Head',
                 description: 'Bet on direct driver matchups and performance',
-              ),
-              BettingOptionCard(
-                title: 'Constructor Points',
-                description: 'Bet on team performance and points finish',
+                onTap: () {},
               ),
               BettingOptionCard(
                 title: 'DNF Predictions',
                 description: 'Predict which drivers won\'t finish the race',
+                onTap: () {},
               ),
             ],
           ),

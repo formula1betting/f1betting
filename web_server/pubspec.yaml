@@ -11,8 +11,11 @@ dependencies:
     sdk: flutter
   flutter_3d_controller: ^2.1.0
   google_fonts: ^6.2.1
+  graphql_flutter: ^5.2.0-beta.8
   particles_flutter: ^1.0.1
+  provider: ^6.1.2
   sensors_plus: ^6.1.1
+
 
 dev_dependencies:
   flutter_test:
