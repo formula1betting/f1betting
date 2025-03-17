@@ -2,10 +2,50 @@ package user_management
 
 import (
 	"context"
+	"errors"
+	"regexp"
 	"time"
+
+	"golang.org/x/crypto/bcrypt"
 
 	"github.com/jackc/pgx/v5"
 )
+
+var (
+	emailRegex           = regexp.MustCompile(`^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$`)
+	validAccountStatuses = map[string]bool{
+		"ACTIVE": true, "SUSPENDED": true, "BANNED": true, "DELETED": true,
+	}
+	validRoles = map[string]bool{
+		"USER": true, "ADMIN": true,
+	}
+)
+
+func HashPassword(password string) (string, error) {
+	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
+	return string(bytes), err
+}
+
+func ValidateEmail(email string) error {
+	if !emailRegex.MatchString(email) {
+		return errors.New("invalid email format")
+	}
+	return nil
+}
+
+func ValidateAccountStatus(status string) error {
+	if !validAccountStatuses[status] {
+		return errors.New("invalid account status")
+	}
+	return nil
+}
+
+func ValidateRole(role string) error {
+	if !validRoles[role] {
+		return errors.New("invalid role")
+	}
+	return nil
+}
 
 type User struct {
 	ID                 int64

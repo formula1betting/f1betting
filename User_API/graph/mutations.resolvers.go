@@ -2,14 +2,12 @@ package graph
 
 import (
 	"context"
-	"f1betting/proto"
+	"f1betting/betting_system"
 	"f1betting/user_api/graph/model"
+	"f1betting/user_management"
 	"fmt"
 	"strconv"
 	"time"
-
-	"google.golang.org/protobuf/types/known/timestamppb"
-	"google.golang.org/protobuf/types/known/wrapperspb"
 )
 
 func parseDate(dateStr string) time.Time {
@@ -22,33 +20,39 @@ func parseDate(dateStr string) time.Time {
 
 // CreateUser is the resolver for the createUser field.
 func (r *mutationResolver) CreateUser(ctx context.Context, input model.UserInput) (string, error) {
-	user := &proto.User{
+	if err := user_management.ValidateEmail(input.Email); err != nil {
+		return "", err
+	}
+
+	// Hash password
+	hashedPassword, err := user_management.HashPassword(input.Password)
+	if err != nil {
+		return "", fmt.Errorf("error hashing password: %v", err)
+	}
+
+	//create user object
+	user := &user_management.User{
 		FullName:          input.FullName,
 		Email:             input.Email,
 		Username:          input.Username,
-		PasswordHash:      input.Password,
-		DateOfBirth:       timestamppb.New(parseDate(input.DateOfBirth)),
-		PhoneNumber:       wrapperspb.String(*input.PhoneNumber),
-		GovernmentId:      input.GovernmentID,
+		PasswordHash:      hashedPassword, // Use hashed password instead of plain text
+		DateOfBirth:       parseDate(input.DateOfBirth),
+		PhoneNumber:       input.PhoneNumber,
+		GovernmentID:      input.GovernmentID,
 		Address:           input.Address,
-		AccountStatus:     "ACTIVE",
-		Role:              "USER",
-		EmailVerified:     false,
-		Country:           wrapperspb.String(*input.Country),
-		PreferredCurrency: wrapperspb.String(*input.PreferredCurrency),
-		FavoriteTeam:      wrapperspb.String(*input.FavoriteTeam),
-		ProfilePictureUrl: wrapperspb.String(*input.ProfilePictureURL),
-		Balance:           0.0,
+		TaxID:             input.TaxID,
+		Country:           input.Country,
+		PreferredCurrency: input.PreferredCurrency,
+		FavoriteTeam:      input.FavoriteTeam,
+		ProfilePictureURL: input.ProfilePictureURL,
 	}
 
-	req := &proto.CreateUserRequest{
-		User: user,
-	}
-	resp, err := r.UserClient.CreateUser(ctx, req)
+	resp, err := user_management.CreateUser(ctx, r.Conn, *user)
 	if err != nil {
 		return "", err
 	}
-	return strconv.FormatInt(resp.UserId, 10), nil
+
+	return strconv.FormatInt(resp, 10), nil
 }
 
 // UpdateUserProfile is the resolver for the updateUserProfile field.
@@ -77,19 +81,20 @@ func (r *mutationResolver) CreateFastestLapBet(ctx context.Context, userID strin
 		return "", fmt.Errorf("invalid userID: %v", err)
 	}
 
-	req := &proto.FastestLapBetRequest{
-		UserId:      uid,
-		SessionId:   input.SessionID,
-		DriverId:    int32(input.DriverID),
-		BettingPool: int32(input.BettingPool),
+	bet := &betting_system.FastestLapBet{
+		UserID:      uid,
+		SessionID:   int(input.SessionID),
+		DriverID:    input.DriverID,
+		BettingPool: int64(input.BettingPool),
 	}
 
-	resp, err := r.BettingClient.CreateFastestLapBet(ctx, req)
+	resp, err := betting_system.CreateFastestLapBet(ctx, r.Conn, *bet)
 	if err != nil {
 		return "", err
 	}
 
-	return fmt.Sprintf("%d", resp.BetId), nil
+	return strconv.FormatInt(resp, 10), nil
+
 }
 
 // Mutation returns MutationResolver implementation.

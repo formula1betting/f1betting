@@ -7,10 +7,11 @@ package graph
 
 import (
 	"context"
+	"f1betting/betting_system"
+	"f1betting/user_management"
 	"fmt"
 	"strconv"
 
-	"f1betting/proto"
 	"f1betting/user_api/graph/model"
 )
 
@@ -21,30 +22,30 @@ func (r *queryResolver) User(ctx context.Context, id string) (*model.User, error
 		return nil, err
 	}
 
-	user, err := r.UserClient.GetUserByID(ctx, &proto.GetUserByIDRequest{Id: userID})
+	user, err := user_management.GetUserByID(ctx, r.Conn, userID)
 	if err != nil {
 		return nil, err
 	}
 
-	phoneNumber := user.PhoneNumber.GetValue()
-	taxId := user.TaxId.GetValue()
-	country := user.Country.GetValue()
-	preferredCurrency := user.PreferredCurrency.GetValue()
-	favoriteTeam := user.FavoriteTeam.GetValue()
-	profilePictureUrl := user.ProfilePictureUrl.GetValue()
+	phoneNumber := *user.PhoneNumber
+	taxId := *user.TaxID
+	country := *user.Country
+	preferredCurrency := *user.PreferredCurrency
+	favoriteTeam := *user.FavoriteTeam
+	profilePictureUrl := *user.ProfilePictureURL
 
 	return &model.User{
-		ID:                strconv.FormatInt(user.Id, 10),
+		ID:                strconv.FormatInt(user.ID, 10),
 		FullName:          user.FullName,
 		Email:             user.Email,
 		Username:          user.Username,
-		DateOfBirth:       user.DateOfBirth.AsTime().String(),
+		DateOfBirth:       user.DateOfBirth.String(),
 		PhoneNumber:       &phoneNumber,
-		GovernmentID:      user.GovernmentId,
+		GovernmentID:      user.GovernmentID,
 		Address:           user.Address,
 		TaxID:             &taxId,
 		AccountStatus:     model.AccountStatus(user.AccountStatus),
-		RegistrationDate:  user.RegistrationDate.AsTime().String(),
+		RegistrationDate:  user.RegistrationDate.String(),
 		Role:              model.UserRole(user.Role),
 		EmailVerified:     user.EmailVerified,
 		Country:           &country,
@@ -68,43 +69,39 @@ func (r *queryResolver) UserByUsername(ctx context.Context, username string) (*m
 // FastestLapBetsAndVisualizedPayout is the resolver for the fastestLapBetsAndVisualizedPayout field.
 func (r *queryResolver) FastestLapBetsAndVisualizedPayout(ctx context.Context, sessionID int32, userID string) (*model.FastestLapBetsAndVisualizedPayout, error) {
 	// Get all bets for session
-	sessionReq := &proto.SessionRequest{
-		SessionId: sessionID,
-	}
-	sessionBets, err := r.BettingClient.GetPendingBetsForSession(ctx, sessionReq)
+
+	sessionBets, err := betting_system.GetFastestLapBetsByRace(ctx, r.Conn, int64(sessionID), "PENDING")
 	if err != nil {
 		return nil, err
 	}
 
 	var result []*model.FastestLapBet
-	driverPayoutMap := make(map[int32]float64)
 
 	// Convert session bets to GraphQL model
-	for _, bet := range sessionBets.Bets {
-		if bet.BetType == "FASTEST_LAP" {
-			result = append(result, &model.FastestLapBet{
-				ID:          strconv.FormatInt(bet.Id, 10),
-				UserID:      strconv.FormatInt(bet.UserId, 10),
-				SessionID:   bet.SessionId,
-				DriverID:    bet.GetDriver().DriverId,
-				Status:      model.BetStatus(bet.Status),
-				BettingPool: int32(bet.BettingPool),
-				CreatedAt:   bet.CreatedAt.AsTime().String(),
-			})
-
-			// Calculate payout for each driver
-			if bet.GetDriver() != nil {
-				driverPayoutMap[bet.GetDriver().DriverId] += bet.Amount
-			}
-		}
+	for _, bet := range *sessionBets {
+		result = append(result, &model.FastestLapBet{
+			ID:          strconv.FormatInt(bet.ID, 10),
+			UserID:      userID,
+			SessionID:   int32(bet.SessionID),
+			DriverID:    bet.DriverID,
+			Status:      model.BetStatus(bet.Status),
+			Amount:      bet.Amount,
+			BettingPool: int32(bet.BettingPool),
+			CreatedAt:   bet.CreateAt.String(),
+		})
 	}
 
-	// Convert payout map to response format
-	var payouts []*model.FastestLapUserPayout
-	for driverID, amount := range driverPayoutMap {
+	userIDInt64, err := strconv.ParseInt(userID, 10, 64)
+	if err != nil {
+		return nil, err
+	}
+	userPayouts, err := betting_system.GetFastestLapUserVisualizedPayout(ctx, r.Conn, userIDInt64, int(sessionID))
+
+	payouts := make([]*model.FastestLapUserPayout, 0)
+	for _, payout := range *userPayouts {
 		payouts = append(payouts, &model.FastestLapUserPayout{
-			DriverID: strconv.FormatInt(int64(driverID), 10),
-			Payout:   amount,
+			DriverID: strconv.Itoa(int(payout.DriverID)),
+			Payout:   payout.Payout,
 		})
 	}
 

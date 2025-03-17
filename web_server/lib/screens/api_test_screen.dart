@@ -71,8 +71,7 @@ class _ApiTestScreenState extends State<ApiTestScreen> {
     });
 
     try {
-      final betsData =
-          await BettingProvider.getFastestLapBetsAndPayout('test-user-id', 1);
+      final betsData = await BettingProvider.getFastestLapBetsAndPayout('1', 1);
       setState(() {
         _resultText = 'Bets Data: ${betsData.toString()}';
       });

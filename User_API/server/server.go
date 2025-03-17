@@ -1,4 +1,4 @@
-package user_api
+package main
 
 import (
 	"context"

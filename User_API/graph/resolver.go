@@ -1,10 +1,7 @@
 package graph
 
-import (
-	"f1betting/proto"
-)
+import "github.com/jackc/pgx/v5"
 
 type Resolver struct {
-	UserClient    proto.UserManagementClient
-	BettingClient proto.BettingServiceClient
+	Conn *pgx.Conn
 }
